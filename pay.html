@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="wrapper help orderdetail nav">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+				</a>
+				<div class="head-main">
+					提交订单
+				</div>
+				<a class="head-tab" href="JavaScript:void(0)">
+					
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main">
+				<div class="help-item">
+					<div>订单编号:9645201</div>
+					<div></div>
+				</div>
+				<div class="shop-main" :class="more==true?'active':''">
+					<div class="shop-item">
+						<img src="img/shop.jpg"/>
+						<div class="name-box">
+							<div class="num-box">
+								<div class="name">618物料包 </div>
+								<div class="price">￥16</div>
+							</div>
+							<div class="num">
+								x1
+							</div>
+						</div>
+					</div>
+					<div class="shop-item">
+						<img src="img/shop.jpg"/>
+						<div class="name-box">
+							<div class="num-box">
+								<div class="name">618物料包 </div>
+								<div class="price">￥16</div>
+							</div>
+							<div class="num">
+								x1
+							</div>
+						</div>
+					</div>
+					<div class="shop-item">
+						<img src="img/shop.jpg"/>
+						<div class="name-box">
+							<div class="num-box">
+								<div class="name">618物料包 </div>
+								<div class="price">￥16</div>
+							</div>
+							<div class="num">
+								x1
+							</div>
+						</div>
+					</div>
+					<div class="shop-item">
+						<img src="img/shop.jpg"/>
+						<div class="name-box">
+							<div class="num-box">
+								<div class="name">618物料包 </div>
+								<div class="price">￥16</div>
+							</div>
+							<div class="num">
+								x1
+							</div>
+						</div>
+					</div>
+					<div class="shop-item">
+						<img src="img/shop.jpg"/>
+						<div class="name-box">
+							<div class="num-box">
+								<div class="name">618物料包 </div>
+								<div class="price">￥16</div>
+							</div>
+							<div class="num">
+								x1
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bottom">
+				<div class="nav-left">
+					<div class="bprice">合计:￥60</div>
+				</div>
+				<div class="nav-right">
+					去结算
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var myvue=new Vue({
+				el:'.wrapper',
+				data:{
+					more:false
+				},
+				methods:{
+					moreboo:function(){
+						this.more=!this.more
+					},
+					opennew:function(id,target){
+						window.location.href='./'+target+'.html'
+					}
+				},
+				mounted:function(){
+					
+				}
+			})
+		</script>
+	</body>
+</html>

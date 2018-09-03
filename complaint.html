@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="wrapper order trade">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+				</a>
+				<div class="head-main">
+					投诉管理
+				</div>
+				<a class="head-tab" href="javascript:void(0)">
+					
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main complaint">
+				<div class="order-main">
+					<div class="trade-top">
+						<div class="trade-item" :class="myindex==0?'active':''" @click="indexchange(0)">
+							<div class="text">未处理<br />12</div>
+							<div class="radius"></div>
+						</div>
+						<div class="trade-item" :class="myindex==1?'active':''" @click="indexchange(1)">
+							<div class="text">已处理<br />14</div>
+							<div class="radius"></div>
+						</div>
+					</div>
+					<div class="trade-main">
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box">
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">D5323246</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">投诉日期</div>
+									<div class="order-time">2018年7月19日</div>
+								</div>
+								
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting"><a class="btn02" href="complaintdetail.html">查看详情</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var myvue=new Vue({
+				el:'.wrapper',
+				data:{
+					myindex:0
+				},
+				methods:{
+					indexchange:function(index){
+						this.myindex=index
+					},
+					opennew:function(type){
+						if(type=='q'){
+							window.location.href='./havetype.html'
+						}else{
+							
+						}
+					}
+				},
+				mounted:function(){
+					
+				}
+			})
+		</script>
+	</body>
+</html>

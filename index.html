@@ -1,19 +1,113 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title></title>
-    <script type="text/javascript">
-    	
-   		document.addEventListener('plusready', function(){
-   			//console.log("所有plus api都应该在此事件发生后调用，否则会出现plus is undefined。"
-   			
-   		});
-   		
-    </script>
-</head>
-<body>
-	
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+
+	</head>
+	<body>
+		<div class="wrapper index">
+			<div class="main">
+				<img src="img/index.jpg" class="banner"/>
+				<div class="notice">
+					<img src="img/notice.png"/>
+					<a href="lxidi.html">
+						公告：恭喜城市合伙人张豆豆获本次评比第一名
+					</a>
+				</div>
+				<div class="nav-box" style="flex: 1;">
+						<a class="nav-item" href="trade.html">
+							<img src="img/nav0.png"/>
+							<div>我的豆豆洗</div>
+						</a>
+						<a class="nav-item" href="model.html">
+							<img src="img/nav1.png"/>
+							<div>查看收入</div>
+						</a>
+						<a class="nav-item" @click="tost" href="examine.html">
+							<img src="img/nav2.png"/>
+							<div>设置价格</div>
+						</a>
+						<a class="nav-item" href="community.html">
+							<img src="img/nav3.png"/>
+							<div>活动管理</div>
+						</a>
+						<a class="nav-item" href="complaint.html">
+							<img src="img/nav4.png"/>
+							<div>洗涤订单</div>
+						</a>
+						<a class="nav-item" href="examine.html">
+							<img src="img/nav5.png"/>
+							<div>滞留件管理</div>
+						</a>
+						<a class="nav-item" href="alert.html">
+							<img src="img/nav6.png"/>
+							<div>警报系统</div>
+						</a>
+						<a class="nav-item" href="complaint.html">
+							<img src="img/nav7.png"/>
+							<div>投诉管理</div>
+						</a>
+						
+					</div>
+					<div class="nav-box">
+						<a class="nav-item" href="model.html">
+							<img src="img/nav8.png"/>
+							<div>取</div>
+						</a>
+						<a class="nav-item" href="alert.html">
+							<img src="img/nav9.png"/>
+							<div>送</div>
+						</a>
+					</div>
+					<div class="nav-box">
+						<a class="nav-item" href="alert.html">
+							<img src="img/nav10.png"/>
+							<div>干洗店订单</div>
+						</a>
+						<a class="nav-item" href="share.html">
+							<img src="img/nav11.png"/>
+							<div>邀请好友</div>
+						</a>
+					</div>
+			</div>
+			<!--底部-->
+			<div class="bottom">
+				<a class="bottom-tab">
+					<img src="img/bottom01-active.png"/>
+					<div class="bottom-text active">
+						首页
+					</div>
+				</a>
+				<a class="bottom-tab" href="newcenter.html">
+					<img src="img/bottom02.png"/>
+					<div class="bottom-text">
+						消息
+					</div>
+				</a>
+				<a class="bottom-tab" href="usercenter.html">
+					<img src="img/bottom03.png"/>
+					<div class="bottom-text">
+						我的
+					</div>
+				</a>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		var myvue=new Vue({
+			el:'.wrapper',
+			data:{
+				
+			},
+			methods:{
+				tost:function(){
+					plus.nativeUI.toast('功能正在开发中~')
+				}
+			}
+		})
+	</script>
 </html>

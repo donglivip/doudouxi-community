@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="wrapper order trade">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+				</a>
+				<div class="head-main">
+					他的干洗店
+				</div>
+				<a class="head-tab" href="javascript:void(0)">
+					
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main sharedetail">
+					<div class="order-box alert01">
+						<div class="order-right">
+							<div class="order-bottom">
+								<div class="order-price">店铺名称</div>
+								<div class="order-time">东城洗衣店</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">店主</div>
+								<div class="order-time">邓紫平</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">联系电话</div>
+								<div class="order-time">17845698547</div>
+							</div>
+						</div>
+					</div>
+					<div class="order-box alert01">
+						<div class="order-right">
+							<div class="order-bottom">
+								<div class="order-price">店铺名称</div>
+								<div class="order-time">东城洗衣店</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">店主</div>
+								<div class="order-time">邓紫平</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">联系电话</div>
+								<div class="order-time">17845698547</div>
+							</div>
+						</div>
+					</div>
+					<div class="order-box alert01">
+						<div class="order-right">
+							<div class="order-bottom">
+								<div class="order-price">店铺名称</div>
+								<div class="order-time">东城洗衣店</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">店主</div>
+								<div class="order-time">邓紫平</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">联系电话</div>
+								<div class="order-time">17845698547</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var myvue=new Vue({
+				el:'.wrapper',
+				data:{
+					myindex:0
+				},
+				methods:{
+					indexchange:function(index){
+						this.myindex=index
+					},
+					opennew:function(type){
+						if(type=='q'){
+							window.location.href='./havetype.html'
+						}else{
+							
+						}
+					}
+				},
+				mounted:function(){
+					
+				}
+			})
+		</script>
+	</body>
+</html>
