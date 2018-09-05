@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper order trade">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</a>
+				<div class="head-main">
+					活动管理
+				</div>
+				<a class="head-tab" href="haveactivity.html">
+					申请活动
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main complaint">
+				<div class="order-main">
+					<div class="trade-top">
+						<div class="trade-item" :class="myindex==0?'active':''" @click="indexchange(0)">
+							<div class="text">审批中</div>
+							<div class="radius"></div>
+						</div>
+						<div class="trade-item" :class="myindex==1?'active':''" @click="indexchange(1)">
+							<div class="text">已审批</div>
+							<div class="radius"></div>
+						</div>
+						<div class="trade-item" :class="myindex==2?'active':''" @click="indexchange(2)">
+							<div class="text">进行中</div>
+							<div class="radius"></div>
+						</div>
+						<div class="trade-item" :class="myindex==3?'active':''" @click="indexchange(3)">
+							<div class="text">已结束</div>
+							<div class="radius"></div>
+						</div>
+					</div>
+					<div class="trade-main activity">
+						<div class="order-box" v-if="myindex==0">
+							<div class="order-right">
+								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+									<div class="order-price">郑春平的一号柜</div>
+									<div class="order-time">
+										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+									</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动项目</div>
+									<div class="order-time">挖宝</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动开始时间</div>
+									<div class="order-time">2018年7月18日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动结束时间</div>
+									<div class="order-time">2018年7月19日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">申请资源</div>
+									<div class="order-time">618物料包</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box" v-if="myindex==1">
+							<div class="order-right">
+								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+									<div class="order-price">郑春平的一号柜</div>
+									<div class="order-time">
+										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+									</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动项目</div>
+									<div class="order-time">挖宝</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动开始时间</div>
+									<div class="order-time">2018年7月18日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动结束时间</div>
+									<div class="order-time">2018年7月19日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">申请资源</div>
+									<div class="order-time">618物料包</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn01" href="complaintdetail.html">查看物流</a>
+										<a class="btn02" href="prize.html">存放奖品</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box" v-if="myindex==2">
+							<div class="order-right">
+								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+									<div class="order-price">郑春平的一号柜</div>
+									<div class="order-time">
+										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+									</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动项目</div>
+									<div class="order-time">挖宝</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动开始时间</div>
+									<div class="order-time">2018年7月18日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动结束时间</div>
+									<div class="order-time">2018年7月19日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">申请资源</div>
+									<div class="order-time">618物料包</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn02" href="javascript:void(0)">结束活动</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box" v-if="myindex==3">
+							<div class="order-right">
+								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+									<div class="order-price">郑春平的一号柜</div>
+									<div class="order-time">
+										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+									</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动项目</div>
+									<div class="order-time">挖宝</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动开始时间</div>
+									<div class="order-time">2018年7月18日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">活动结束时间</div>
+									<div class="order-time">2018年7月19日8：30</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">申请资源</div>
+									<div class="order-time">618物料包</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn02" href="javascript:void(0)">上传活动照</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					myindex: 0
+				},
+				methods: {
+					indexchange: function(index) {
+						this.myindex = index
+					},
+					opennew: function(type) {
+						if(type == 'q') {
+							window.location.href = './havetype.html'
+						} else {
+
+						}
+					}
+				},
+				mounted: function() {
+
+				}
+			})
+		</script>
+	</body>
+
+</html>
