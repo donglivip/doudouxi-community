@@ -31,7 +31,7 @@
 					<div class="tab-text">取送员管理</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
 				</a>
-				<a class="user-tab" href="setting.html">
+				<a class="user-tab" href="shopadmin.html">
 					<div class="tab-text">干洗店管理</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
 				</a>
@@ -39,10 +39,10 @@
 					<div class="tab-text">设备管理</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
 				</a>
-				<a class="user-tab" href="saoyisao.html">
+				<div class="user-tab" @click="opensao">
 					<div class="tab-text">激活设备</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
-				</a>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript">
@@ -52,7 +52,9 @@
 
 				},
 				methods:{
-					
+					opensao:function(){
+						plus.webview.open('./saoyisao.html')
+					}
 				},
 				mounted:function(){
 					

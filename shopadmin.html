@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="wrapper order trade">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+				</a>
+				<div class="head-main">
+					干洗店管理
+				</div>
+				<a class="head-tab" href="devicedetail.html">
+					<img src="img/add.png"/>
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main sharedetail">
+					<a class="order-box alert01" href="device.html">
+						<div class="order-right">
+							<div class="order-bottom">
+								<div class="order-price">店铺名称</div>
+								<div class="order-time">江海洗衣店</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">店主</div>
+								<div class="order-time">李江海</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">手机号</div>
+								<div class="order-time">15487965489</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var myvue=new Vue({
+				el:'.wrapper',
+				data:{
+					myindex:0
+				},
+				methods:{
+					indexchange:function(index){
+						this.myindex=index
+					},
+					opennew:function(type){
+						if(type=='q'){
+							window.location.href='./havetype.html'
+						}else{
+							
+						}
+					}
+				},
+				mounted:function(){
+					
+				}
+			})
+		</script>
+	</body>
+</html>

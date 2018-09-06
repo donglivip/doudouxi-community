@@ -45,7 +45,7 @@ input{border: 0;}
 .new .new-title{display: flex;justify-content: space-between;}
 .new .title{color: #021A13;font-size:.28rem;}
 .new .time{color: #B8B8B8;}
-.new .text{font-size: .1rem;color: #666666;}
+.new .text{font-size: .2rem;color: #666666;}
 .pay02 .shop-main{height: 4.1rem;}
 
 /*帮助*/

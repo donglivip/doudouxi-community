@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.weui.css"/>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.weui.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="wrapper usercenter communitydetail">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+				</a>
+				<div class="head-main">
+					添加干洗店
+				</div>
+				<a class="head-tab" href="javascript:void(0)">
+					
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main" style="margin-top: .8rem;padding-bottom: .5rem;height: calc(100% - 1.8rem);">
+				<div class="user-tab">
+					<div class="tab-text">店铺名称<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入干洗店名称"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">地址<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入干洗店名称"id='city-picker' v-model="adress"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">手机号<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入取送员手机号"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">密码 <span class="red"> *</span></div>
+					<input type="text" placeholder="请设置密码"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">确认密码<span class="red"> *</span></div>
+					<input type="text" placeholder="请再次设置密码"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">支付密码<span class="red"> *</span></div>
+					<input type="text" placeholder="请再次设置密码"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">性别 </div>
+					<label for="man">男</label>
+					<input type="radio" placeholder="请设置密码" name="sex" id="man" checked="checked"/>
+					<label for="man">女</label>
+					<input type="radio" placeholder="请设置密码" name="sex" id="wman"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">身份证号码<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入取送员身份证号"/>
+				</div>
+				<div class="user-tab top">
+					<div class="tab-text">上传身份证照<span class="red"> *</span></div>
+				</div>
+				<div class="user-tab mys">
+					<img src="img/sz.png"/>
+					<img src="img/sf.png"/>
+				</div>
+				<div class="user-tab top">
+					<div class="tab-text">上传营业执照<span class="red"> *</span></div>
+				</div>
+				<div class="user-tab mys">
+					<img src="img/zhi.png"/>
+				</div>
+				<div class="user-tab top">
+					<div class="tab-text">上传特种行业许可证<span class="red"> *</span></div>
+				</div>
+				<div class="user-tab mys">
+					<img src="img/te.png"/>
+				</div>
+			</div>
+			<div class="bottom" style="background: #096148;color: #FFFFFF;justify-content: center;">
+				提交
+			</div>
+		</div>
+		
+		<script src="js/city-picker.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue=new Vue({
+				el:'.wrapper',
+				data:{
+					adress:''
+				},
+				methods:{
+					
+				},
+				mounted:function(){
+					var that=this
+					 $("#city-picker").cityPicker({
+				        title: "选择省市区/县",
+				        onChange: function (picker, values, displayValues) {
+				            console.log(values, displayValues);
+				            that.adress=displayValues
+				        }
+				    });
+				}
+			})
+		</script>
+	</body>
+</html>
