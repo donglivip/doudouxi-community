@@ -47,7 +47,7 @@
 						<div class="order-bottom">
 							<div class="order-price">清洗最迟时间</div>
 							<div class="order-time">
-								<input type="text" v-model="stime" @click="pickDate('e')" placeholder="活动结束时间" />
+								<input type="text" v-model="etime" @click="pickDate('e')" placeholder="活动结束时间" />
 							</div>
 						</div>
 						<div class="order-bottom">
@@ -92,8 +92,9 @@
 					pickDate: function(type) {
 						var that = this
 						plus.nativeUI.pickDate(function(e) {
+							console.log(type)
 							var d = e.date;
-							if(type = 's') {
+							if(type == 's') {
 								that.stime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
 							} else {
 								that.etime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
@@ -105,12 +106,7 @@
 					}
 				},
 				mounted: function() {
-					$("#city-picker").cityPicker({
-						title: "选择省市区/县",
-						onChange: function(picker, values, displayValues) {
-							console.log(values, displayValues);
-						}
-					});
+					
 				}
 			})
 		</script>

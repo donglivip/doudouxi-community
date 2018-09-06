@@ -77,8 +77,8 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;"> 
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="complaintdetail.html">核实订单</a>
-										<a class="btn02" href="prize.html">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)">发送取件码</a>
+										<a class="btn02" href="saoyisao.html">扫码开箱</a>
 									</div>
 								</div>
 							</div>
@@ -152,8 +152,8 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;"> 
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="complaintdetail.html">核实订单</a>
-										<a class="btn02" href="prize.html">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)">发送取件码</a>
+										<a class="btn02" href="javascript:void(0)"  @click="opensao">扫码开箱</a>
 									</div>
 								</div>
 							</div>
@@ -178,6 +178,9 @@
 						} else {
 
 						}
+					},
+					opensao:function(){
+						plus.webview.open('./saoyisao.html')
 					}
 				},
 				mounted: function() {

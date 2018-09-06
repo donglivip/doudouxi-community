@@ -6,7 +6,6 @@
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<link rel="stylesheet" type="text/css" href="css/jquery.weui.css" />
-		<script src="js/jquery.weui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
@@ -58,13 +57,13 @@
 						<div class="order-bottom">
 							<div class="order-price">收件地址</div>
 							<div class="order-time">
-								<input type="text" v-model="adress"  placeholder="收件地址"  id='city-picker' />
+								<input type="text" v-model="adress" placeholder="收件地址" id='city-picker' />
 							</div>
 						</div>
 						<div class="order-bottom">
 							<div class="order-price">详细地址</div>
 							<div class="order-time">
-								<input type="text" v-model="adetail" placeholder="详细地址"/>
+								<input type="text" v-model="adetail" placeholder="详细地址" />
 							</div>
 						</div>
 						<div class="order-bottom">
@@ -108,7 +107,7 @@
 		</div>
 		</div>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		
+		<script src="js/jquery.weui.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/city-picker.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
@@ -146,6 +145,7 @@
 							console.log(values, displayValues);
 						}
 					});
+					$('html').removeClass()
 				}
 			})
 		</script>

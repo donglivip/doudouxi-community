@@ -153,7 +153,18 @@
 					"trade.html",
 					"lxidi.html",
 					"recommend.html",
-					"community.html"
+					"community.html",
+					"my.html",
+					"activity.html",
+					"model.html",
+					"examine.html",
+					"orderxidi.html",
+					"orderzhi.html",
+					"alert.html",
+					"complaint.html",
+					"orderqu.html",
+					"ordersong.html",
+					"ordedianpu.html"
 				],
 				"priority": 0
 			},
@@ -167,7 +178,8 @@
 			"trade.html": {
 				"resources": [],
 				"refer": [
-					"index.html"
+					"index.html",
+					"model.html"
 				],
 				"priority": 0
 			},
@@ -182,14 +194,205 @@
 				"resources": [],
 				"refer": [
 					"search.html",
-					"index.html"
+					"index.html",
+					"model.html"
 				],
 				"priority": 0
 			},
 			"search.html": {
 				"resources": [],
 				"refer": [
-					"recommend.html"
+					"recommend.html",
+					"orderzhi.html"
+				],
+				"priority": 0
+			},
+			"shopadmin.html": {
+				"resources": [],
+				"refer": [
+					"devicedetail.html",
+					"my.html"
+				],
+				"priority": 0
+			},
+			"my.html": {
+				"resources": [],
+				"refer": [
+					"shopadmin.html",
+					"community.html",
+					"index.html",
+					"saoyisao.html"
+				],
+				"priority": 0
+			},
+			"community.html": {
+				"resources": [],
+				"refer": [
+					"my.html",
+					"communitydetail.html"
+				],
+				"priority": 0
+			},
+			"devicedetail.html": {
+				"resources": [],
+				"refer": [
+					"shopadmin.html"
+				],
+				"priority": 0
+			},
+			"communitydetail.html": {
+				"resources": [],
+				"refer": [
+					"community.html"
+				],
+				"priority": 0
+			},
+			"haveactivity.html": {
+				"resources": [],
+				"refer": [
+					"haveactivity02.html",
+					"activity.html"
+				],
+				"priority": 0
+			},
+			"activity.html": {
+				"resources": [],
+				"refer": [
+					"haveactivity.html",
+					"index.html",
+					"prize.html"
+				],
+				"priority": 0
+			},
+			"haveactivity02.html": {
+				"resources": [],
+				"refer": [
+					"haveactivity.html"
+				],
+				"priority": 0
+			},
+			"model.html": {
+				"resources": [],
+				"refer": [
+					"trade.html",
+					"trade02.html",
+					"recommend.html",
+					"index.html"
+				],
+				"priority": 0
+			},
+			"trade02.html": {
+				"resources": [],
+				"refer": [
+					"model.html"
+				],
+				"priority": 0
+			},
+			"price03.html": {
+				"resources": [],
+				"refer": [
+					"examinedetail.html"
+				],
+				"priority": 0
+			},
+			"examine.html": {
+				"resources": [],
+				"refer": [
+					"index.html",
+					"examinedetail.html"
+				],
+				"priority": 0
+			},
+			"examinedetail.html": {
+				"resources": [],
+				"refer": [
+					"price03.html",
+					"examine.html"
+				],
+				"priority": 0
+			},
+			"prize.html": {
+				"resources": [],
+				"refer": [
+					"activity.html"
+				],
+				"priority": 0
+			},
+			"orderxidi.html": {
+				"resources": [],
+				"refer": [
+					"appoint.html",
+					"index.html",
+					"appoint02.html"
+				],
+				"priority": 0
+			},
+			"appoint.html": {
+				"resources": [],
+				"refer": [
+					"orderxidi.html"
+				],
+				"priority": 0
+			},
+			"appoint02.html": {
+				"resources": [],
+				"refer": [
+					"orderxidi.html",
+					"orderzhi.html"
+				],
+				"priority": 0
+			},
+			"orderzhi.html": {
+				"resources": [],
+				"refer": [
+					"index.html",
+					"search.html",
+					"appoint02.html"
+				],
+				"priority": 0
+			},
+			"complaintdetail.html": {
+				"resources": [],
+				"refer": [
+					"complaint.html",
+					"orderqu.html"
+				],
+				"priority": 0
+			},
+			"alert.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
+				],
+				"priority": 0
+			},
+			"complaint.html": {
+				"resources": [],
+				"refer": [
+					"index.html",
+					"complaintdetail.html"
+				],
+				"priority": 0
+			},
+			"orderqu.html": {
+				"resources": [],
+				"refer": [
+					"complaintdetail.html",
+					"index.html"
+				],
+				"priority": 0
+			},
+			"ordersong.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
+				],
+				"priority": 0
+			},
+			"ordedianpu.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
 				],
 				"priority": 0
 			}
@@ -205,7 +408,6 @@
 				"img/notice.png",
 				"img/Arrow_right@2x.png",
 				"img/ios5.png",
-				"complaint.html",
 				"plogin.html",
 				"img/Mail Copy@2x.png",
 				"img/wpay.png",
@@ -231,14 +433,12 @@
 				"mlogin.html",
 				"img/shop.jpg",
 				"img/a1080.png",
-				"examinedetail.html",
 				"js/rem.js",
 				"img/nav1.png",
 				"img/a480.png",
 				"img/search.png",
 				"img/nav8.png",
 				"img/nav7.png",
-				"examine.html",
 				"rname.html",
 				"img/qq (2).png",
 				"img/number (1).png",
@@ -251,7 +451,6 @@
 				"img/wallet@2x.png",
 				"integral.html",
 				"img/nav6.png",
-				"model.html",
 				"img/nav0.png",
 				"img/bottom02-active.png",
 				"img/avatar.jpg",
@@ -276,7 +475,6 @@
 				"img/nav2.png",
 				"pay.html",
 				"img/erweima.png",
-				"alert.html",
 				"aboutus.html",
 				"img/model0.png",
 				"img/640.png",
