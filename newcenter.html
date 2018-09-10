@@ -24,7 +24,7 @@
 			</div>
 			<!--中间主体-->
 			<div class="main">
-				<a class="nav-tab" href="new-order.html">
+				<div class="nav-tab" @click="opennew('new-order')">
 					<div class="img-box type01" >
 						<img src="img/hanger-1@3x.png"/>
 					</div>
@@ -35,8 +35,8 @@
 						</div>
 						<div class="text">您的洗涤订单1358665状态已改变</div>
 					</div>
-				</a>
-				<a class="nav-tab" href="new-gonggao.html">
+				</div>
+				<div class="nav-tab" @click="opennew('new-gonggao')">
 					<div class="img-box type02" >
 						<img src="img/Share@3x.png"/>
 					</div>
@@ -47,30 +47,31 @@
 						</div>
 						<div class="text">您的洗涤订单1358665状态已改变</div>
 					</div>
-				</a>
+				</div>
 			</div>
 			<!--底部-->
 			<div class="bottom">
-				<a class="bottom-tab" href="index.html">
+				<div class="bottom-tab" @click="opennew('index')">
 					<img src="img/bottom01.png"/>
 					<div class="bottom-text">
 						首页
 					</div>
-				</a>
+				</div>
 				<a class="bottom-tab" href="javascript:void(0)">
 					<img src="img/bottom02-active.png"/>
 					<div class="bottom-text active">
 						消息
 					</div>
 				</a>
-				<a class="bottom-tab" href="usercenter.html">
+				<div class="bottom-tab" @click="opennew('usercenter')"> 
 					<img src="img/bottom03.png"/>
 					<div class="bottom-text">
 						我的
 					</div>
-				</a>
+				</div>
 			</div>
 		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
@@ -78,7 +79,12 @@
 					
 				},
 				methods:{
-					
+					opennew:function(target,id){
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
+					}
 				},
 				mounted:function(){
 					

@@ -19,84 +19,85 @@
 					</a>
 				</div>
 				<div class="nav-box" style="flex: 1;">
-						<a class="nav-item" href="my.html">
+						<div class="nav-item" @click="opennew('my')">
 							<img src="img/C279703D-2D4F-4E35-813A-6F75E4EF2FF1@2x.png"/>
 							<div>我的豆豆洗</div>
-						</a>
-						<a class="nav-item" href="model.html">
+						</div>
+						<div class="nav-item" @click="opennew('model')">
 							<img src="img/C8A7FA66-AE54-4A5D-AF5B-C99FF0E9B72C@2x.png"/>
 							<div>查看收入</div>
-						</a>
-						<a class="nav-item" @click="tost" href="examine.html">
+						</div>
+						<div class="nav-item" @click="opennew('examine')"> 
 							<img src="img/D6BC1C4D-6324-4D49-A066-1EF734CADAFC@2x.png"/>
 							<div>设置价格</div>
-						</a>
-						<a class="nav-item" href="activity.html">
+						</div>
+						<div class="nav-item" @click="opennew('activity')">
 							<img src="img/C08CD27A-7E44-4CB7-BBF7-C73BB40671B6@2x.png"/>
 							<div>活动管理</div>
-						</a>
-						<a class="nav-item" href="orderxidi.html">
+						</div>
+						<div class="nav-item" @click="opennew('orderxidi')">
 							<img src="img/2ABF332D-D2DD-47C3-B2BF-9D771AC33445@2x.png"/>
 							<div>洗涤订单</div>
-						</a>
-						<a class="nav-item" href="orderzhi.html">
+						</div>
+						<div class="nav-item" @click="opennew('orderzhi')">
 							<img src="img/09DB222B-103D-4126-B223-67B290E1BA10@2x.png"/>
 							<div>滞留件管理</div>
-						</a>
-						<a class="nav-item" href="alert.html">
+						</div>
+						<div class="nav-item" @click="opennew('alert')">
 							<img src="img/6BB5A998-B636-4BBC-962B-807A90B79DB9@2x.png"/>
 							<div>警报系统</div>
-						</a>
-						<a class="nav-item" href="complaint.html">
+						</div>
+						<div class="nav-item" @click="opennew('complaint')">
 							<img src="img/92B68C93-091C-485C-9777-7AEBD5E65E4B@2x.png"/>
 							<div>投诉管理</div>
-						</a>
+						</div>
 						
 					</div>
 					<div class="nav-box">
-						<a class="nav-item" href="orderqu.html">
+						<div class="nav-item" @click="opennew('orderqu')">
 							<img src="img/61572438-52B2-4008-824E-9152FCE6FBA5@2x.png"/>
 							<div>取</div>
-						</a>
-						<a class="nav-item" href="ordersong.html">
+						</div>
+						<div class="nav-item" @click="opennew('ordersong')">
 							<img src="img/23877E44-8E63-49FF-B835-F0E0E0E0E2DB@2x.png"/>
 							<div>送</div>
-						</a>
+						</div>
 					</div>
 					<div class="nav-box">
-						<a class="nav-item" href="ordedianpu.html">
+						<div class="nav-item" @click="opennew('ordedianpu')">
 							<img src="img/2323C410-0CF8-4900-9429-31C085319B66@2x.png"/>
 							<div>干洗店订单</div>
-						</a>
-						<a class="nav-item" href="share.html">
+						</div>
+						<div class="nav-item" @click="opennew('share')">
 							<img src="img/2A9AE22E-FE14-4E8F-9070-86D6688A6064@2x.png"/>
 							<div>邀请好友</div>
-						</a>
+						</div>
 					</div>
 			</div>
 			<!--底部-->
 			<div class="bottom">
-				<a class="bottom-tab">
+				<div class="bottom-tab">
 					<img src="img/bottom01-active.png"/>
 					<div class="bottom-text active">
 						首页
 					</div>
-				</a>
-				<a class="bottom-tab" href="newcenter.html">
+				</div>
+				<div class="bottom-tab" @click="opennew('newcenter')">
 					<img src="img/bottom02.png"/>
 					<div class="bottom-text">
 						消息
 					</div>
-				</a>
-				<a class="bottom-tab" href="usercenter.html">
+				</div>
+				<div class="bottom-tab" @click="opennew('usercenter')"> 
 					<img src="img/bottom03.png"/>
 					<div class="bottom-text">
 						我的
 					</div>
-				</a>
+				</div>
 			</div>
 		</div>
 	</body>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		var myvue=new Vue({
 			el:'.wrapper',
@@ -104,8 +105,11 @@
 				
 			},
 			methods:{
-				tost:function(){
-					plus.nativeUI.toast('功能正在开发中~')
+				opennew:function(target,id){
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
 				}
 			}
 		})

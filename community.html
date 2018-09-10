@@ -12,96 +12,85 @@
 		<div class="wrapper community">
 			<!--头部-->
 			<div class="header">
-				<a class="head-tab" href="javascript:history.back()">
+				<div class="head-tab mui-action-back">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
-				</a>
+				</div>
 				<div class="head-main">
 					取送员管理
 				</div>
-				<a class="head-tab" href="communitydetail.html">
+				<div class="head-tab" @click="opennew('communitydetail')">
 					<img src="img/add.png"/>
-				</a>
+				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main">
-				<a class="community-box" href='peopledetail.html'>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
+				</div>
+				
+				<div class="community-box" @click="opennew('peopledetail')">
 					<img src="img/avatar.jpg"/>
 					<div class="community-main">
 						<h2>郑春平</h2>
 						<p>联系方式：17864958756</p>
 					</div>
-				</a>
-				<a class="community-box" href='peopledetail.html'>
-					<img src="img/avatar.jpg"/>
-					<div class="community-main">
-						<h2>郑春平</h2>
-						<p>联系方式：17864958756</p>
-					</div>
-				</a><a class="community-box" href='peopledetail.html'>
-					<img src="img/avatar.jpg"/>
-					<div class="community-main">
-						<h2>郑春平</h2>
-						<p>联系方式：17864958756</p>
-					</div>
-				</a>
+				</div>
 			</div>
 		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
@@ -109,7 +98,12 @@
 
 				},
 				methods:{
-					
+					opennew:function(target,id){
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
+					}
 				},
 				mounted:function(){
 					

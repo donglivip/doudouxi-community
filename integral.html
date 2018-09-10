@@ -12,15 +12,15 @@
 		<div class="wrapper profit integral">
 			<!--头部-->
 			<div class="header">
-				<a class="head-tab" href="javascript:history.back()">
+				<div class="head-tab mui-action-back">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
-				</a>
+				</div>
 				<div class="head-main">
 					我的钱包
 				</div>
-				<a class="head-tab" href="./profitdetail.html">
+				<div class="head-tab" @click="opennew('profitdetail')">
 					明细
-				</a>
+				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main">
@@ -28,20 +28,21 @@
 					<div class="subtitile">账户余额</div>
 					<div class="price">355.5 <span style="font-size: .2rem;">(元)</span> </div>
 				</div>
-				<a class="integral-tab" href="rname.html">
+				<div class="integral-tab" @click="opennew('rname')">
 					<div>
 						绑定支付宝
 					</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png"/>
-				</a>
-				<a class="integral-tab" href="profitgo.html">
+				</div>
+				<div class="integral-tab"  @click="opennew('profitgo')">
 					<div>
 						提现
 					</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png"/>
-				</a>
+				</div>
 			</div>
 		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
@@ -49,7 +50,12 @@
 
 				},
 				methods:{
-					
+					opennew:function(target,id){
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
+					}
 				},
 				mounted:function(){
 					
