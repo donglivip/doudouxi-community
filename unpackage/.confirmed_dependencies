@@ -18,7 +18,8 @@
 			"orderqu.html",
 			"ordersong.html",
 			"ordedianpu.html",
-			"newcenter.html"
+			"newcenter.html",
+			"share.html"
 		]
 	},
 	"my.html": {
@@ -55,7 +56,8 @@
 		"refer": [
 			"haveactivity.html",
 			"index.html",
-			"prize.html"
+			"prize.html",
+			"complaintdetail.html"
 		]
 	},
 	"haveactivity02.html": {
@@ -105,7 +107,8 @@
 	},
 	"prize.html": {
 		"refer": [
-			"activity.html"
+			"activity.html",
+			"ordedianpu.html"
 		]
 	},
 	"orderxidi.html": {
@@ -141,7 +144,8 @@
 	"complaintdetail.html": {
 		"refer": [
 			"complaint.html",
-			"orderqu.html"
+			"orderqu.html",
+			"activity.html"
 		]
 	},
 	"alert.html": {
@@ -168,7 +172,71 @@
 	},
 	"ordedianpu.html": {
 		"refer": [
+			"index.html",
+			"nav.html",
+			"prize.html"
+		]
+	},
+	"newcenter.html": {
+		"refer": [
+			"usercenter.html"
+		]
+	},
+	"usercenter.html": {
+		"refer": [
+			"aboutus.html",
+			"help.html",
+			"setting.html",
 			"index.html"
+		]
+	},
+	"aboutus.html": {
+		"refer": [
+			"usercenter.html"
+		]
+	},
+	"help.html": {
+		"refer": [
+			"usercenter.html",
+			"question.html"
+		]
+	},
+	"setting.html": {
+		"refer": [
+			"wlogin.html",
+			"usercenter.html"
+		]
+	},
+	"question.html": {
+		"refer": [
+			"help.html"
+		]
+	},
+	"wlogin.html": {
+		"refer": [
+			"setting.html"
+		]
+	},
+	"share.html": {
+		"refer": [
+			"sharedetail.html",
+			"index.html"
+		]
+	},
+	"sharedetail.html": {
+		"refer": [
+			"share.html"
+		]
+	},
+	"pay02.html": {
+		"refer": [
+			"nav.html"
+		]
+	},
+	"nav.html": {
+		"refer": [
+			"ordedianpu.html",
+			"pay02.html"
 		]
 	}
 }

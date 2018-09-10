@@ -141,7 +141,8 @@
 			"newcenter.html": {
 				"resources": [],
 				"refer": [
-					"index.html"
+					"index.html",
+					"usercenter.html"
 				],
 				"priority": 0
 			},
@@ -164,14 +165,18 @@
 					"complaint.html",
 					"orderqu.html",
 					"ordersong.html",
-					"ordedianpu.html"
+					"ordedianpu.html",
+					"share.html"
 				],
 				"priority": 0
 			},
 			"usercenter.html": {
 				"resources": [],
 				"refer": [
-					"index.html"
+					"index.html",
+					"aboutus.html",
+					"help.html",
+					"setting.html"
 				],
 				"priority": 0
 			},
@@ -260,7 +265,8 @@
 				"refer": [
 					"haveactivity.html",
 					"index.html",
-					"prize.html"
+					"prize.html",
+					"complaintdetail.html"
 				],
 				"priority": 0
 			},
@@ -314,7 +320,8 @@
 			"prize.html": {
 				"resources": [],
 				"refer": [
-					"activity.html"
+					"activity.html",
+					"ordedianpu.html"
 				],
 				"priority": 0
 			},
@@ -355,7 +362,8 @@
 				"resources": [],
 				"refer": [
 					"complaint.html",
-					"orderqu.html"
+					"orderqu.html",
+					"activity.html"
 				],
 				"priority": 0
 			},
@@ -392,7 +400,76 @@
 			"ordedianpu.html": {
 				"resources": [],
 				"refer": [
+					"index.html",
+					"nav.html",
+					"prize.html"
+				],
+				"priority": 0
+			},
+			"aboutus.html": {
+				"resources": [],
+				"refer": [
+					"usercenter.html"
+				],
+				"priority": 0
+			},
+			"help.html": {
+				"resources": [],
+				"refer": [
+					"usercenter.html",
+					"question.html"
+				],
+				"priority": 0
+			},
+			"setting.html": {
+				"resources": [],
+				"refer": [
+					"wlogin.html",
+					"usercenter.html"
+				],
+				"priority": 0
+			},
+			"question.html": {
+				"resources": [],
+				"refer": [
+					"help.html"
+				],
+				"priority": 0
+			},
+			"wlogin.html": {
+				"resources": [],
+				"refer": [
+					"setting.html"
+				],
+				"priority": 0
+			},
+			"share.html": {
+				"resources": [],
+				"refer": [
+					"sharedetail.html",
 					"index.html"
+				],
+				"priority": 0
+			},
+			"sharedetail.html": {
+				"resources": [],
+				"refer": [
+					"share.html"
+				],
+				"priority": 0
+			},
+			"pay02.html": {
+				"resources": [],
+				"refer": [
+					"nav.html"
+				],
+				"priority": 0
+			},
+			"nav.html": {
+				"resources": [],
+				"refer": [
+					"ordedianpu.html",
+					"pay02.html"
 				],
 				"priority": 0
 			}
@@ -400,7 +477,6 @@
 		"idle": {
 			"resources": [
 				"img/Arrow_simple_rightt Copy 3@2x.png",
-				"wlogin.html",
 				"img/bottom03.png",
 				"img/number (2).png",
 				"img/nav3.png",
@@ -420,7 +496,6 @@
 				"img/index.jpg",
 				"img/Group 10@2x.png",
 				"new-order.html",
-				"sharedetail.html",
 				"img/index.png",
 				"img/QQ@2x.png",
 				"css/main.css",
@@ -428,7 +503,6 @@
 				"profitgo.html",
 				"img/Close-2 Copy 6@2x.png",
 				"img/bottom02.png",
-				"setting.html",
 				"img/bottom03-active.png",
 				"mlogin.html",
 				"img/shop.jpg",
@@ -444,7 +518,6 @@
 				"img/number (1).png",
 				"img/Check@2x.png",
 				"img/Settings-2 Copy@2x.png",
-				"share.html",
 				"img/nav4.png",
 				"img/Share@3x.png",
 				"img/Group 2@2x.png",
@@ -461,7 +534,6 @@
 				"img/nav5.png",
 				"img/Alert@2x.png",
 				"img/model3.png",
-				"help.html",
 				"img/hanger-1@3x.png",
 				"img/ios6.png",
 				"pchange.html",
@@ -469,13 +541,11 @@
 				"js/jquery.min.js",
 				"img/bottom01-active.png",
 				"img/Close-2 Copy 9@2x.png",
-				"question.html",
 				"shop.html",
 				"img/wquan.png",
 				"img/nav2.png",
 				"pay.html",
 				"img/erweima.png",
-				"aboutus.html",
 				"img/model0.png",
 				"img/640.png",
 				"img/nav9.png",
