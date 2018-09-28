@@ -18,8 +18,8 @@
 				<div class="head-main">
 					洗涤订单
 				</div>
-				<a class="head-tab" href="javascript:void(0)">
-					批量指派
+				<a class="head-tab" href="javascript:void(0)" @click="changestate">
+					{{state==false?'批量指派':'指派'}}
 				</a>
 			</div>
 			<!--中间主体-->
@@ -36,46 +36,50 @@
 						</div>
 					</div>
 					<div class="trade-main activity">
-						<div class="order-box" v-if="myindex==0">
+						<div class="order-box" v-if="myindex==0" v-for="(val,index) in shopdata02">
 							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">D51264621</div>
+									<div class="order-time">{{val.id}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">下单时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
+									<div class="order-time">{{val.time}}</div>
 								</div>
 								<div class="order-bottom" style="align-items: flex-start;">
 									<div class="order-price">订单内容</div>
-									<div class="order-time">西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 </div>
+									<div class="order-time">{{val.detail}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint')">订单指派</a>
+										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint')" v-if="!state">订单指派</a>
+										<img src="img/y.png" v-if="state&&val.state==true" class="logo" @click="changeindex(index,1)"/>
+										<img src="img/n.png" v-if="state&&val.state==false" class="logo" @click="changeindex(index,1)"/>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="order-box" v-if="myindex==1">
+						<div class="order-box" v-if="myindex==1" v-for='(val,index) in shopdata'>
 							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">D51264621</div>
+									<div class="order-time">{{val.id}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">店铺名称</div>
-									<div class="order-time">海洋干洗店</div>
+									<div class="order-time">{{val.name}}</div>
 								</div>
 								<div class="order-bottom" style="align-items: flex-start;">
 									<div class="order-price">店铺地址</div>
-									<div class="order-time">徐州市铜山区春旺小区西门 </div>
+									<div class="order-time">{{val.adress}} </div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint')">订单指派</a>
+										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint')" v-if="!state">订单指派</a>
+										<img src="img/y.png" v-if="state&&val.state==true" class="logo" @click="changeindex(index,2)"/>
+										<img src="img/n.png" v-if="state&&val.state==false" class="logo" @click="changeindex(index,2)"/>
 									</div>
 								</div>
 							</div>
@@ -89,7 +93,69 @@
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					myindex: 0
+					myindex: 0,
+					state:false,
+					shopdata:[
+						{
+							id:'D51264621',
+							name:'海洋干洗店',
+							adress:'徐州市铜山区春旺小区西门 ',
+							state:false
+						},{
+							id:'D51264621',
+							name:'海洋干洗店',
+							adress:'徐州市铜山区春旺小区西门 ',
+							state:false
+						},{
+							id:'D51264621',
+							name:'海洋干洗店',
+							adress:'徐州市铜山区春旺小区西门 ',
+							state:false
+						},{
+							id:'D51264621',
+							name:'海洋干洗店',
+							adress:'徐州市铜山区春旺小区西门 ',
+							state:false
+						},{
+							id:'D51264621',
+							name:'海洋干洗店',
+							adress:'徐州市铜山区春旺小区西门 ',
+							state:false
+						},{
+							id:'D51264621',
+							name:'海洋干洗店',
+							adress:'徐州市铜山区春旺小区西门 ',
+							state:false
+						}
+					],
+					shopdata02:[
+						{
+							id:'D51264621',
+							time:'2018年7月18日8：30',
+							detail:'西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 ',
+							state:false
+						},{
+							id:'D51264621',
+							time:'2018年7月18日8：30',
+							detail:'西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 ',
+							state:false
+						},{
+							id:'D51264621',
+							time:'2018年7月18日8：30',
+							detail:'西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 ',
+							state:false
+						},{
+							id:'D51264621',
+							time:'2018年7月18日8：30',
+							detail:'西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 ',
+							state:false
+						},{
+							id:'D51264621',
+							time:'2018年7月18日8：30',
+							detail:'西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 西服x1  衬衫x3  运动裤x2 ',
+							state:false
+						}
+					]
 				},
 				methods: {
 					indexchange: function(index) {
@@ -100,6 +166,19 @@
 							url:'./'+target+'.html',
 							id:target
 						})
+					},
+					changestate:function(){
+						this.state=!this.state
+						if(this.state==false){
+							this.opennew('appoint')
+						}
+					},
+					changeindex:function(index,type){
+						if(type==1){
+							this.shopdata02[index].state=!this.shopdata02[index].state
+						}else{
+							this.shopdata[index].state=!this.shopdata[index].state
+						}
 					}
 				},
 				mounted: function() {

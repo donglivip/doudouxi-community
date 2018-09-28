@@ -178,17 +178,27 @@
 					<img src="img/Basket@2x.png"/>
 					<div class="bprice">合计:￥60</div>
 				</div>
-				<div class="nav-right">
-					去结算
+				<div class="nav-right" @click="alertshow">
+					去调整
 				</div>
 			</div>
+			<div class="alert" v-show="alertboo" @click="alertshow">
+					<div class="alert-inner">
+						<img src="img/yes.png"/>
+						<div class="text">调整完成！</div>
+						<div class="button">
+							<div style="border: 0;">确定</div>
+						</div>
+					</div>
+				</div>
 		</div>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
 					more:false,
-					more1:false
+					more1:false,
+					alertboo:false
 				},
 				methods:{
 					moreboo:function(){
@@ -199,6 +209,9 @@
 					},
 					opennew:function(id,target){
 						window.location.href='./'+target+'.html'
+					},
+					alertshow:function(){
+						this.alertboo=!this.alertboo
 					}
 				},
 				mounted:function(){

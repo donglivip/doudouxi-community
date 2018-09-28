@@ -5,7 +5,7 @@ body,html,.wrapper{width: 100%;height: 100%;position: relative;overflow: hidden;
 .bottom-text {margin-bottom: .15rem;}
 .head-tab:first-of-type img{float: left;}
 .head-tab:last-of-type img{float: right;}
-.head-tab{width: 1.6rem;margin: 0 .2rem;font-size: .25rem;font-weight: 500;white-space: nowrap;text-align: right;}
+.head-tab{width: 1.6rem;margin: 0 .2rem;font-size: .25rem;font-weight: 500;white-space: nowrap;text-align: right;height: 100%;display: flex;align-items: center;}
 .head-main{flex: 1;text-align: center;}
 .bottom{width:100%;height: 1rem;position: absolute;bottom: 0;left: 0;display: flex;align-items: center;border-top: 1px solid #f4f4f4;background: #FFFFFF;}
 .bottom-tab{flex: 1;display: flex;flex-direction: column;align-items: center;justify-content: center;}
@@ -15,11 +15,12 @@ body,html,.wrapper{width: 100%;height: 100%;position: relative;overflow: hidden;
 .big-main{height: calc(100% - .8rem);}
 .header .back{width: .16rem;float: left;}
 .alert{width: 100%;height: 100%;position: absolute;top: 0;left: 0;background: rgba(0,0,0,.5);display: flex;align-items: center;justify-content: center;}
-.alert .alert-inner{background: #FFFFFF;width: 5rem;height: 3.5rem;border-radius: .2rem;overflow: hidden;}
+.alert .alert-inner{background: #FFFFFF;width: 5rem;border-radius: .2rem;overflow: hidden;}
 .alert .button{background: #096148;color: #FFFFFF;height: 1rem;display: flex;align-items: center;justify-content: center;font-size: .3rem;}
 .alert img{width: 1rem;height: 1rem;margin: .6rem auto 0;display: block;}
 .alert .text{color: #096148;font-size: .3rem;margin: .2rem auto .4rem;text-align: center;}
 input{border: 0;}
+.head-tab:last-of-type{justify-content: flex-end;}
 /*验证码登录*/
 .plogin .main-inner{height: 100%;width: calc(100% - .6rem);margin: 0 auto;display: flex;flex-direction: column;}
 .plogin .titile{font-size: .35rem;margin-top: .5rem;}
@@ -34,6 +35,9 @@ input{border: 0;}
 .plogin .three-box{display: flex;justify-content: center;}
 .plogin .three-box img{height: .5rem;margin:.3rem .5rem;}
 .plogin .input-box img{width: .5rem;}
+.plogin .user-box{display: flex;align-items: center;margin: .3rem .2rem;}
+.plogin .box{width: 1.84rem;height: .64rem;display: flex;align-items: center;justify-content: center;margin-right: .4rem;border-radius: .16rem;font-size: .24rem;border: 1px solid #B8B8B8;color: #333333;box-sizing: border-box;}
+.plogin .active{background: #096148;color: #FFFFFF;border: 0;}
 /*消息*/
 .new{background: #F4F4F4;}
 .new .nav-tab{display: flex;background: #FFFFFF;border-bottom: 1px solid #F4F4F4;height: 1.2rem;align-items: center;}
@@ -85,7 +89,7 @@ input{border: 0;}
 .setting .submit{background: #096148;color: #FFFFFF;height: .9rem;position: absolute;bottom: 0;left: 0;width: 100%;display: flex;align-items: center;justify-content: center;}
 /*关于我们*/
 .aboutus h4{font-size: .3rem;margin: .2rem .2rem .1rem;}
-.aboutus p{margin: 0 .25rem;font-size: .25rem;}
+.aboutus p{margin-left: .25rem;font-size: .25rem;line-height: .5rem;}
 .aboutus .main img{width: calc(100% - .6rem);margin: .3rem;}
 /*问题详情*/
 .questiondetail h5{font-size: .28rem;margin: .3rem .2rem;}
@@ -170,6 +174,7 @@ input{border: 0;}
 .trade .active .radius{visibility: visible;}
 .trade p{line-height: .3rem;}
 .trade .trade-main{height: calc(100% - .8rem);overflow-y: scroll;}
+.trade .logo{width: .5rem!important;height: .5rem!important;}
 /*搜索*/
 .search{background: #F4F4F4;}
 .search .input-box{display: flex;align-items: center;background: #F4F4F4;color: #B8B8B8;border-radius: .4rem;width: 5.5rem;height: .6rem;}
@@ -344,3 +349,15 @@ input[type=radio] {
 	}
 	.mys{height: auto!important;align-items: center;justify-content: center;flex-direction: column;}
 	.mys img{width: 4rem;height: 3rem;margin: .3rem 0;}
+/*商品详情*/
+.shopdetail{background: #f4f4f4;} 
+.shopdetail .img-box{background: #FFFFFF;height: 6rem;display: flex;align-items: center;justify-content: center;}
+.shopdetail .img-box img{height: 4.5rem;}
+.shopdetail .detail-inner{background: #FFFFFF;margin: .2rem 0;display: flex;align-items: center;height: 1rem;}
+.shopdetail .name{margin: 0 .2rem;}
+.shopdetail .setting{display: flex;align-items: center;margin-right: .2rem;}
+.shopdetail .setting img{width: .3rem;height: .3rem;}
+.shopdetail .setting div{width: .5rem;text-align: center;}
+.shopdetail .price{flex: 1;}
+.shopdetail .process{background: #FFFFFF;}
+.shopdetail .process-title{padding: .2rem;}

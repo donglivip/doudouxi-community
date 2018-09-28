@@ -25,8 +25,13 @@
 			<!--中间主体-->
 			<div class="main big-main">
 				<div class="main-inner">
+					<div class="titile">请选择登陆身份 </div>
+					<div class="user-box">
+						<div class="box" :class="index==0?'active':''" @click="change(0)">社区合伙人</div>
+						<div class="box" :class="index==1?'active':''" @click="change(1)">取送员</div>
+						<div class="box" :class="index==2?'active':''" @click="change(2)">干洗店</div>
+					</div>
 					<div class="titile">手机快捷登录 </div>
-					<div class="subtitle">未注册的手机号将自动创建豆豆洗账号 </div>
 					<div class="input-box">
 						<input type="number" placeholder="请输入手机号"/>
 						<div class="addcode" @click="addcode">{{num}}</div>
@@ -34,10 +39,14 @@
 					<div class="input-box">
 						<input type="number" placeholder="请输入短信验证码"/>
 					</div>
-					<div class="login">登录</div>
 					<div class="login-type">
 						<a href="mlogin.html">密码账户登录</a>
 					</div>
+					<div class="login" @click="login">登录</div>
+					<div class="login-type">
+						<div @click="opennew('Agreement','')">登陆即视为同意 	<strong>《豆豆洗注册协议》</strong></div>
+					</div>
+					
 					<div class="three">
 						<div class="thre-title">第三方登录 </div>
 						<div class="three-box">
@@ -48,13 +57,19 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-					num:'获取验证码'
+					num:'获取验证码',
+					index:0
 				},
 				methods:{
+					login:function(){
+						localStorage.setItem('usertype',this.index)
+						this.opennew('index')
+					},
 					addcode:function(){
 						var set
 							that=this;
@@ -69,6 +84,15 @@
 								}
 							},1000)
 						}
+					},
+					opennew:function(target,id){
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
+					},
+					change:function(index){
+						this.index=index
 					}
 				},
 				mounted:function(){

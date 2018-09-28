@@ -31,10 +31,10 @@
 					</div>
 				</div>
 				<div class="subnav">
-					<div class="subnav-item"  :class="subindex==0?'active':''">大衣外套</div>
-					<div class="subnav-item">上衣</div>
-					<div class="subnav-item">童装</div>
-					<div class="subnav-item">配饰</div>
+					<div class="subnav-item"  :class="subindex==0?'active':''" @click="subindexchange(0)">大衣外套</div>
+					<div class="subnav-item"  :class="subindex==1?'active':''" @click="subindexchange(1)">上衣</div>
+					<div class="subnav-item"  :class="subindex==2?'active':''" @click="subindexchange(2)">童装</div>
+					<div class="subnav-item"  :class="subindex==3?'active':''" @click="subindexchange(3)">配饰</div>
 				</div>
 				<div class="shop-box">
 					<div class="shop" @click="opennew('shop-detail')">
@@ -267,6 +267,7 @@
 				</div>
 			</div>
 		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
@@ -290,10 +291,16 @@
 						this.alertboo=!this.alertboo
 					},
 					opennew:function(target){
-						window.location.href='./shop-detail.html'
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
 					},
 					pay:function(){
 						window.location.href='./pay02.html'
+					},
+					subindexchange:function(index){
+						this.subindex=index
 					}
 				},
 				mounted:function(){

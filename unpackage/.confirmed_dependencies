@@ -1,242 +1,251 @@
 {
-	"shopadmin.html": {
-		"refer": [
-			"devicedetail.html",
-			"my.html"
-		]
-	},
-	"index.html": {
-		"refer": [
-			"my.html",
-			"activity.html",
-			"model.html",
-			"examine.html",
-			"orderxidi.html",
-			"orderzhi.html",
-			"alert.html",
-			"complaint.html",
-			"orderqu.html",
-			"ordersong.html",
-			"ordedianpu.html",
-			"newcenter.html",
-			"share.html"
-		]
-	},
-	"my.html": {
-		"refer": [
-			"shopadmin.html",
-			"community.html",
-			"index.html",
-			"saoyisao.html"
-		]
-	},
-	"community.html": {
-		"refer": [
-			"my.html",
-			"communitydetail.html"
-		]
-	},
-	"devicedetail.html": {
-		"refer": [
-			"shopadmin.html"
-		]
-	},
-	"communitydetail.html": {
-		"refer": [
-			"community.html"
-		]
-	},
-	"haveactivity.html": {
-		"refer": [
-			"haveactivity02.html",
-			"activity.html"
-		]
-	},
-	"activity.html": {
-		"refer": [
-			"haveactivity.html",
-			"index.html",
-			"prize.html",
-			"complaintdetail.html"
-		]
-	},
-	"haveactivity02.html": {
-		"refer": [
-			"haveactivity.html"
-		]
-	},
-	"model.html": {
-		"refer": [
-			"trade.html",
-			"trade02.html",
-			"recommend.html",
-			"index.html"
-		]
-	},
-	"trade02.html": {
-		"refer": [
-			"model.html"
-		]
-	},
-	"recommend.html": {
-		"refer": [
-			"model.html"
-		]
-	},
-	"trade.html": {
-		"refer": [
-			"model.html"
-		]
-	},
-	"price03.html": {
-		"refer": [
-			"examinedetail.html"
-		]
-	},
-	"examine.html": {
-		"refer": [
-			"index.html",
-			"examinedetail.html"
-		]
-	},
-	"examinedetail.html": {
-		"refer": [
-			"price03.html",
-			"examine.html"
-		]
-	},
-	"prize.html": {
-		"refer": [
-			"activity.html",
-			"ordedianpu.html"
-		]
-	},
-	"orderxidi.html": {
-		"refer": [
-			"appoint.html",
-			"index.html",
-			"appoint02.html"
-		]
-	},
-	"appoint.html": {
-		"refer": [
-			"orderxidi.html"
-		]
-	},
-	"appoint02.html": {
-		"refer": [
-			"orderxidi.html",
-			"orderzhi.html"
-		]
-	},
-	"orderzhi.html": {
-		"refer": [
-			"index.html",
-			"search.html",
-			"appoint02.html"
-		]
-	},
-	"search.html": {
-		"refer": [
-			"orderzhi.html"
-		]
-	},
-	"complaintdetail.html": {
-		"refer": [
-			"complaint.html",
-			"orderqu.html",
-			"activity.html"
-		]
-	},
-	"alert.html": {
-		"refer": [
-			"index.html"
-		]
-	},
-	"complaint.html": {
-		"refer": [
-			"index.html",
-			"complaintdetail.html"
-		]
-	},
-	"orderqu.html": {
-		"refer": [
-			"complaintdetail.html",
-			"index.html"
-		]
-	},
-	"ordersong.html": {
-		"refer": [
-			"index.html"
-		]
-	},
-	"ordedianpu.html": {
-		"refer": [
-			"index.html",
-			"nav.html",
-			"prize.html"
-		]
-	},
-	"newcenter.html": {
-		"refer": [
-			"usercenter.html"
-		]
-	},
-	"usercenter.html": {
-		"refer": [
-			"aboutus.html",
-			"help.html",
-			"setting.html",
-			"index.html"
-		]
-	},
-	"aboutus.html": {
-		"refer": [
-			"usercenter.html"
-		]
-	},
-	"help.html": {
-		"refer": [
-			"usercenter.html",
-			"question.html"
-		]
-	},
-	"setting.html": {
-		"refer": [
-			"wlogin.html",
-			"usercenter.html"
-		]
-	},
-	"question.html": {
-		"refer": [
-			"help.html"
-		]
-	},
-	"wlogin.html": {
-		"refer": [
-			"setting.html"
-		]
-	},
-	"share.html": {
-		"refer": [
-			"sharedetail.html",
-			"index.html"
-		]
-	},
-	"sharedetail.html": {
-		"refer": [
-			"share.html"
-		]
-	},
-	"pay02.html": {
-		"refer": [
-			"nav.html"
-		]
-	},
-	"nav.html": {
-		"refer": [
-			"ordedianpu.html",
-			"pay02.html"
-		]
-	}
+  "shopadmin.html": {
+    "refer": [
+      "devicedetail.html",
+      "my.html"
+    ]
+  },
+  "index.html": {
+    "refer": [
+      "my.html",
+      "activity.html",
+      "model.html",
+      "examine.html",
+      "orderxidi.html",
+      "orderzhi.html",
+      "alert.html",
+      "complaint.html",
+      "orderqu.html",
+      "ordersong.html",
+      "ordedianpu.html",
+      "newcenter.html",
+      "share.html",
+      "usercenter.html"
+    ]
+  },
+  "my.html": {
+    "refer": [
+      "shopadmin.html",
+      "community.html",
+      "index.html",
+      "saoyisao.html"
+    ]
+  },
+  "community.html": {
+    "refer": [
+      "my.html",
+      "communitydetail.html"
+    ]
+  },
+  "devicedetail.html": {
+    "refer": [
+      "shopadmin.html"
+    ]
+  },
+  "communitydetail.html": {
+    "refer": [
+      "community.html"
+    ]
+  },
+  "haveactivity.html": {
+    "refer": [
+      "haveactivity02.html",
+      "activity.html"
+    ]
+  },
+  "activity.html": {
+    "refer": [
+      "haveactivity.html",
+      "index.html",
+      "prize.html",
+      "complaintdetail.html"
+    ]
+  },
+  "haveactivity02.html": {
+    "refer": [
+      "haveactivity.html"
+    ]
+  },
+  "model.html": {
+    "refer": [
+      "trade.html",
+      "trade02.html",
+      "recommend.html",
+      "index.html"
+    ]
+  },
+  "trade02.html": {
+    "refer": [
+      "model.html"
+    ]
+  },
+  "recommend.html": {
+    "refer": [
+      "model.html"
+    ]
+  },
+  "trade.html": {
+    "refer": [
+      "model.html"
+    ]
+  },
+  "price03.html": {
+    "refer": [
+      "examinedetail.html"
+    ]
+  },
+  "examine.html": {
+    "refer": [
+      "index.html",
+      "examinedetail.html"
+    ]
+  },
+  "examinedetail.html": {
+    "refer": [
+      "price03.html",
+      "examine.html"
+    ]
+  },
+  "prize.html": {
+    "refer": [
+      "activity.html",
+      "ordedianpu.html"
+    ]
+  },
+  "orderxidi.html": {
+    "refer": [
+      "appoint.html",
+      "index.html",
+      "appoint02.html"
+    ]
+  },
+  "appoint.html": {
+    "refer": [
+      "orderxidi.html"
+    ]
+  },
+  "appoint02.html": {
+    "refer": [
+      "orderxidi.html",
+      "orderzhi.html"
+    ]
+  },
+  "orderzhi.html": {
+    "refer": [
+      "index.html",
+      "search.html",
+      "appoint02.html"
+    ]
+  },
+  "search.html": {
+    "refer": [
+      "orderzhi.html"
+    ]
+  },
+  "complaintdetail.html": {
+    "refer": [
+      "complaint.html",
+      "orderqu.html",
+      "activity.html"
+    ]
+  },
+  "alert.html": {
+    "refer": [
+      "index.html"
+    ]
+  },
+  "complaint.html": {
+    "refer": [
+      "index.html",
+      "complaintdetail.html"
+    ]
+  },
+  "orderqu.html": {
+    "refer": [
+      "complaintdetail.html",
+      "index.html",
+      "saoyisao.html"
+    ]
+  },
+  "ordersong.html": {
+    "refer": [
+      "index.html",
+      "saoyisao.html"
+    ]
+  },
+  "ordedianpu.html": {
+    "refer": [
+      "index.html",
+      "nav.html",
+      "prize.html"
+    ]
+  },
+  "newcenter.html": {
+    "refer": [
+      "usercenter.html"
+    ]
+  },
+  "usercenter.html": {
+    "refer": [
+      "aboutus.html",
+      "help.html",
+      "setting.html",
+      "index.html",
+      "integral.html"
+    ]
+  },
+  "aboutus.html": {
+    "refer": [
+      "usercenter.html"
+    ]
+  },
+  "help.html": {
+    "refer": [
+      "usercenter.html",
+      "question.html"
+    ]
+  },
+  "setting.html": {
+    "refer": [
+      "wlogin.html",
+      "usercenter.html"
+    ]
+  },
+  "question.html": {
+    "refer": [
+      "help.html"
+    ]
+  },
+  "wlogin.html": {
+    "refer": [
+      "setting.html"
+    ]
+  },
+  "share.html": {
+    "refer": [
+      "sharedetail.html",
+      "index.html"
+    ]
+  },
+  "sharedetail.html": {
+    "refer": [
+      "share.html"
+    ]
+  },
+  "pay02.html": {
+    "refer": [
+      "nav.html"
+    ]
+  },
+  "nav.html": {
+    "refer": [
+      "ordedianpu.html",
+      "pay02.html"
+    ]
+  },
+  "integral.html": {
+    "refer": [
+      "profitgo.html"
+    ]
+  }
 }

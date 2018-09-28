@@ -10,7 +10,7 @@
     "icons": {
         "72": "icon.png"
     },
-    "launch_path": "index.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
+    "launch_path": "mlogin.html",/*应用的入口页面，默认为根目录下的index.html；支持网络地址，必须以http://或https://开头*/
     "developer": {
         "name": "",/*开发者名称*/
         "email": "",/*开发者邮箱地址*/
@@ -176,7 +176,8 @@
 					"index.html",
 					"aboutus.html",
 					"help.html",
-					"setting.html"
+					"setting.html",
+					"integral.html"
 				],
 				"priority": 0
 			},
@@ -386,14 +387,16 @@
 				"resources": [],
 				"refer": [
 					"complaintdetail.html",
-					"index.html"
+					"index.html",
+					"saoyisao.html"
 				],
 				"priority": 0
 			},
 			"ordersong.html": {
 				"resources": [],
 				"refer": [
-					"index.html"
+					"index.html",
+					"saoyisao.html"
 				],
 				"priority": 0
 			},
@@ -472,6 +475,13 @@
 					"pay02.html"
 				],
 				"priority": 0
+			},
+			"integral.html": {
+				"resources": [],
+				"refer": [
+					"profitgo.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -500,7 +510,6 @@
 				"img/QQ@2x.png",
 				"css/main.css",
 				"img/Arrow_Simple_left Copy@2x.png",
-				"profitgo.html",
 				"img/Close-2 Copy 6@2x.png",
 				"img/bottom02.png",
 				"img/bottom03-active.png",
@@ -522,7 +531,6 @@
 				"img/Share@3x.png",
 				"img/Group 2@2x.png",
 				"img/wallet@2x.png",
-				"integral.html",
 				"img/nav6.png",
 				"img/nav0.png",
 				"img/bottom02-active.png",
