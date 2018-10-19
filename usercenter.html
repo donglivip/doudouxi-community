@@ -26,18 +26,24 @@
 			<div class="main">
 				<div class="center-top">
 					<img :src="avatar" class="backimg"/>
-					<img :src="avatar" class="avatar" @click="imgclick"/>
+					<img :src="avatar" class="avatar"/>
+					 <!--@click="imgclick"-->
 					<div class="name-box">
-						<div class="name">雨雪霏霏</div>
+						<div class="name">{{uname}}</div>
 						<div class="state-box">
-							<div class="phone">手机号：135465255566</div>
-							<div class="state">南京</div>
+							<div class="phone">手机号：{{uphone}}</div>
+							<!--<div class="state">南京</div>-->
 						</div>
 					</div>
 				</div>
-				<div class="user-tab" @click="opennew('integral')">
+				<div class="user-tab" @click="opennew('integral')" v-if="utype!=1">
 					<img src="img/wallet@2x.png" class="logo"/>
 					<div class="tab-text">我的钱包</div>
+					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
+				</div>
+				<div class="user-tab" @click="opennew('orderhistory')" v-if="utype!=1">
+					<img src="img/orderim.png" class="logo"/>
+					<div class="tab-text">历史订单</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
 				</div>
 				<div class="user-tab" @click="opennew('setting')">
@@ -83,8 +89,12 @@
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-					avatar:'img/avatar.jpg',
-					files:[]
+					avatar:'img/Group 10@2x.png',
+					files:[],
+					uname:localStorage.getItem('uname'),
+					uphone:localStorage.getItem('uphone'),
+//					avatar:localStorage.getItem('uavatar'),
+					utype:localStorage.getItem('utype')
 				},
 				methods:{
 					opennew:function(target,id){

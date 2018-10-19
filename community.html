@@ -95,7 +95,7 @@
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-
+					mydata：[]
 				},
 				methods:{
 					opennew:function(target,id){
@@ -106,7 +106,7 @@
 					}
 				},
 				mounted:function(){
-					
+					this.myajax()
 				}
 			})
 		</script>

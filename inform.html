@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper plogin wlogin">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					信息修改
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main">
+				<div class="main-inner">
+					<div class="input-box">
+						<input type="text" placeholder="登陆密码" v-model="usStPassword" />
+					</div>
+					<!--<div class="input-box">
+						<input type="text" placeholder="支付密码" v-model="usStPayPassword" />
+					</div>-->
+					<div class="input-box">
+						<input type="text" placeholder="支付宝账号" v-model="usStAliPayCode" />
+					</div>
+					<div class="input-box">
+						<input type="text" placeholder="微信账号" v-model="usStWeChatCode" />
+					</div>
+					<div class="login" @click="login">确认更改</div>
+				</div>
+			</div>
+			<div class="alert" v-if="alertboo" @click="alertshow('')">
+				<div class="alert-inner">
+					<div class="alert-top">豆豆洗</div>
+					<div class="text alert-text">{{alerttext}}</div>
+					<div class="button">确定</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					usStPassword: '',
+					usStPayPassword: '',
+					alerttext: '两次密码不一致',
+					alertboo: false,
+					usStAliPayCode:'',
+					usStWeChatCode:''
+				},
+				methods: {
+					alertshow: function(text) {
+						this.alerttext = text
+						this.alertboo = !this.alertboo
+					},
+					login: function() {
+						var that = this
+						if(that.usStPassword == ''||that.usStWeChatCode==''||that.usStAliPayCode=='') {
+							that.alertshow('资料填写不完整')
+						} else {
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/laundry/updateUsStoreInfo",
+								dataType: 'json',
+								data: {
+									usStoreId: localStorage.getItem('uid'),
+									usStPassword: that.usStPassword,
+									usStPayPassword:that.usStPayPassword,
+									usStAliPayCode:that.usStAliPayCode,
+									usStWeChatCode:that.usStWeChatCode
+								},
+								success: function(res) {
+									console.log(res)
+									if(res.data == 1) {
+										plus.nativeUI.toast('修改完成')
+									}
+								}
+							});
+						}
+
+					}
+				},
+				mounted: function() {
+
+				}
+			})
+		</script>
+	</body>
+
+</html>

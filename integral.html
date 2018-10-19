@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,12 +9,13 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+
 	<body>
 		<div class="wrapper profit integral">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab mui-action-back">
-					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					我的钱包
@@ -26,41 +28,62 @@
 			<div class="main big-main">
 				<div class="profit-top">
 					<div class="subtitile">账户余额</div>
-					<div class="price">355.5 <span style="font-size: .2rem;">(元)</span> </div>
+					<div class="price">{{mydata.usSwBalance}}<span style="font-size: .2rem;">(元)</span> </div>
 				</div>
-				<div class="integral-tab" @click="opennew('rname')">
+				<div class="integral-tab" @click="opennew('rname')" v-if="utype!=2">
 					<div>
 						绑定支付宝
 					</div>
-					<img src="img/Arrow_simple_rightt Copy 3@2x.png"/>
+					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
 				</div>
-				<div class="integral-tab"  @click="opennew('profitgo')">
+				<div class="integral-tab" @click="opennew('profitgo')">
 					<div>
 						提现
 					</div>
-					<img src="img/Arrow_simple_rightt Copy 3@2x.png"/>
+					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
 				</div>
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var myvue=new Vue({
-				el:'.wrapper',
-				data:{
-
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					utype: localStorage.getItem('utype'),
+					mydata:''
 				},
-				methods:{
-					opennew:function(target,id){
+				methods: {
+					opennew: function(target, id) {
 						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
+							url: './' + target + '.html',
+							id: target
 						})
+					},
+					myajax: function() {
+						//						干洗店
+						if(localStorage.getItem('utype') == 2) {
+							var that = this
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/laundry/queryUsStoreWalletMoney",
+								dataType: 'json',
+								data: {
+									usStoreId: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									console.log(res)
+									that.mydata = res.data
+								}
+							});
+						}
 					}
 				},
-				mounted:function(){
-					
+				mounted: function() {
+					this.myajax()
 				}
 			})
 		</script>
 	</body>
+
 </html>

@@ -16,7 +16,7 @@
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
 				</div>
 				<div class="head-main">
-					明细
+					历史订单
 				</div>
 				<div class="head-tab">
 					
@@ -29,13 +29,12 @@
 						<div class="order-right">
 							<div class="order-title">
 								<div class="order-h1">
-									{{val.usSfdStyle | state}}
+									订单编号
 								</div>
-								<div class="order-state">{{val.usSfdPrice}}</div>
+								<div class="order-state">{{val.pbOrDressCode}}</div>
 							</div>
 							<div class="order-bottom">
-								<div class="order-price">余额:￥{{val.usSfdBalance}}</div>
-								<div class="order-time">{{val.usSfdCreateTime}}</div>
+								<div class="order-price">{{val.pbOrUpdateTime}}</div>
 							</div>
 						</div>
 					</div>
@@ -62,13 +61,12 @@
 						}
 					},
 					myajax:function(){
-//						干洗店
+//						历史订单
 						if(localStorage.getItem('utype')==2){
 							var that=this
-							that.pageNum++
 							$.ajax({
 								type:"post",
-								url:localStorage.getItem('myurl')+"/laundry/queryUsStoreWalletDetail",
+								url:localStorage.getItem('myurl')+"/laundry/queryUsStoreOrder",
 								dataType:'json',
 								data:{
 									usStoreId:localStorage.getItem('uid'),

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,42 +9,49 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+
 	<body>
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab mui-action-back">
-					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					干洗店收入
 				</div>
 				<div class="head-tab">
-					
+
 				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main sharedetail">
 				<div class="sharedetail-top">
 					<div class="sharedetail-item">
-						<p></p>
+						<p style="visibility: hidden;">123</p>
 						<p>流水</p>
 						<p class="yellow">收益</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>今日</p>
-						<p>￥300</p>
-						<p>￥300</p>
+						<p v-if="mydata.mapDay!=null">￥{{mydata.mapDay.pbOrCountPrice}}</p>
+						<p v-if="mydata.mapDay!=null">￥{{mydata.mapDay.usCpfdPrice}}</p>
+						<p v-if="mydata.mapDay==null">￥0</p>
+						<p v-if="mydata.mapDay==null">￥0</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>当月</p>
-						<p>￥300</p>
-						<p>￥300</p>
+						<p v-if="mydata.mapMonth!=null">￥{{mydata.mapMonth.pbOrCountPrice}}</p>
+						<p v-if="mydata.mapMonth!=null">￥{{mydata.mapMonth.usCpfdPrice}}</p>
+						<p v-if="mydata.mapMonth==null">￥0</p>
+						<p v-if="mydata.mapMonth==null">￥0</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>当季</p>
-						<p>￥200</p>
-						<p>￥300</p>
+						<p v-if="mydata.mapQuarter!=null">￥{{mydata.mapQuarter.pbOrCountPrice}}</p>
+						<p v-if="mydata.mapQuarter!=null">￥{{mydata.mapQuarter.usCpfdPrice}}</p>
+						<p v-if="mydata.mapQuarter==null">￥0</p>
+						<p v-if="mydata.mapQuarter==null">￥0</p>
 					</div>
 				</div>
 				<div class="order-main">
@@ -61,51 +69,21 @@
 							<div class="radius"></div>
 						</div>
 					</div>
-					<div class="order-box">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">郑淳嫔</div>
-								<div class="order-time">2018-05-25</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">流水</div>
-								<div class="order-time">￥1200</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">收益</div>
-								<div class="order-time yellow">￥30</div>
-							</div>
-						</div>
-					</div>
-					<div class="order-box">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">郑淳嫔</div>
-								<div class="order-time">2018-05-25</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">流水</div>
-								<div class="order-time">￥1200</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">收益</div>
-								<div class="order-time yellow">￥30</div>
-							</div>
-						</div>
-					</div>
-					<div class="order-box">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">郑淳嫔</div>
-								<div class="order-time">2018-05-25</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">流水</div>
-								<div class="order-time">￥1200</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">收益</div>
-								<div class="order-time yellow">￥30</div>
+					<div class="order-box" @scroll="myscroll">
+						<div class="main-inner">
+							<div class="order-right" v-for="val in mydata01">
+								<div class="order-bottom">
+									<div class="order-price">订单号:{{val.pbOrderId}}</div>
+									<div class="order-time">{{val.pbOrUpdateTimeDay}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">流水</div>
+									<div class="order-time">￥{{val.pbOrCountPrice}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">收益</div>
+									<div class="order-time yellow">￥{{val.usCpfdPrice}}</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -113,28 +91,124 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var myvue=new Vue({
-				el:'.wrapper',
-				data:{
-					myindex:0
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					myindex: 0,
+					mydata: '',
+					mydata01: [],
+					pages: 0,
+					pageNum: 0
 				},
-				methods:{
-					indexchange:function(index){
-						this.myindex=index
-					},
-					opennew:function(type){
-						if(type=='q'){
-							window.location.href='./havetype.html'
-						}else{
-							
+				methods: {
+					myscroll: function() {
+						var that = this
+						if(Math.abs($('.main-inner').offset().top) + $('.order-box').height() + 200 >= $('.main-inner').height()) {
+							if(that.pages > that.pageNum) {
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.showWaiting("等待中...");
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								that.myajax()
+							}
+
 						}
+					},
+					indexchange: function(index) {
+						this.myindex = index
+						this.mydata01=[]
+						this.pageNum=0
+						this.myajax()
+					},
+					opennew: function(type) {
+						if(type == 'q') {
+							window.location.href = './havetype.html'
+						} else {
+
+						}
+					},
+					myajax: function() {
+						var that = this
+						that.pageNum++
+							if(localStorage.getItem('utype') == 2) {
+								if(that.mydata==''){
+									//							顶部总和
+									$.ajax({
+										type: "post",
+										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeAll",
+										dataType: 'json',
+										data: {
+											usStoreId: localStorage.getItem('uid')
+										},
+										success: function(res) {
+											console.log(res)
+											that.mydata = res.data
+										}
+									});
+								}
+								var ajaxjson = {
+									usStoreId: localStorage.getItem('uid'),
+									pageNum: that.pageNum
+								}
+								if(that.myindex==0){
+									$.ajax({
+										type: "post",
+										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeDay",
+										dataType: 'json',
+										data: ajaxjson,
+										success: function(res) {
+											console.log(res)
+											that.pages=res.data.pages
+											for(var i = 0; i < res.data.list.length; i++) {
+												that.mydata01.push(res.data.list[i])
+											}
+										}
+									});
+								}else if(that.myindex==1){
+									$.ajax({
+										type: "post",
+										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeMonth",
+										dataType: 'json',
+										data: ajaxjson,
+										success: function(res) {
+											console.log(res)
+											that.pages=res.data.pages
+											for(var i = 0; i < res.data.list.length; i++) {
+												that.mydata01.push(res.data.list[i])
+											}
+										}
+									});
+								}else{
+									$.ajax({
+										type: "post",
+										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeQuarter",
+										dataType: 'json',
+										data: ajaxjson,
+										success: function(res) {
+											console.log(res)
+											that.pages=res.data.pages
+											for(var i = 0; i < res.data.list.length; i++) {
+												that.mydata01.push(res.data.list[i])
+											}
+										}
+									});
+								}
+								
+							}
 					}
 				},
-				mounted:function(){
-					
+				mounted: function() {
+					this.myajax()
 				}
 			})
 		</script>
 	</body>
+
 </html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper order trade">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					我的订单
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main complaint">
+				<div class="order-main" @scroll="myscroll">
+						<div class="main-inner">
+							<div class="order-box" v-for="val in mydata">
+								<div class="order-right">
+									<div class="order-bottom">
+										<div class="order-price">订单号</div>
+										<div class="order-time">{{val.pbOrCode}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">订单时间</div>
+										<div class="order-time">{{val.pbOrUpdateTime}}</div>
+									</div>
+								</div>
+							</div>
+						</div>
+				</div>
+			</div>
+			<div class="alert" v-show="alertboo" @click="alertshow">
+				<div class="alert-inner">
+					<img src="img/yes.png" />
+					<div class="text">操作已完成, {{time}}后返回</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					myindex: 0,
+					alertboo: false,
+					time: 3,
+					usStaffId: localStorage.getItem('uid'),
+					pageNum: 0,
+					mydata: [],
+					pages:0
+				},
+				methods: {
+					myajax: function() {
+						var that = this
+						that.pageNum++
+							var ajaxjson = {
+								usStaffId: that.usStaffId,
+								pageNum: that.pageNum
+							}
+						console.log(ajaxjson)
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/fetch/queryUsStaffHistory",
+							dataType: 'json',
+							data: ajaxjson,
+							success: function(res) {
+								console.log(res)
+								that.pages=res.data.pages
+								for(var i = 0; i < res.data.list.length; i++) {
+									that.mydata.push(res.data.list[i])
+								}
+
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.closeWaiting()
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+							}
+						});
+					},
+					myscroll: function() {
+						var that = this
+						if(Math.abs($('.main-inner').offset().top) + $('.main').height() + 200 >= $('.main-inner').height()) {
+							if(that.pages>that.pageNum){
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.showWaiting("等待中...");
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								that.myajax()
+							}
+							
+						}
+					},
+					indexchange: function(index) {
+						this.myindex = index
+					},
+					opennew: function(type) {
+						if(type == 'q') {
+							window.location.href = './havetype.html'
+						} else {
+
+						}
+					},
+					alertshow: function() {
+						this.alertboo = !this.alertboo
+					},
+					pay: function() {
+						var that = this
+						that.alertshow()
+						var set = setInterval(function() {
+							if(that.time == 1) {
+								clearInterval(set)
+								that.time = 3
+								that.alertshow()
+							} else {
+								that.time--
+							}
+						}, 1000)
+					}
+				},
+				mounted: function() {
+					this.myajax()
+				}
+			})
+		</script>
+	</body>
+
+</html>

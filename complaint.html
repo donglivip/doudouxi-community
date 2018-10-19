@@ -290,10 +290,22 @@
 							url:'./'+target+'.html',
 							id:target
 						})
+					},
+					myajax:function(){
+						var that=this
+						$.ajax({
+						type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/queryBannerNews",
+							dataType:'json',
+							success:function(res){
+								console.log(res)
+								that.navdata=res.data
+							}
+						})
 					}
 				},
 				mounted:function(){
-					
+					this.myajax()
 				}
 			})
 		</script>

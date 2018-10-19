@@ -42,118 +42,122 @@
 						</div>
 					</div>
 					<div class="trade-main activity">
-						<div class="order-box" v-if="myindex==0">
+						<div class="order-box" v-if="myindex==0" v-for="val in mydata">
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<a class="order-time" href="tel:12345685" style="font-size: .2rem;color: #096148;">
+									<div class="order-price">{{val.deviceName}}</div>
+									<a class="order-time" href="['tel:'+12345685+'']" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">D215454</div>
+									<div class="order-time">{{val.userPhone}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">取件地址</div>
-									<div class="order-time">徐州市铜山区春旺小区西门</div>
+									<div class="order-time">{{val.takeAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">送达地址</div>
-									<div class="order-time">徐州市铜山区春旺路136号</div>
+									<div class="order-time">{{val.sendAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">最迟收取时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
+									<div class="order-time">{{val.sendTime}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">干洗店电话</div>
-									<div class="order-time">17864598745</div>
+									<div class="order-time">{{val.storePhone}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">订单状态</div>
-									<div class="order-time">待收取</div>
+									<div class="order-time">待配送</div>
 								</div>
-								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;"> 
+								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if="val.orderStauts!=5"> 
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="pay">发送取件码</a>
+										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId)">发送取件码</a>
 										<a class="btn02" href="javascript:void(0)" @click="opensao">扫码开箱</a>
+									</div>
+								</div>
+								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if="val.orderStauts==5"> 
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn02" href="javascript:void(0)" @click="orderqu(val.pbOrderId)">确认取衣</a>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="order-box" v-if="myindex==1">
+						<div class="order-box" v-if="myindex==1" v-for='val in mydata01'>
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<a class="order-time" href="tel:12345685" style="font-size: .2rem;color: #096148;">
+									<div class="order-price">{{val.deviceName}}</div>
+									<a class="order-time" href="['tel:'+12345685+'']" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">D215454</div>
+									<div class="order-time">{{val.orderCode}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">取件地址</div>
-									<div class="order-time">徐州市铜山区春旺小区西门</div>
+									<div class="order-time">{{val.takeAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">送达地址</div>
-									<div class="order-time">徐州市铜山区春旺路136号</div>
+									<div class="order-time">{{val.sendAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">最迟收取时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
+									<div class="order-time">{{val.sendTime}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">干洗店电话</div>
-									<div class="order-time">17864598745</div>
+									<div class="order-time">{{val.storePhone}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">订单状态</div>
-									<div class="order-time">待收取</div>
+									<div class="order-time">已派送</div>
 								</div>
 							</div>
 						</div>
-						<div class="order-box" v-if="myindex==2">
+						<div class="order-box" v-if="myindex==2" v-for='val in mydata02'>
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<a class="order-time" href="tel:12345685" style="font-size: .2rem;color: #096148;">
+									<div class="order-price">{{val.deviceName}}</div>
+									<a class="order-time" href="['tel:'+val.userPhone+'']" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">D215454</div>
+									<div class="order-time">{{val.orderCode}}</div>
 								</div>
 								<div class="order-bottom">
-									<div class="order-price">取件地址</div>
-									<div class="order-time">徐州市铜山区春旺小区西门</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">送达地址</div>
-									<div class="order-time">徐州市铜山区春旺路136号</div>
+									<div class="order-price">滞留地址</div>
+									<div class="order-time">{{val.caseAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">最迟收取时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">干洗店电话</div>
-									<div class="order-time">17864598745</div>
+									<div class="order-time">{{val.ruleTime}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">订单状态</div>
-									<div class="order-time">待收取</div>
+									<div class="order-time">滞留中</div>
 								</div>
-								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;"> 
+								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if='val.orderStauts==14'> 
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="pay">发送取件码</a>
-										<a class="btn02" href="javascript:void(0)"  @click="opensao">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId)">发送取件码</a>
+										<a class="btn02" href="javascript:void(0)"  @click="orderzopen(val.pbOrderId)">扫码开箱</a>
+									</div>
+								</div>
+								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if='val.orderStauts==15'> 
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn02" href="javascript:void(0)"  @click="orderzok(val.pbOrderId)">确认送达</a>
 									</div>
 								</div>
 							</div>
@@ -163,21 +167,142 @@
 				<div class="alert" v-show="alertboo" @click="alertshow">
 					<div class="alert-inner">
 						<img src="img/yes.png"/>
-						<div class="text">取件码已发送,  {{time}}后返回</div>
+						<div class="text">操作成功,  {{time}}后返回</div>
 					</div>
 				</div>
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
 					myindex: 0,
 					alertboo:false,
-					time:3
+					time:3,
+					mydata:[],
+					mydata01:[],
+					mydata02:[]
 				},
 				methods: {
+					orderzok:function(id){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/updateOrderStausss",
+							dataType:'json',
+							data:{
+								pbOrderId:id
+							},
+							success:function(res){
+								console.log(res)
+								if(res.data==1){
+									that.pay()
+									that.myajax()
+								}else{
+									alert('操作失败')
+								}
+							}
+						});
+					},
+					orderzopen:function(id){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/updateOrderStau",
+							dataType:'json',
+							data:{
+								pbOrderId:id
+							},
+							success:function(res){
+								console.log(res)
+								if(res.data==1){
+									that.pay()
+									that.myajax()
+								}else{
+									alert('操作失败')
+								}
+							}
+						});
+					},
+					orderfa:function(id){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/updateOrderStautsBycodes",
+							dataType:'json',
+							data:{
+								pbOrderId:id
+							},
+							success:function(res){
+								console.log(res)
+								if(res.data==1){
+									that.pay()
+									that.myajax()
+								}else{
+									alert('操作失败')
+								}
+							}
+						});
+					},
+					orderqu:function(id){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/updateOrderStautsB",
+							dataType:'json',
+							data:{
+								pbOrderId:id
+							},
+							success:function(res){
+								console.log(res)
+								if(res.data==1){
+									that.pay()
+									that.myajax()
+								}else{
+									alert('操作失败')
+								}
+							}
+						});
+					},
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/queryComUsStaffOrderListBeSendOut",
+							dataType:'json',
+							data:{
+								usStaffId:localStorage.getItem('uid')
+							},
+							success:function(res){
+								that.mydata=res.data
+							}
+						});
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/queryComUsStaffOrderListBeSendOutFinlly",
+							dataType:'json',
+							data:{
+								usStaffId:localStorage.getItem('uid')
+							},
+							success:function(res){
+								that.mydata01=res.data
+							}
+						});
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/fetch/queryComUsStaffOrderListBeSendOutRetention",
+							dataType:'json',
+							data:{
+								usStaffId:localStorage.getItem('uid')
+							},
+							success:function(res){
+								console.log(res)
+								that.mydata02=res.data
+							}
+						});
+					},
 					indexchange: function(index) {
 						this.myindex = index
 					},
@@ -212,7 +337,7 @@
 					}
 				},
 				mounted: function() {
-
+					this.myajax()
 				}
 			})
 		</script>

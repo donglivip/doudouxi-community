@@ -26,7 +26,11 @@
 			</div>
 			<!--中间主体-->
 			<div class="main big-main complaint">
-				<div class="order-main">
+				<div class="order-top">
+						<span :class="myindex==0?'active':''" @click="indexchange(0)">洗涤价格</span>
+						<span :class="myindex==1?'active':''" @click="indexchange(1)">成本价格</span>
+					</div>
+				<div class="order-main" style="height: calc(100% - .7rem);">
 					<div class="order-box" v-if="myindex==0">
 						<div class="order-right">
 							<div class="order-bottom">
@@ -45,33 +49,15 @@
 							</div>
 						</div>
 					</div>
-					<div class="order-box" v-if="myindex==0">
+					<div class="order-box" v-if="myindex==1">
 						<div class="order-right">
 							<div class="order-bottom">
-								<div class="order-price">设备名称</div>
+								<div class="order-price">店铺名称</div>
 								<div class="order-time">郑春平的一号柜</div>
 							</div>
 							<div class="order-bottom">
-								<div class="order-price">所在位置</div>
-								<div class="order-time">徐州市铜山区春旺小区西门</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price"></div>
-								<div class="order-time setting">
-									<a class="btn02" href="examinedetail.html">设置价格</a>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="order-box" v-if="myindex==0">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">设备名称</div>
-								<div class="order-time">郑春平的一号柜</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">所在位置</div>
-								<div class="order-time">徐州市铜山区春旺小区西门</div>
+								<div class="order-price">店主姓名</div>
+								<div class="order-time">董小礼</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price"></div>
