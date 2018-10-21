@@ -24,45 +24,62 @@
 			</div>
 			<!--中间主体-->
 			<div class="main big-main sharedetail">
-					<a class="order-box alert01" href="device.html">
+					<div class="order-box alert01" v-for="val in navdata" @click="opennew('device',val.usStoreId)">
 						<div class="order-right">
 							<div class="order-bottom">
 								<div class="order-price">店铺名称</div>
-								<div class="order-time">江海洗衣店</div>
+								<div class="order-time">{{val.usStShopName}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price">店主</div>
-								<div class="order-time">李江海</div>
+								<div class="order-time">{{val.usStCreateName}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price">手机号</div>
-								<div class="order-time">15487965489</div>
+								<div class="order-time">{{val.usStPhone}}</div>
 							</div>
 						</div>
-					</a>
+					</div>
 				</div>
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-					myindex:0
+					navdata:[]
 				},
 				methods:{
 					indexchange:function(index){
 						this.myindex=index
 					},
 					opennew:function(target,id){
+						localStorage.setItem('usStoreId',id)
 						mui.openWindow({
 							url:'./'+target+'.html',
 							id:target
 						})
+					},
+					myajax: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectUsStore",
+							dataType: 'json',
+							data:{
+								usCommunityPartnerId:localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.navdata = res.data
+							}
+						});
 					}
 				},
 				mounted:function(){
-					
+					this.myajax()
 				}
 			})
 		</script>

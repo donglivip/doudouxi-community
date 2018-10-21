@@ -189,10 +189,25 @@
 							url:'./'+target+'.html',
 							id:target
 						})
+					},
+					myajax: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectPbPartnerDevice",
+							dataType: 'json',
+							data:{
+								usCommunityPartnerId:localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.navdata = res.data
+							}
+						});
 					}
 				},
 				mounted: function() {
-
+					this.myajax()
 				}
 			})
 		</script>

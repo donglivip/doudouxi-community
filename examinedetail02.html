@@ -18,17 +18,17 @@
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
-					选择一级分类
+					选择二级分类
 				</div>
 				<div class="head-tab"></div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main complaint">
 				<div class="order-main">
-					<div class="order-box" v-for="val in navdata" @click="opennew('examinedetail02',val.pbClothesOneId)">
+					<div class="order-box" v-for="val in navdata" @click="opennew('price03',val.pbClothesTwoId)">
 						<div class="order-right">
 							<div class="order-bottom">
-								<div class="order-price">{{val.pbCoName}}</div>
+								<div class="order-price">{{val.pbCtName}}</div>
 								<div class="order-time setting">
 									<a class="btn02" href="javascript:void(0)">设置价格</a>
 								</div>
@@ -51,19 +51,30 @@
 						this.myindex = index
 					},
 					opennew: function(target,id) {
-						localStorage.setItem('pbClothesOneId',id)
-						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
-						})
+						localStorage.setItem('pbClothesTwoId',id)
+						if(localStorage.getItem('examinetype')==0){
+							mui.openWindow({
+								url:'./price02.html',
+								id:'price02'
+							})
+						}else{
+							mui.openWindow({
+								url:'./price03.html',
+								id:'price03'
+							})
+						}
+						
 					},
 					myajax:function(){
-//						获取一级分类
+//						获取二级分类
 						var that=this
 						$.ajax({
 						type:"post",
-							url:localStorage.getItem('myurl')+"/community/selectPbClothesOne",
+							url:localStorage.getItem('myurl')+"/community/selectPbClothesTwo",
 							dataType:'json',
+							data:{
+								pbClothesOneId:localStorage.getItem('pbClothesOneId')
+							},
 							success:function(res){
 								console.log(res)
 								that.navdata=res.data

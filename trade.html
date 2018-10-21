@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,42 +9,43 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+
 	<body>
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab mui-action-back">
-					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					交易收入
 				</div>
 				<div class="head-tab">
-					
+
 				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main sharedetail">
 				<div class="sharedetail-top">
 					<div class="sharedetail-item">
-						<p></p>
+						<p style="visibility: hidden;">asd</p>
 						<p>流水</p>
 						<p class="yellow">收益</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>今日</p>
-						<p>￥300</p>
-						<p>￥300</p>
+						<p>￥{{navdata.mapDay==null?'0':navdata.mapDay.pbOrCountPrice}}</p>
+						<p>￥{{navdata.mapDay==null?'0':navdata.mapDay.usCpfdPrice}}</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>当月</p>
-						<p>￥300</p>
-						<p>￥300</p>
+						<p>￥{{navdata.mapMonth==null?'0':navdata.mapMonth.pbOrCountPrice}}</p>
+						<p>￥{{navdata.mapMonth==null?'0':navdata.mapMonth.usCpfdPrice}}</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>当季</p>
-						<p>￥200</p>
-						<p>￥300</p>
+						<p>￥{{navdata.mapQuarter==null?'0':navdata.mapQuarter.pbOrCountPrice}}</p>
+						<p>￥{{navdata.mapQuarter==null?'0':navdata.mapQuarter.usCpfdPrice}}</p>
 					</div>
 				</div>
 				<div class="order-main">
@@ -61,51 +63,24 @@
 							<div class="radius"></div>
 						</div>
 					</div>
-					<div class="order-box">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">郑淳嫔</div>
-								<div class="order-time">2018-05-25</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">流水</div>
-								<div class="order-time">￥1200</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">收益</div>
-								<div class="order-time yellow">￥30</div>
-							</div>
-						</div>
-					</div>
-					<div class="order-box">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">郑淳嫔</div>
-								<div class="order-time">2018-05-25</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">流水</div>
-								<div class="order-time">￥1200</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">收益</div>
-								<div class="order-time yellow">￥30</div>
-							</div>
-						</div>
-					</div>
-					<div class="order-box">
-						<div class="order-right">
-							<div class="order-bottom">
-								<div class="order-price">郑淳嫔</div>
-								<div class="order-time">2018-05-25</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">流水</div>
-								<div class="order-time">￥1200</div>
-							</div>
-							<div class="order-bottom">
-								<div class="order-price">收益</div>
-								<div class="order-time yellow">￥30</div>
+					<div class="main-wrapper" @scroll="myscroll" style="height: calc(100% - .8rem);overflow-y: scroll;">
+						<div class="main-inner">
+							<div class="order-box" v-for="val in mydata">
+								<div class="order-right">
+									<div class="order-bottom">
+										<div class="order-price">{{val.usName}}</div>
+										<div class="order-time" v-if="myindex!=0">{{val.pbOrUpdateTimeMonth}}</div>
+										<div class="order-time" v-if="myindex==0">{{val.pbOrUpdateTimeDay}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">流水</div>
+										<div class="order-time">￥{{val.pbOrCountPrice}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">收益</div>
+										<div class="order-time yellow">￥{{val.usCpfdPrice}}</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -113,28 +88,137 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var myvue=new Vue({
-				el:'.wrapper',
-				data:{
-					myindex:0
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					myindex: 0,
+					navdata: [],
+					mydata: [],
+					pages: 0,
+					pageNum: 0
 				},
-				methods:{
-					indexchange:function(index){
-						this.myindex=index
+				methods: {
+					indexchange: function(index) {
+						this.myindex = index
+						this.pageNum = 0
+						this.mydata = []
+						this.myajax()
 					},
-					opennew:function(type){
-						if(type=='q'){
-							window.location.href='./havetype.html'
-						}else{
-							
+					opennew: function(type) {
+						if(type == 'q') {
+							window.location.href = './havetype.html'
+						} else {
+
+						}
+					},
+					myscroll: function() {
+						var that = this
+						if(Math.abs($('.main-inner').offset().top) + $('.main-wrapper').height() + 200 >= $('.main-inner').height()) {
+							if(that.pages > that.pageNum) {
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.showWaiting("等待中...");
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								that.myajax()
+							}
+
+						}
+					},
+					myajax: function() {
+						var that = this
+						that.pageNum++
+							if(that.myindex == 0) {
+								$.ajax({
+									type: "post",
+									url: localStorage.getItem('myurl') + "/community/selectPbOrderUsUserIncomePojoDay",
+									dataType: 'json',
+									data: {
+										usCommunityPartnerId: localStorage.getItem('uid'),
+										pageNum: that.pageNum
+									},
+									success: function(res) {
+										console.log(res)
+										that.pages = res.data.pages
+										for(var i = 0; i < res.data.list.length; i++) {
+											that.mydata.push(res.data.list[i])
+										}
+									},
+									error: function(err) {
+										console.log(err)
+									}
+								});
+							} else
+						if(that.myindex == 1) {
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/selectPbOrderUsUserIncomePojoMonth",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid'),
+									pageNum: that.pageNum
+								},
+								success: function(res) {
+									console.log(res)
+									that.pages = res.data.pages
+									for(var i = 0; i < res.data.list.length; i++) {
+										that.mydata.push(res.data.list[i])
+									}
+								},
+								error: function(err) {
+									console.log(err)
+								}
+							});
+						} else if(that.myindex == 2) {
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/selectPbOrderUsUserIncomePojoQuarter",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid'),
+									pageNum: that.pageNum
+								},
+								success: function(res) {
+									console.log(res)
+									that.pages = res.data.pages
+									for(var i = 0; i < res.data.list.length; i++) {
+										that.mydata.push(res.data.list[i])
+									}
+								},
+								error: function(err) {
+									console.log(err)
+								}
+							});
 						}
 					}
 				},
-				mounted:function(){
-					
+				mounted: function() {
+					this.myajax()
+					var that = this
+					$.ajax({
+						type: "post",
+						url: localStorage.getItem('myurl') + "/community/selectCommunityTransactionStatistics",
+						dataType: 'json',
+						data: {
+							usCommunityPartnerId: localStorage.getItem('uid')
+						},
+						success: function(res) {
+							console.log(res)
+							that.navdata = res.data
+						},
+						error: function(err) {
+							console.log(err)
+						}
+					});
 				}
 			})
 		</script>
 	</body>
+
 </html>

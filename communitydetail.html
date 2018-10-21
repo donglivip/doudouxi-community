@@ -24,38 +24,54 @@
 			</div>
 			<!--中间主体-->
 			<div class="main" style="margin-top: .8rem;padding-bottom: .5rem;">
+				<div class="user-tab">
+					<div class="tab-text">头像</div>
+					<img src="img/Group 10@2x.png" @click="imgclick('usStHeadImg')" id="usStHeadImg" style="height: 80%;border: 1px solid #F4F4F4;border-radius: 50%;"/>
+				</div>
+				<div class="user-tab top">
+					<div class="tab-text">姓名</div>
+					<input type="text" placeholder="请输入取送员手机号" v-model="usStName"/>
+				</div>
 				<div class="user-tab top">
 					<div class="tab-text">手机号</div>
-					<input type="text" placeholder="请输入取送员手机号"/>
+					<input type="text" placeholder="请输入取送员手机号" v-model="usStPhone"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">密码 </div>
-					<input type="text" placeholder="请设置密码"/>
+					<input type="text" placeholder="请设置密码" v-model="usStPassword"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">确认密码</div>
-					<input type="text" placeholder="请再次设置密码"/>
+					<input type="text" placeholder="请再次设置密码" v-model="usStPassword02"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">性别 </div>
 					<label for="man">男</label>
-					<input type="radio" placeholder="请设置密码" name="sex" id="man" checked="checked"/>
+					<input type="radio"  name="sex" id="man" checked="checked" v-model="usStSex" value="1"/>
 					<label for="man">女</label>
-					<input type="radio" placeholder="请设置密码" name="sex" id="wman"/>
+					<input type="radio"  name="sex" id="wman" v-model="usStSex" value="2"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">支付宝账号</div>
+					<input type="text" placeholder="支付宝账号" v-model="usStAliPayCode"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">微信账号</div>
+					<input type="text" placeholder="微信账号" v-model="usStWeChatPayCode"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">身份证号码</div>
-					<input type="text" placeholder="请输入取送员身份证号"/>
+					<input type="text" placeholder="请输入取送员身份证号" v-model="usStIdCard"/>
 				</div>
 				<div class="user-tab top">
 					<div class="tab-text">上传身份证照</div>
 				</div>
 				<div class="user-tab mys">
-					<img src="img/sz.png"/>
-					<img src="img/sf.png"/>
+					<img src="img/sz.png" @click="imgclick('usStFrontCardImg')" id="usStFrontCardImg"/>
+					<img src="img/sf.png" @click="imgclick('usStBackCardImg')" id="usStBackCardImg"/>
 				</div>
 			</div>
-			<div class="bottom" style="background: #096148;color: #FFFFFF;justify-content: center;" @click="pay">
+			<div class="bottom" style="background: #096148;color: #FFFFFF;justify-content: center;" @click="submit">
 				提交
 			</div>
 			<div class="alert" v-show="alertboo" @click="alertshow">
@@ -66,14 +82,64 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
 					alertboo:false,
-					time:3
+					time:3,
+					files: [],
+					server: localStorage.getItem('myurl') + '/fetch/imageFetchImage',
+					myid:'',
+					usStName:'',
+					usStPhone:'',
+					usStPassword:'',
+					usStPassword02:'',
+					usStSex:1,
+					usStIdCard:'',
+					usStFrontCardImg:'',
+					usStBackCardImg:'',
+					usStAliPayCode:'',
+					usStWeChatPayCode:'',
+					usStHeadImg:''
 				},
 				methods:{
+					submit:function(){
+						if(this.usStPassword!=this.usStPassword02){
+							plus.nativeUI.toast('两次密码不一致！')
+							return false;
+						}
+//						if(this.usStName==''||this.usStPhone==''||this.usStPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStAliPayCode==''||this.usStWeChatPayCode==''||this.usStHeadImg==''){
+//							plus.nativeUI.toast('信息填写不完整！')
+//							return false;
+//						}
+						var that = this
+						var ajaxjson={
+							usCommunityPartnerId:localStorage.getItem('uid'),
+							usStName:that.usStName,
+							usStPhone:that.usStPhone,
+							usStPassword:that.usStPassword,
+							usStSex:that.usStSex,
+							usStIdCard:that.usStIdCard,
+							usStFrontCardImg:that.usStFrontCardImg,
+							usStBackCardImg:that.usStBackCardImg,
+							usStAliPayCode:that.usStAliPayCode,
+							usStWeChatPayCode:that.usStWeChatPayCode,
+							usStHeadImg:that.usStHeadImg
+						}
+						console.log(JSON.stringify(ajaxjson))
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/insertUsStaff",
+							dataType: 'json',
+							data: ajaxjson,
+							success: function(res) {
+								console.log(JSON.stringify(res))
+								that.pay()
+							}
+						});
+					},
 					alertshow:function(){
 						this.alertboo=!this.alertboo
 					},
@@ -82,11 +148,129 @@
 						that.alertshow()
 						setInterval(function(){
 							if(that.time==1){
+								plus.webview.getWebviewById('community').reload()
 								mui.back()
 							}else{
 								that.time--
 							}
 						},1000)
+					},
+					imgclick: function(id) {
+						this.id=id
+						var that = this
+						var btnArray = [{
+							title: "照相机"
+						}, {
+							title: "相册"
+						}]; //选择按钮  1 2 3
+						plus.nativeUI.actionSheet({
+								title: "请选择",
+								cancel: "取消", // 0
+								buttons: btnArray
+							},
+							function(e) {
+								var index = e.index; // 
+								switch(index) {
+									case 1:
+										//写自己的逻辑
+										that.camera();
+										break;
+									case 2:
+										that.album();
+										break;
+								}
+							});
+					},
+					camera: function() {
+						var that = this
+						var cmr = plus.camera.getCamera();
+						cmr.captureImage(function(p) {
+							//成功
+							plus.io.resolveLocalFileSystemURL(p, function(entry) {
+								var img_name = entry.name; //获得图片名称
+								var img_path = entry.toLocalURL(); //获得图片路径
+								that.avatar = img_path
+								that.upload_img(img_path);
+							}, function(e) {
+								alert("读取拍照文件错误：" + e.message);
+							});
+
+						}, function(e) {
+							alert("失败：" + e.message);
+						}, {
+							filename: '_doc/camera/',
+							index: 1
+						});
+					},
+					album: function() {
+						var that = this
+						plus.gallery.pick(function(path) {
+							that.upload_img(path);
+							that.avatar = path
+						}, function(e) {
+							alert("取消选择图片");
+						}, {
+							filter: "image"
+						});
+					},
+					upload_img: function(p) {
+						var that = this
+						var n = p.substr(p.lastIndexOf('/') + 1);
+						that.files.push({
+							name: "uploadkey",
+							path: p
+						});
+						//开始上传
+						that.start_upload();
+					},
+					start_upload: function() {
+						var that = this
+						if(that.files.length <= 0) {
+							plus.nativeUI.alert("没有添加上传文件！");
+							return;
+						}
+						//原生的转圈等待框
+						var wt = plus.nativeUI.showWaiting();
+						var task = plus.uploader.createUpload(that.server, {
+								method: "POST"
+							},
+							function(t, status) { //上传完成
+								if(status == 200) {
+									//资源
+									var responseText = t.responseText;
+									//转换成json
+									var json = eval('(' + responseText + ')');
+									//上传文件的信息
+									var files = json.data;
+									
+									if(that.id=='usStHeadImg'){
+										that.usStHeadImg=files
+										$('#usStHeadImg').attr('src',localStorage.getItem('myurl')+files)
+									}else if(that.id=='usStFrontCardImg'){
+										that.usStFrontCardImg=files
+										$('#usStFrontCardImg').attr('src',localStorage.getItem('myurl')+files)
+									}else{
+										that.usStBackCardImg=files
+										$('#usStBackCardImg').attr('src',localStorage.getItem('myurl')+files)
+									}
+									wt.close();
+								} else {
+									alert("上传失败：" + status);
+									//关闭原生的转圈等待框
+									wt.close();
+								}
+							});
+						task.addData("uid", that.getUid());
+						for(var i = 0; i < that.files.length; i++) {
+							var f = that.files[i];
+							task.addFile(f.path, {
+								key: f.name
+							});
+						}
+						task.start();
+					},
+					getUid: function() {
+						return Math.floor(Math.random() * 100000000 + 10000000).toString();
 					}
 				},
 				mounted:function(){

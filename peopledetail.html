@@ -25,52 +25,92 @@
 			<!--中间主体-->
 			<div class="main">
 				<div class="center-top">
-					<img src="img/avatar.jpg" class="avatar"/>
+					<img :src="mydata.usStHeadImg | myimg" class="avatar"/>
 					<div class="name-box">
 						<div class="name">
-							雨雪霏霏
-							<img src="img/woman.png"/>
+							{{mydata.usStName}}
+							<img src="img/woman.png" v-if="mydata.usStSex==1"/>
+							<img src="img/man.png" v-if="mydata.usStSex==2"/>
 						</div>
 						<div class="state-box">
-							<div class="phone">联系方式：135465255566</div>
+							<div class="phone">联系方式：{{mydata.usStPhone}}</div>
 						</div>
 					</div>
 				</div>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">ID</div>
 					<div class="tab-text">
-						Q25488423
+						{{mydata.usStaffId}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">身份证号</div>
 					<div class="tab-text">
-						**************9865
+						{{mydata.usStIdCard}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">入职时间</div>
 					<div class="tab-text">
-						2017年7月8日
+						{{mydata.usStCreateTime}}
 					</div>
 				</a>
 			</div>
-			<div class="bottom" style="background: red;color: #FFFFFF;justify-content: center;">
+			<div class="bottom" style="background: red;color: #FFFFFF;justify-content: center;" @click="godelete(mydata.usStaffId)">
 				删除取送员
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-
+					mydata:''
 				},
 				methods:{
-					
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/community/selectUsStaffId",
+							dataType:'json',
+							data:{
+								usStaffId:localStorage.getItem('usStaffId')
+							},
+							success:function(res){
+								console.log(res)
+								that.mydata=res.data
+							}
+						});
+					},
+					godelete:function(){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/community/deleteUsStaff",
+							dataType:'json',
+							data:{
+								usStaffId:localStorage.getItem('usStaffId'),
+								usStUpdateName:localStorage.getItem('uname')
+							},
+							success:function(res){
+								console.log(res)
+								if(res.data==1){
+									plus.webview.getWebviewById('community').reload()
+									mui.back()
+								}else{
+									plus.nativeUI.toast('删除失败')
+								}
+							},
+							error:function(error){
+								console.log(error)
+							}
+						});
+					}
 				},
 				mounted:function(){
-					
+					this.myajax()
 				}
 			})
 		</script>

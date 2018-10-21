@@ -236,7 +236,8 @@
 				"resources": [],
 				"refer": [
 					"my.html",
-					"communitydetail.html"
+					"communitydetail.html",
+					"peopledetail.html"
 				],
 				"priority": 0
 			},
@@ -481,6 +482,13 @@
 				"resources": [],
 				"refer": [
 					"profitgo.html"
+				],
+				"priority": 0
+			},
+			"mlogin.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
 				],
 				"priority": 0
 			}

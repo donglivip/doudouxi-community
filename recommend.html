@@ -57,7 +57,7 @@
 							<div class="radius"></div>
 						</div>
 					</div>
-					<div class="trade-main" @scroll="myscroll">
+					<div class="trade-main" @scroll="myscroll" v-if="utype==2">
 						<div class="main-inner">
 							<div class="order-box" v-for="val in mydata01">
 								<div class="order-right">
@@ -67,6 +67,24 @@
 									</div>
 									<div class="order-bottom">
 										<div class="order-price">{{val.usSpCreateTimeStringDay}}</div>
+										<div class="order-time"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="trade-main" @scroll="myscroll" v-if="utype==0">
+						<div class="main-inner">
+							<div class="order-box" v-for="val in mydata01">
+								<div class="order-right">
+									<div class="order-bottom">
+										<div class="order-price">{{val.usCppCreateName}}</div>
+										<div class="order-time">￥{{val.usCppPrice}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price" v-if="myindex==0">{{val.usCppCreateTimeStringDay}}</div>
+										<div class="order-price" v-if="myindex==1">{{val.usCppCreateTimeStringMonth}}</div>
+										<div class="order-price" v-if="myindex==2">{{val.usCppCreateTimeStringMonth}}</div>
 										<div class="order-time"></div>
 									</div>
 								</div>
@@ -86,7 +104,8 @@
 					mydata:'',
 					mydata01: [],
 					pages:0,
-					pageNum:0
+					pageNum:0,
+					utype:localStorage.getItem('utype')
 				},
 				methods:{
 					myscroll: function() {
@@ -180,6 +199,74 @@
 									dataType:'json',
 									data:{
 										usStoreId:localStorage.getItem('uid'),
+										pageNum:that.pageNum
+									},
+									success:function(res){
+										console.log(res)
+										that.pages=res.data.pages
+										for(var i = 0; i < res.data.list.length; i++) {
+											that.mydata01.push(res.data.list[i])
+										}
+									}
+								});
+							}
+						}else if(localStorage.getItem('utype')==0){
+//							是否已经初始化
+							if(that.mydata==''){
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/selectCommunityRecommendTransaction",
+									dataType:'json',
+									data:{
+										usCommunityPartnerId:localStorage.getItem('uid')
+									},
+									success:function(res){
+										console.log(res)
+										that.mydata=res.data
+									}
+								});
+							}
+							if(that.myindex==0){
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/selectUsCommunityPartnerProfitDay",
+									dataType:'json',
+									data:{
+										usCommunityPartnerId:localStorage.getItem('uid'),
+										pageNum:that.pageNum
+									},
+									success:function(res){
+										console.log(res)
+										that.pages=res.data.pages
+										for(var i = 0; i < res.data.list.length; i++) {
+											that.mydata01.push(res.data.list[i])
+										}
+									}
+								});
+							}else if(that.myindex==0){
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/selectUsCommunityPartnerProfitMonth",
+									dataType:'json',
+									data:{
+										usCommunityPartnerId:localStorage.getItem('uid'),
+										pageNum:that.pageNum
+									},
+									success:function(res){
+										console.log(res)
+										that.pages=res.data.pages
+										for(var i = 0; i < res.data.list.length; i++) {
+											that.mydata01.push(res.data.list[i])
+										}
+									}
+								});
+							}else{
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/selectUsCommunityPartnerProfitQuarter",
+									dataType:'json',
+									data:{
+										usCommunityPartnerId:localStorage.getItem('uid'),
 										pageNum:that.pageNum
 									},
 									success:function(res){

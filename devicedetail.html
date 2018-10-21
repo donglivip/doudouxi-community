@@ -26,61 +26,77 @@
 			<!--中间主体-->
 			<div class="main" style="margin-top: .8rem;padding-bottom: .5rem;height: calc(100% - 1.8rem);">
 				<div class="user-tab">
+					<div class="tab-text">店铺头像<span class="red"> *</span></div>
+					<img src="img/Group 10@2x.png" style="height: 80%;border-radius: 50%;"  @click="imgclick('usStHeadImg')" id="usStHeadImg"/>
+				</div>
+				<div class="user-tab">
 					<div class="tab-text">店铺名称<span class="red"> *</span></div>
-					<input type="text" placeholder="请输入干洗店名称"/>
+					<input type="text" placeholder="请输入干洗店名称" v-model="usStShopName"/>
 				</div>
 				<div class="user-tab">
-					<div class="tab-text">地址<span class="red"> *</span></div>
-					<input type="text" placeholder="请输入干洗店名称"id='city-picker' v-model="adress"/>
+					<div class="tab-text">店铺地址<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入店铺地址" id='city-picker' v-model="usStAddress" readonly="readonly"/>
 				</div>
 				<div class="user-tab">
-					<div class="tab-text">手机号<span class="red"> *</span></div>
-					<input type="text" placeholder="请输入取送员手机号"/>
+					<div class="tab-text">联系人姓名<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入联系人姓名" v-model="usStLegalPerson"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">联系人手机号<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入联系人手机号" v-model="usStPhone"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">支付宝账号<span class="red"> *</span></div>
+					<input type="number" placeholder="请输入支付宝账号" v-model="usStAliPayCode"/>
+				</div>
+				<div class="user-tab">
+					<div class="tab-text">微信账号<span class="red"> *</span></div>
+					<input type="number" placeholder="请输入微信账号" v-model="usStWeChatCode"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">密码 <span class="red"> *</span></div>
-					<input type="text" placeholder="请设置密码"/>
+					<input type="text" placeholder="请设置密码" v-model="usStPassword"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">确认密码<span class="red"> *</span></div>
-					<input type="text" placeholder="请再次设置密码"/>
+					<input type="text" placeholder="请再次设置密码" v-model="usStPassword02"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">支付密码<span class="red"> *</span></div>
-					<input type="text" placeholder="请再次设置密码"/>
+					<input type="text" placeholder="请再次支付密码" v-model="usStPayPassword"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">性别 </div>
 					<label for="man">男</label>
-					<input type="radio" placeholder="请设置密码" name="sex" id="man" checked="checked"/>
+					<input type="radio" name="sex" id="man" value="1" v-model="usStSex"/>
 					<label for="man">女</label>
-					<input type="radio" placeholder="请设置密码" name="sex" id="wman"/>
+					<input type="radio" name="sex" id="wman" value="2" v-model="usStSex"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">身份证号码<span class="red"> *</span></div>
-					<input type="text" placeholder="请输入身份证号"/>
+					<input type="text" placeholder="请输入身份证号" v-model="usStIdCard"/>
 				</div>
 				<div class="user-tab top">
 					<div class="tab-text">上传身份证照<span class="red"> *</span></div>
 				</div>
 				<div class="user-tab mys">
-					<img src="img/sz.png"/>
-					<img src="img/sf.png"/>
+					<img src="img/sz.png" @click="imgclick('usStFrontCardImg')" id="usStFrontCardImg"/>
+					<img src="img/sf.png" @click="imgclick('usStBackCardImg')" id="usStBackCardImg"/>
 				</div>
-				<div class="user-tab top">
-					<div class="tab-text">上传营业执照<span class="red"> *</span></div>
-				</div>
-				<div class="user-tab mys">
-					<img src="img/zhi.png"/>
-				</div>
-				<div class="user-tab top">
-					<div class="tab-text">上传特种行业许可证<span class="red"> *</span></div>
+				<div class="user-tab top" >
+					<div class="tab-text">上传营业执照<span class="red"> </span></div>
 				</div>
 				<div class="user-tab mys">
-					<img src="img/te.png"/>
+					<img src="img/zhi.png" @click="imgclick('usStBusinessLicenseImg')" id="usStBusinessLicenseImg"/>
+				</div>
+				<div class="user-tab top">
+					<div class="tab-text">上传特种行业许可证<span class="red"> </span></div>
+				</div>
+				<div class="user-tab mys">
+					<img src="img/te.png" @click="imgclick('usStSpencialIndustryImg')" id="usStSpencialIndustryImg"/>
 				</div>
 			</div>
-			<div class="bottom" style="background: #096148;color: #FFFFFF;justify-content: center;" @click="pay">
+			<div class="bottom" style="background: #096148;color: #FFFFFF;justify-content: center;" @click="submit">
 				提交
 			</div>
 			<div class="alert" v-show="alertboo" @click="alertshow">
@@ -98,11 +114,78 @@
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-					adress:'',
 					alertboo:false,
-					time:3
+					time:3,
+					id:'',
+					usStShopName:'',
+					usStAddress:'',
+					usStLegalPerson:'',
+					usStPhone:'',
+					usStPassword:'',
+					usStPayPassword:'',
+					usStPassword02:'',
+					usStSex:1,
+					usStIdCard:'',
+					usStFrontCardImg:'',
+					usStBackCardImg:'',
+					usStBusinessLicenseImg:'',
+					usStAliPayCode:'',
+					usStWeChatCode:'',
+					usStHeadImg:'',
+					usStSpencialIndustryImg:'',
+					files: [],
+					server: localStorage.getItem('myurl') + '/laundry/imageLaundryImage'
 				},
 				methods:{
+					submit:function(){
+						if(this.usStPassword!=this.usStPassword02){
+							plus.nativeUI.toast('两次密码不一致！')
+							return false;
+						}
+						if(this.usStShopName==''||this.usStAddress==''||this.usStLegalPerson==''||this.usStPhone==''||this.usStPassword==''||this.usStPayPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStAliPayCode==''||this.usStWeChatCode==''||this.usStHeadImg==''){
+							plus.nativeUI.toast('信息录入不完整！')
+							return false;
+						}
+						var that=this,
+							ajaxjson={
+								usCommunityPartnerId:localStorage.getItem('uid'),
+								usStShopName:that.usStShopName,
+								usStAddress:that.usStAddress[0]+that.usStAddress[1]+that.usStAddress[2],
+								usStLegalPerson:that.usStLegalPerson,
+								usStPhone:that.usStPhone,
+								usStPassword:that.usStPassword,
+								usStPayPassword:that.usStPayPassword,
+								usStSex:that.usStSex,
+								usStIdCard:that.usStIdCard,
+								usStFrontCardImg:that.usStFrontCardImg,
+								usStBackCardImg:that.usStBackCardImg,
+								usStBusinessLicenseImg:that.usStBusinessLicenseImg,
+								usStAliPayCode:that.usStAliPayCode,
+								usStWeChatCode:that.usStWeChatCode,
+								usStHeadImg:that.usStHeadImg,
+								usStSpencialIndustryImg:that.usStSpencialIndustryImg,
+								createName:localStorage.getItem('uname')
+							}
+							console.log(JSON.stringify(ajaxjson))
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/insertUsStore",
+								dataType: 'json',
+								data:ajaxjson,
+								success: function(res) {
+									console.log(JSON.stringify(res))
+									if(res.data==1){
+										plus.webview.getWebviewById('shopadmin').reload()
+										mui.back()
+									}else{
+										plus.nativeUI.toast('添加失败')
+									}
+								},
+								error:function(err){
+									console.log(JSON.stringify(err))
+								}
+							});
+					},
 					alertshow:function(){
 						this.alertboo=!this.alertboo
 					},
@@ -116,18 +199,138 @@
 								that.time--
 							}
 						},1000)
+					},
+					imgclick: function(id) {
+						this.id=id
+						var that = this
+						var btnArray = [{
+							title: "照相机"
+						}, {
+							title: "相册"
+						}]; //选择按钮  1 2 3
+						plus.nativeUI.actionSheet({
+								title: "请选择",
+								cancel: "取消", // 0
+								buttons: btnArray
+							},
+							function(e) {
+								var index = e.index; // 
+								switch(index) {
+									case 1:
+										//写自己的逻辑
+										that.camera();
+										break;
+									case 2:
+										that.album();
+										break;
+								}
+							});
+					},
+					camera: function() {
+						var that = this
+						var cmr = plus.camera.getCamera();
+						cmr.captureImage(function(p) {
+							//成功
+							plus.io.resolveLocalFileSystemURL(p, function(entry) {
+								var img_name = entry.name; //获得图片名称
+								var img_path = entry.toLocalURL(); //获得图片路径
+								that.avatar = img_path
+								that.upload_img(img_path);
+							}, function(e) {
+								alert("读取拍照文件错误：" + e.message);
+							});
+
+						}, function(e) {
+							alert("失败：" + e.message);
+						}, {
+							filename: '_doc/camera/',
+							index: 1
+						});
+					},
+					album: function() {
+						var that = this
+						plus.gallery.pick(function(path) {
+							that.upload_img(path);
+							that.avatar = path
+						}, function(e) {
+							alert("取消选择图片");
+						}, {
+							filter: "image"
+						});
+					},
+					upload_img: function(p) {
+						var that = this
+						var n = p.substr(p.lastIndexOf('/') + 1);
+						that.files.push({
+							name: "uploadkey",
+							path: p
+						});
+						//开始上传
+						that.start_upload();
+					},
+					start_upload: function() {
+						var that = this
+						if(that.files.length <= 0) {
+							plus.nativeUI.alert("没有添加上传文件！");
+							return;
+						}
+						//原生的转圈等待框
+						var wt = plus.nativeUI.showWaiting();
+						var task = plus.uploader.createUpload(that.server, {
+								method: "POST"
+							},
+							function(t, status) { //上传完成
+								if(status == 200) {
+									//资源
+									var responseText = t.responseText;
+									//转换成json
+									var json = eval('(' + responseText + ')');
+									//上传文件的信息
+									var files = json.data;
+									if(that.id=='usStFrontCardImg'){
+										that.usStFrontCardImg=files
+										$('#usStFrontCardImg').attr('src',localStorage.getItem('myurl')+files)
+									}else if(that.id=='usStBackCardImg'){
+										that.usStBackCardImg=files
+										$('#usStBackCardImg').attr('src',localStorage.getItem('myurl')+files)
+									}else if(that.id=='usStBusinessLicenseImg'){
+										that.usStBusinessLicenseImg=files
+										$('#usStBusinessLicenseImg').attr('src',localStorage.getItem('myurl')+files)
+									}else if(that.id=='usStHeadImg'){
+										that.usStHeadImg=files
+										$('#usStHeadImg').attr('src',localStorage.getItem('myurl')+files)
+									}else if(that.id=='usStSpencialIndustryImg'){
+										that.usStSpencialIndustryImg=files
+										$('#usStSpencialIndustryImg').attr('src',localStorage.getItem('myurl')+files)
+									}
+									wt.close();
+								} else {
+									alert("上传失败：" + status);
+									//关闭原生的转圈等待框
+									wt.close();
+								}
+							});
+						task.addData("uid", that.getUid());
+						for(var i = 0; i < that.files.length; i++) {
+							var f = that.files[i];
+							task.addFile(f.path, {
+								key: f.name
+							});
+						}
+						task.start();
+					},
+					getUid: function() {
+						return Math.floor(Math.random() * 100000000 + 10000000).toString();
 					}
 				},
 				mounted:function(){
 					var that=this
 					 $("#city-picker").cityPicker({
-				        title: "选择省市区/县",
+				        title: "请选择地址",
 				        onChange: function (picker, values, displayValues) {
-				            console.log(values, displayValues);
-				            that.adress=displayValues
+				            that.usStAddress=displayValues
 				        }
-				   });
-				   $('html').removeClass()
+				  });
 				}
 			})
 		</script>

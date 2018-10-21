@@ -60,12 +60,12 @@
 					if(this.navdata[index].pbCdCreateName == undefined || this.navdata[index].pbCdCreateName == null) {
 						$.ajax({
 							type: "post",
-							url: localStorage.getItem('myurl') + "/community/insertUsCommunityPartnerCost",
+							url: localStorage.getItem('myurl') + "/community/insertUsCommunityPartnerSale",
 							dataType: 'json',
 							data: {
 								usCommunityPartnerId: localStorage.getItem('uid'),
-								usStoreId: localStorage.getItem('pbPartnerDeviceReasonId'),
-								usCpcCostPrice: $('input').eq(index).val(),
+								pbPartnerDeviceId: localStorage.getItem('pbPartnerDeviceReasonId'),
+								usCpsSalePrice: $('input').eq(index).val(),
 								createName: localStorage.getItem('uname'),
 								pbClothesDetailsId: that.navdata[index].pbClothesDetailsId
 							},
@@ -80,18 +80,13 @@
 							}
 						})
 					} else {
-						console.log({
-								usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
-								usCpcCostPrice: $('input').eq(index).val(),
-								updateName: localStorage.getItem('uname')
-							})
 						$.ajax({
 							type: "post",
-							url: localStorage.getItem('myurl') + "/community/updateUsCommunityPartnerCost",
+							url: localStorage.getItem('myurl') + "/community/updateUsCommunityPartnerSale",
 							dataType: 'json',
 							data: {
-								usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
-								usCpcCostPrice: $('input').eq(index).val(),
+								usCommunityPartnerSaleId: that.navdata[index].pbCdCreateName,
+								usCpsSalePrice: $('input').eq(index).val(),
 								updateName: localStorage.getItem('uname')
 							},
 							success: function(res) {
@@ -125,11 +120,11 @@
 					var that = this
 					$.ajax({
 						type: "post",
-						url: localStorage.getItem('myurl') + "/community/selectStorePbClothesTwoUsCommunityPartner",
+						url: localStorage.getItem('myurl') + "/community/selectPbClothesTwoUsCommunityPartner",
 						dataType: 'json',
 						data: {
 							usCommunityPartnerId: localStorage.getItem('uid'),
-							usStoreId: localStorage.getItem('pbPartnerDeviceReasonId'),
+							pbPartnerDeviceId: localStorage.getItem('pbPartnerDeviceReasonId'),
 							pbClothesTwoId: localStorage.getItem('pbClothesTwoId')
 						},
 						success: function(res) {

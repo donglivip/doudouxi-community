@@ -31,38 +31,38 @@
 						<span :class="myindex==1?'active':''" @click="indexchange(1)">成本价格</span>
 					</div>
 				<div class="order-main" style="height: calc(100% - .7rem);">
-					<div class="order-box" v-if="myindex==0">
+					<div class="order-box" v-if="myindex==0" v-for="val in mydata">
 						<div class="order-right">
 							<div class="order-bottom">
 								<div class="order-price">设备名称</div>
-								<div class="order-time">郑春平的一号柜</div>
+								<div class="order-time">{{val.pbPdName}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price">所在位置</div>
-								<div class="order-time">徐州市铜山区春旺小区西门</div>
+								<div class="order-time">{{val.pbPdAddress}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price"></div>
 								<div class="order-time setting">
-									<a class="btn02" href="examinedetail.html">设置价格</a>
+									<a class="btn02" href="javascript:void(0)" @click="opennew('examinedetail',val.pbPartnerDeviceReasonId,0)">设置价格</a>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="order-box" v-if="myindex==1">
+					<div class="order-box" v-if="myindex==1" v-for="val in mydata02">
 						<div class="order-right">
 							<div class="order-bottom">
 								<div class="order-price">店铺名称</div>
-								<div class="order-time">郑春平的一号柜</div>
+								<div class="order-time">{{val.usStShopName}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price">店主姓名</div>
-								<div class="order-time">董小礼</div>
+								<div class="order-time">{{val.usStLegalPerson}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price"></div>
 								<div class="order-time setting">
-									<a class="btn02" href="examinedetail.html">设置价格</a>
+									<a class="btn02" href="javascript:void(0)" @click="opennew('examinedetail',val.usStoreId,1)">设置价格</a>
 								</div>
 							</div>
 						</div>
@@ -71,26 +71,57 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					myindex: 0
+					myindex: 0,
+					mydata:[],
+					mydata02:[]
 				},
 				methods: {
 					indexchange: function(index) {
 						this.myindex = index
 					},
-					opennew: function(type) {
-						if(type == 'q') {
-							window.location.href = './havetype.html'
-						} else {
-
-						}
+					opennew:function(target,id,index){
+						localStorage.setItem('pbPartnerDeviceReasonId',id)
+						localStorage.setItem('examinetype',index)
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
+					},
+					myajax: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectUsCommunityPartnerPbPartnerDevice",
+							dataType: 'json',
+							data:{
+								usCommunityPartnerId:localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata = res.data
+							}
+						});
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectUsCommunityPartnerUsStore",
+							dataType: 'json',
+							data:{
+								usCommunityPartnerId:localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata02 = res.data
+							}
+						});
 					}
 				},
 				mounted: function() {
-
+					this.myajax()
 				}
 			})
 		</script>

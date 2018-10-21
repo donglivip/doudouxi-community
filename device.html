@@ -12,46 +12,46 @@
 		<div class="wrapper usercenter communitydetail">
 			<!--头部-->
 			<div class="header">
-				<a class="head-tab" href="javascript:history.back()">
+				<div class="head-tab mui-action-back">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
-				</a>
+				</div>
 				<div class="head-main">
 					干洗店详情
 				</div>
-				<a class="head-tab" href="javascript:void(0)">
+				<div class="head-tab">
 					
-				</a>
+				</div>
 			</div>
 			<!--中间主体-->
-			<div class="main">
+			<div class="main" style="margin-top:.8rem ;height: calc(100% - 1.8rem);">
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">店铺名称</div>
 					<div class="tab-text">
-						东城洗衣店
+						{{navdata.usStShopName}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">店主</div>
 					<div class="tab-text">
-						邓紫平
+						{{navdata.usStLegalPerson}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">身份证号</div>
 					<div class="tab-text">
-						**************9878
+						{{navdata.usStIdCard}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">联系电话</div>
 					<div class="tab-text">
-						17845698547
+						{{navdata.usStPhone}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">地址</div>
 					<div class="tab-text">
-						徐州市铜山区春旺小区
+						{{navdata.usStAddress}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)" style="margin-top: .2rem;">
@@ -63,31 +63,71 @@
 				<a class="user-tab" href="javascript:void(0)" style="margin-top: .2rem;">
 					<div class="tab-text">营业执照</div>
 					<div class="tab-text">
-						已认证
+						{{navdata.usStBusinessLicenseImg==null?'未认证':'已认证'}}
 					</div>
 				</a>
 				<a class="user-tab" href="javascript:void(0)" style="margin-top: .2rem;">
 					<div class="tab-text">特种行业许可证</div>
 					<div class="tab-text">
-						已认证
+						{{navdata.usStSpencialIndustryImg==null?'未认证':'已认证'}}
 					</div>
 				</a>
 			</div>
-			<div class="bottom" style="background: red;color: #FFFFFF;justify-content: center;">
+			<div class="bottom" style="background: red;color: #FFFFFF;justify-content: center;" @click="godelete">
 				删除干洗店
 			</div>
 		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-
+					navdata:[]
 				},
 				methods:{
-					
+					myajax: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectUsStoreId",
+							dataType: 'json',
+							data:{
+								usStoreId:localStorage.getItem('usStoreId')
+							},
+							success: function(res) {
+								console.log(res)
+								that.navdata = res.data
+							}
+						});
+					},
+					godelete:function(){
+						var that=this
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/community/deleteUsStoreId",
+							dataType:'json',
+							data:{
+								usStoreId:localStorage.getItem('usStoreId'),
+								updateName:localStorage.getItem('uname')
+							},
+							success:function(res){
+								console.log(res)
+								if(res.data==1){
+									plus.webview.getWebviewById('shopadmin').reload()
+									mui.back()
+								}else{
+									plus.nativeUI.toast('删除失败')
+								}
+							},
+							error:function(error){
+								console.log(error)
+							}
+						});
+					}
 				},
 				mounted:function(){
-					
+					this.myajax()
 				}
 			})
 		</script>

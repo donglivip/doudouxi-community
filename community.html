@@ -26,24 +26,26 @@
 			</div>
 			<!--中间主体-->
 			<div class="main big-main">
-				<div class="community-box" @click="opennew('peopledetail')">
-					<img src="img/avatar.jpg" />
+				<div class="community-box" @click="opennew('peopledetail',val.usStaffId)" v-for="val in mydata">
+					<img :src="val.usStHeadImg | myimg" />
 					<div class="community-main">
-						<h2>郑春平</h2>
-						<p>联系方式：17864958756</p>
+						<h2>{{val.usStName}}</h2>
+						<p>联系方式：{{val.usStPhone}}</p>
 					</div>
 				</div>
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					mydata：[]
+					mydata:[]
 				},
 				methods: {
 					opennew: function(target, id) {
+						localStorage.setItem('usStaffId',id)
 						mui.openWindow({
 							url: './' + target + '.html',
 							id: target
@@ -67,6 +69,11 @@
 				},
 				mounted: function() {
 					this.myajax()
+				},
+				filters:{
+					myimg:function(value){
+						return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+					}
 				}
 			})
 		</script>
