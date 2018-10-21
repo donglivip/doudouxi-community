@@ -166,7 +166,8 @@
 					"orderqu.html",
 					"ordersong.html",
 					"ordedianpu.html",
-					"share.html"
+					"share.html",
+					"mlogin.html"
 				],
 				"priority": 0
 			},
@@ -513,7 +514,6 @@
 				"img/Close-2 Copy 6@2x.png",
 				"img/bottom02.png",
 				"img/bottom03-active.png",
-				"mlogin.html",
 				"img/shop.jpg",
 				"img/a1080.png",
 				"js/rem.js",

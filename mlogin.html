@@ -118,7 +118,7 @@
 								}
 							});
 						}else if(that.index==2){
-//							社区合伙人登陆
+//							干洗店登陆
 							var ajaxjson={
 									phone:that.phone,
 									usStPassword:that.passs
@@ -148,6 +148,36 @@
 									console.log(err)
 								}
 							});
+						}else{
+//							社区合伙人登陆
+							var ajaxjson={
+									phone:that.phone,
+									usStPassword:that.passs
+								}
+							console.log(ajaxjson)
+							$.ajax({
+								type:"post",
+								url:localStorage.getItem('myurl')+"/community/selectCommunityLogin",
+								dataType:'json',
+								data:ajaxjson,
+								success:function(res){
+									console.log(res)
+									if(res.status==200){
+										localStorage.setItem('uname',res.data.usCpName)
+										localStorage.setItem('usStPhone',res.data.usCpPhone )
+										localStorage.setItem('uapay',res.data.usCpAliPayCode)
+										localStorage.setItem('uid',res.data.usCommunityPartnerId)
+										localStorage.setItem('uwpay',res.data.usCpWeChatCode)
+										localStorage.setItem('utype',0)
+										that.opennew('index')
+									}else{
+										that.alertshow(res.msg)
+									}
+								},
+								error:function(err){
+									console.log(err)
+								}
+							});							
 						}
 					},
 					changetype:function(text){
