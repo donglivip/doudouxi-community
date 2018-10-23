@@ -175,7 +175,7 @@
 									}
 								},
 								error:function(err){
-									console.log(err)
+									console.log(JSON.stringify(err))
 								}
 							});							
 						}
@@ -194,7 +194,7 @@
 					}
 				},
 				mounted:function(){
-					localStorage.setItem('myurl','http://27.54.248.14:8080')
+					localStorage.setItem('myurl','http://192.168.0.118')
 				}
 			})
 		</script>

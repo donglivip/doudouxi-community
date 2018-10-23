@@ -18,62 +18,36 @@
 				<div class="head-main">
 					滞留件管理
 				</div>
-				<div class="head-tab" @click="opennew('search')">
-					<img src="img/search.png"/>
+				<div class="head-tab">
+					<!--<img src="img/search.png"/>-->
 				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main complaint">
 				<div class="order-main orderxidi">
 					<div class="trade-main activity" style="height: calc(100%);">
-						<div class="order-box">
+						<div class="order-box" v-for="val in pages">
 							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">D51264621</div>
+									<div class="order-time">{{val.orderCode}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">用户名</div>
-									<div class="order-time">杨永鑫</div>
+									<div class="order-time">{{val.userName}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">下单时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
+									<div class="order-time">{{val.creatTime}}</div>
 								</div>
 								<div class="order-bottom" style="align-items: flex-start;">
 									<div class="order-price">滞留时长</div>
-									<div class="order-time">72小时 </div>
+									<div class="order-time">{{val.ruleHour}}小时 </div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint02')">订单指派</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="order-box">
-							<div class="order-right">
-								<div class="order-bottom">
-									<div class="order-price">订单号</div>
-									<div class="order-time">D51264621</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">用户名</div>
-									<div class="order-time">杨永鑫</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">下单时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
-								</div>
-								<div class="order-bottom" style="align-items: flex-start;">
-									<div class="order-price">滞留时长</div>
-									<div class="order-time">72小时 </div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price"></div>
-									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint02')">订单指派</a>
+										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint02',val.pbOrderId)">订单指派</a>
 									</div>
 								</div>
 							</div>
@@ -83,25 +57,43 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					myindex: 0
+					myindex: 0,
+					pages:[]
 				},
 				methods: {
 					indexchange: function(index) {
 						this.myindex = index
 					},
 					opennew:function(target,id){
+						localStorage.setItem('pbOrderId',id)
 						mui.openWindow({
 							url:'./'+target+'.html',
 							id:target
 						})
+					},
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/queryUsCommUnityReturnOrder",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.pages = res.data
+							}
+						});
 					}
 				},
 				mounted: function() {
-
+					this.myajax()
 				}
 			})
 		</script>

@@ -41,19 +41,26 @@
 						<div class="order-bottom">
 							<div class="order-price">取送最迟时间</div>
 							<div class="order-time">
-								<input type="text" v-model="stime" @click="pickDate('s')" placeholder="活动开始时间" />
+								<input type="text" v-model="pbOrTakeOffTime" @click="pickDate('s')" placeholder="取送最迟时间" />
 							</div>
 						</div>
 						<div class="order-bottom">
 							<div class="order-price">指派取送员</div>
 							<div class="order-time">
-								<select name="">
-									<option value="">1号</option>
-									<option value="">2号</option>
+								<select v-model="usStaffIdRetention">
+									<option :value="val.usStaffId" v-for="val in mydata01">{{val.usStName}}</option>
 								</select>
 							</div>
 						</div>
-						<div class="bottom" @click="pay">确认指派</div>
+						<div class="order-bottom">
+							<div class="order-price">选择暂存地</div>
+							<div class="order-time">
+								<select v-model="usTommunityStoragePointId">
+									<option :value="val.usCommunityStoragePointId" v-for="val in mydata">{{val.usCspAddress}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="bottom" @click="submit">确认指派</div>
 					</div>
 				</div>
 			
@@ -67,32 +74,49 @@
 		</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					myindex: 0,
-					stime: '',
+					pbOrTakeOffTime: '',
 					etime: '',
 					adetail: '',
 					adress: '',
 					alertboo:false,
-					time:3
+					time:3,
+					mydata:[],
+					mydata01:[],
+					usStaffIdRetention:'',
+					usTommunityStoragePointId:''
 				},
 				methods: {
-					indexchange: function(index) {
-						this.myindex = index
+					submit:function(){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/updateAssignmentOrderIdRetention",
+							dataType: 'json',
+							data: {
+								pbOrderId: localStorage.getItem('pbOrderId'),
+								usStaffIdRetention:that.usStaffIdRetention,
+								pbOrTakeOffTime:that.pbOrTakeOffTime,
+								usTommunityStoragePointId:that.usTommunityStoragePointId
+							},
+							success: function(res) {
+								if(res.data==1){
+									plus.nativeUI.toast('订单指派完成')
+								}else{
+									plus.nativeUI.toast('订单指派失败')
+								}
+							}
+						});
 					},
 					pickDate: function(type) {
 						var that = this
 						plus.nativeUI.pickDate(function(e) {
 							var d = e.date;
-							if(type = 's') {
-								that.stime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
-							} else {
-								that.etime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
-							}
-							console.log("选择的日期：" + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
+							that.pbOrTakeOffTime = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate()
 						}, function(e) {
 							console.log("未选择日期：" + e.message);
 						});
@@ -110,15 +134,37 @@
 								that.time--
 							}
 						},1000)
+					},
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/queryStorageAddress",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata = res.data
+							}
+						});
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/queryUsCommunityUsStaff",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata01 = res.data
+							}
+						});
 					}
 				},
 				mounted: function() {
-					$("#city-picker").cityPicker({
-						title: "选择省市区/县",
-						onChange: function(picker, values, displayValues) {
-							console.log(values, displayValues);
-						}
-					});
+					this.myajax()
 				}
 			})
 		</script>

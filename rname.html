@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,36 +9,45 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+
 	<body>
 		<div class="wrapper rname">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab mui-action-back">
-					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					认证中心
 				</div>
 				<div class="head-tab" @click="opennew('newcenter')">
-					
+
 				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main">
 				<div class="input-box">
 					<label for="uname">支付宝账号</label>
-					<input type="text" placeholder="请输入支付宝账号" id="uname" name="uname"/>
+					<input type="text" placeholder="请输入支付宝账号" v-model="usCpAliPayCode" />
 				</div>
 				<div class="input-box">
-					<label for="uname">密码</label>
-					<input type="text" placeholder="请输入密码" id="uname" name="uname"/>
+					<label for="uname">微信账号</label>
+					<input type="text" placeholder="请输入微信账号" v-model="usCpWeChatCode">
 				</div>
-				<div class="submit" @click="alertshow">
+				<div class="input-box">
+					<label for="uname">登陆密码</label>
+					<input type="text" placeholder="请输入登陆密码" v-model="usCpPassword" />
+				</div>
+				<div class="input-box">
+					<label for="uname">支付密码</label>
+					<input type="text" placeholder="请输入支付密码" v-model="usCpPayPassword" />
+				</div>
+				<div class="submit" @click="submit">
 					提交
 				</div>
 				<div class="alert" v-show="alertboo" @click="alertshow">
 					<div class="alert-inner">
-						<img src="img/yes.png"/>
+						<img src="img/yes.png" />
 						<div class="text">提交成功！</div>
 						<div class="button">
 							确定
@@ -48,26 +58,50 @@
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var myvue=new Vue({
-				el:'.wrapper',
-				data:{
-					alertboo:false
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					alertboo: false,
+					usCpAliPayCode: '',
+					usCpWeChatCode: '',
+					usCpPassword: '',
+					usCpPayPassword: ''
 				},
-				methods:{
-					alertshow:function(){
-						this.alertboo=!this.alertboo
+				methods: {
+					alertshow: function() {
+						this.alertboo = !this.alertboo
 					},
-					opennew:function(target,id){
-						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
-						})
+					submit: function() {
+						if(that.usCpAliPayCode==''||that.usCpWeChatCode==''||that.usCpPassword==''||that.usCpPayPassword==''){
+							plus.nativeUI.toast('信息填写不完整')
+							return false;
+						}
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/updateUsCommunityInfo",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid'),
+								usCpPassword: that.usCpPassword,
+								usCpPayPassword: that.usCpPayPassword,
+								usCpAliPayCode: that.usCpAliPayCode,
+								usCpWeChatCode:that.usCpWeChatCode
+							},
+							success: function(res) {
+								console.log(res)
+								localStorage.setItem('uapay',that.usCpAliPayCode)
+								localStorage.setItem('uwpay',that.usCpWeChatCode)
+								mui.back()
+							}
+						});
 					}
 				},
-				mounted:function(){
-					
+				mounted: function() {
+
 				}
 			})
 		</script>
 	</body>
+
 </html>

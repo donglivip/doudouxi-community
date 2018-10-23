@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="https://webapi.amap.com/maps?v=1.4.8&key=68aa6ce0aa3da10b36c6baed4fb2bc7a"></script>
+		<!--<script type="text/javascript" crossorigin="anonymous" src="https://mirror.testin.cn/testin-sdk-latest.min.js"></script>
+		<script>testinSDK.enable('data','2651500bcca2788527aa9a395cb38e67');testinSDK.enable('bug');</script>-->
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper index changeadress">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					选择位置
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<!--中间主体-->
+			<div class="main" style="margin-top: .8rem;height: calc(100% - 2.5rem);">
+				<div id="container" style="height: 100%;"></div>
+				<img src="img/go.png" @click="gocenter" class="gocenter" />
+			</div>
+			<div class="button">
+				<div class="left">
+					<p>[安放位置]</p>
+					<p>{{info}}</p>
+				</div>
+				<div class="right" @click="opennew('ordersure')">
+					确定安放
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: ".wrapper",
+				data: {
+					map: '',
+					informbooo: false,
+					gid: 0,
+					mydata: '',
+					adress: '',
+					lng: 34.269361,
+					lat: 117.271321,
+					juli: 0,
+					info: []
+				},
+				mounted: function() {
+					function plusReady() {
+						// 弹出系统等待对话框
+						plus.nativeUI.showWaiting("地图生成中...");
+						plus.geolocation.getCurrentPosition(function(p) {
+							that.lng = p.coords.longitude
+							that.lat = p.coords.latitude
+						}, function(e) {
+							alert('Geolocation error: ' + e.message);
+						});
+					}
+					if(window.plus) {
+						plusReady();
+					} else {
+						document.addEventListener("plusready", plusReady, false);
+					}
+					var that = this
+					that.mapinit(that.lat, that.lng)
+					//					localStorage.setItem('lng',34.269361)
+					//					localStorage.setItem('lat',117.271321)
+				},
+				methods: {
+					gocenter: function() {
+						this.map.setZoomAndCenter(17, [this.lat, this.lng]);
+					},
+					opennew: function(target) {
+						localStorage.setItem('pbPdAddress', this.info)
+						mui.openWindow({
+							url: './' + target + '.html',
+							id: target
+						})
+					},
+					informshow: function() {
+						this.informbooo = !this.informbooo
+					},
+					mapinit: function(lat, lng) {
+						var that = this
+						this.map = new AMap.Map('container', {
+							resizeEnable: true,
+							rotateEnable: true,
+							pitchEnable: true,
+							zoom: 17,
+							pitch: 50,
+							rotation: -15,
+							viewMode: '3D',
+							buildingAnimation: true,
+							center: [lat, lng],
+							layers: [
+								new AMap.TileLayer({}),
+								new AMap.Buildings({
+									zIndex: 100,
+									merge: false,
+									sort: false,
+									zooms: [17, 20]
+								})
+							]
+						});
+						//添加点标记，并使用自己的icon
+						var marker = new AMap.Marker({
+							map: that.map,
+							position: [lat, lng],
+							icon: new AMap.Icon({
+								size: new AMap.Size(27, 33),
+								image: "./img/pin copy.png",
+							})
+						});
+						//					   	 获取箱子位置
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/user/getDevices",
+							dataType: 'json',
+							data: {
+								coordinate: that.lat + ',' + that.lng
+							},
+							success: function(res) {
+								that.mydata = res.data
+								for(var i = 0; i < res.data.length; i++) {
+									that.addmarker(res.data[i].pbPdAddress.substring(0, res.data[i].pbPdAddress.indexOf(',')), res.data[i].pbPdAddress.substr(res.data[i].pbPdAddress.indexOf(',') + 1), i, res.data[i].pbActivityTreasulrId)
+								}
+							}
+						});
+						AMap.service('AMap.Geocoder', function() { //回调函数
+							//			实例化Geocoder
+							geocoder = new AMap.Geocoder({
+								city: "" //城市，默认：“全国”
+							});
+							//		    根据经纬度查地址
+							var lnglatXY = [that.lat, that.lng]; //地图上所标点的坐标
+							geocoder.getAddress(lnglatXY, function(status, result) {
+								if(status === 'complete' && result.info === 'OK') {
+									that.info = result.regeocode.formattedAddress
+								} else {
+									//获取地址失败
+								}
+							});
+						})
+						var _onClick = function(e) {
+							AMap.service('AMap.Geocoder', function() {
+								geocoder = new AMap.Geocoder({
+									city: ""
+								});
+								geocoder.getAddress(e.lnglat, function(status, result) {
+									if(status === 'complete' && result.info === 'OK') {
+										that.info = result.regeocode.formattedAddress
+										var info = [];
+										info.push(result.regeocode.formattedAddress)
+										new AMap.InfoWindow({
+											content: info.join("<br>") //使用默认信息窗体框样式，显示信息内容
+										}).open(that.map, e.lnglat);
+									}
+								});
+							})
+						}
+						AMap.event.addListener(that.map, "click", _onClick);
+
+						function plusReady() {
+							// 弹出系统等待对话框
+							var w = plus.nativeUI.closeWaiting()
+						}
+						if(window.plus) {
+							plusReady();
+						} else {
+							document.addEventListener("plusready", plusReady, false);
+						}
+					},
+					addmarker: function(lat, lng, id, aid) {
+						var that = this
+						if(aid == null) {
+							var marker = new AMap.Marker({
+								position: new AMap.LngLat(lat, lng),
+								offset: new AMap.Pixel(-10, -10),
+								icon: './img/Group.png', // 添加 Icon 图标 URL
+								title: id
+							});
+						} else {
+							var marker = new AMap.Marker({
+								position: new AMap.LngLat(lat, lng),
+								offset: new AMap.Pixel(-10, -10),
+								icon: './img/Groupred.png', // 添加 Icon 图标 URL
+								title: id
+							});
+						}
+						this.map.add(marker);
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

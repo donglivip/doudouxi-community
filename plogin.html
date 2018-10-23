@@ -58,13 +58,15 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
 					num:'获取验证码',
 					index:0,
-					usCpPhone:''
+					usCpPhone:'',
+					code:''
 				},
 				methods:{
 					login:function(){

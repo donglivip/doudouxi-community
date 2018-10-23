@@ -26,48 +26,50 @@
 			<div class="main">
 				<div class="help-item">
 					<div>订单号</div>
-					<div>D5323246</div>
+					<div>{{mydata.pbOrCode}}</div>
 				</div>
 				<div class="help-item">
 					<div>投诉日期</div>
-					<div>2018年7月19日</div>
+					<div>{{mydata.pbOrRetentionTime}}</div>
 				</div>
 				<div class="help-item detailtop">
 					<div>干洗店</div>
-					<div>海洋干洗店</div>
+					<div>{{mydata.usStShopName}}</div>
 				</div>
 				<div class="help-item">
 					<div>取送员</div>
-					<div>李俊芮</div>
+					<div>{{mydata.usStName}}</div>
 				</div>
 				<div class="help-item detailtop">
 					<div>投诉内容</div>
 					<div></div>
 				</div>
 				<div class="help-item inner" style="height: auto;">
-					<textarea placeholder="请输入投诉内容">
+					<textarea placeholder="请输入投诉内容" :value="mydata.pbOcContent + mydata.pbOrProblemDescribe">
 						
 					</textarea>
 				</div>
 			</div>
 			<div class="bottom">
-				<div class="nav-left complaintb">
+				<a class="nav-left complaintb" :href="['tel:'+mydata.usStorePhone]">
 					联系干洗店
-				</div>
-				<div class="nav-left complaintb" style="margin-right: 1rem;">
+				</a>
+				<a class="nav-left complaintb" style="margin-right: 1rem;" :href="['tel:'+mydata.usStaffPhone]">
 					联系取送员
-				</div>
-				<div class="nav-right">
+				</a>
+				<a class="nav-right" :href="['tel:'+mydata.usUserStPhone]">
 					联系用户
-				</div>
+				</a>
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-					more:false
+					more:false,
+					mydata:''
 				},
 				methods:{
 					moreboo:function(){
@@ -75,10 +77,26 @@
 					},
 					opennew:function(id,target){
 						window.location.href='./'+target+'.html'
+					},
+					myajax:function(){
+						var that=this
+//						投诉详情
+						$.ajax({
+							type:"post",
+							url:localStorage.getItem('myurl')+"/community/queryPbOrderByComplaintDetails",
+							dataType:'json',
+							data:{
+								pbOrCode:localStorage.getItem('pbOrCode')
+							},
+							success:function(res){
+								console.log(res)
+								that.mydata=res.data
+							}
+						})
 					}
 				},
 				mounted:function(){
-					
+					this.myajax()
 				}
 			})
 		</script>

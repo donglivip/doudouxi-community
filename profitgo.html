@@ -39,7 +39,8 @@
 				<div class="profit-top">
 					<div class="subtitile" style="color: #096148;">提现金额</div>
 					<input type="price" placeholder="请输入提现金额" v-model="price" />
-					<div class="subtitile">可提现额￥{{mydata.usSwBalance}}</div>
+					<div class="subtitile" v-if='utype==2'>可提现额￥{{mydata.usSwBalance}}</div>
+					<div class="subtitile" v-if='utype==0'>可提现额￥{{mydata.usCpwBalance}}</div>
 					<div class="profit-type" @click="alertshow02">
 						<div>提现到</div>
 						<div>{{style | mytype}}</div>
@@ -80,9 +81,10 @@
 					mydata01: '',
 					alerttext: '',
 					alertboo02: false,
-					usAliPayCode: localStorage.getItem('usAliPayCode'),
-					usWeChatPayCode: localStorage.getItem('usWeChatPayCode'),
-					style: ''
+					usAliPayCode: localStorage.getItem('uapay'),
+					usWeChatPayCode: localStorage.getItem('uwpay'),
+					style: '',
+					utype: localStorage.getItem('utype')
 				},
 				methods: {
 					paytype: function(type) {
@@ -111,34 +113,57 @@
 						} else {
 							payCode = localStorage.getItem('usWeChatPayCode')
 						}
-						var ajaxjson = {
-							usStoreId: localStorage.getItem('uid'),
-							usStoreForMoney: that.price,
-							usStServiceCharge: that.price * that.mydata01.pbPfPercentage / 100,
-							usStAccountStyle: that.style,
-							usStoreWalletId:that.mydata.usStoreWalletId
-						}
-						console.log(ajaxjson)
-						$.ajax({
-							type: "post",
-							url: localStorage.getItem('myurl') + "/laundry/insertUsStoreTransaction",
-							dataType: 'json',
-							data: ajaxjson,
-							success: function(res) {
-								console.log(res)
-								if(res.data!=1){
-									alert('提现失败')
-								}else{
-									mui.back()
+						if(that.utype==2){
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/laundry/insertUsStoreTransaction",
+								dataType: 'json',
+								data: {
+									usStoreId: localStorage.getItem('uid'),
+									usStoreForMoney: that.price,
+									usStServiceCharge: that.price * that.mydata01.pbPfPercentage / 100,
+									usStAccountStyle: that.style,
+									usStoreWalletId: that.mydata.usStoreWalletId
+								},
+								success: function(res) {
+									console.log(res)
+									if(res.data != 1) {
+										alert('提现失败')
+									} else {
+										mui.back()
+									}
 								}
-							}
-						});
+							});
+						}else{
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/insertUsCommunityTransaction",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid'),
+									usCommPartnerMoney: that.price,
+									usCptServiceCharge: that.price * that.mydata01.pbPfPercentage / 100,
+									usCptAccountStyle: that.style,
+									usCommunityPartnerWalletId: that.mydata.usCommunityPartnerWalletId
+								},
+								success: function(res) {
+									console.log(res)
+									if(res.data != 1) {
+										alert('提现失败')
+									} else {
+										mui.back()
+									}
+								},
+								error:function(err){
+									console.log(err)
+								}
+							});
+						}
 					},
 					myajax: function() {
 						var that = this
 						if(localStorage.getItem('utype') == 2) {
-//							干洗店余额
-							var that = this
+							//							干洗店余额
 							$.ajax({
 								type: "post",
 								url: localStorage.getItem('myurl') + "/laundry/queryUsStoreWalletMoney",
@@ -151,8 +176,22 @@
 									that.mydata = res.data
 								}
 							});
+						} else if(localStorage.getItem('utype') == 0) {
+							//							社区合伙人余额
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/queryCommunityWallet",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									console.log(res)
+									that.mydata = res.data
+								}
+							});
 						}
-//						获取提现规则
+						//						获取提现规则
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/share/findPresentation",

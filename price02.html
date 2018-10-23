@@ -37,7 +37,7 @@
 				<div class="price-box" v-for="(val,index) in navdata">
 					<img :src="val.pbCdImg | myimg" />
 					<div class="name">{{val.pbCdName}}</div>
-					<input type="text" :placeholder="val.pbCdUpdateName" @blur="inputblur(index)" />
+					<input type="number" :placeholder="val.pbCdUpdateName" @blur="inputblur(index)" />
 					<div class="fhao">元</div>
 				</div>
 			</div>

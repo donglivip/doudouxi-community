@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<style type="text/css">
+		.main {
+			background: #f5f5f5;
+		}
+		
+		.main-top {
+			background: #FFFFFF;
+			padding: .3rem .4rem;
+		}
+		
+		.text {
+			font-size: .28rem;
+			color: #04271D;
+		}
+		
+		.img-box img {
+			width: 1.3rem;
+			height: 1.3rem;
+			margin: .5rem .12rem;
+		}
+		
+		.button {
+			margin: 1.8rem .3rem;
+			height: 1.08rem;
+			background: #096148;
+			color: #FFFFFF;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 2rem;
+		}
+	</style>
+
+	<body>
+		<div class="wrapper activityimg">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					上传活动照
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<div class="main big-main">
+				<div class="main-top">
+					<div class="text">
+						上传活动照
+					</div>
+					<div class="img-box">
+						<img src="img/addimg.png" @click="imgclick" />
+						<img :src="val | myimg" v-for="val in pbAtActivityImg" />
+					</div>
+				</div>
+				<div class="button" @click="myajax">提交</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			new Vue({
+				el: '.wrapper',
+				data: {
+					pbAtActivityImg: [],
+					files: [],
+					server: localStorage.getItem('myurl') + '/community/imageUsCommunityPartnerImagePbActivityTreasulr'
+				},
+				methods: {
+					myajax: function() {
+						var that = this
+						if(that.pbAtActivityImg.length == 0) {
+							plus.nativeUI.toast('您还没选择照片呢！')
+							return false;
+						}
+						var ajaxjson = {
+							pbActivityTreasulrId: localStorage.getItem('pbPartnerDeviceId'),
+							updateName: localStorage.getItem('uname'),
+							pbAtActivityImg: JSON.stringify(that.pbAtActivityImg)
+						}
+						console.log(JSON.stringify(ajaxjson))
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/updatePbActivityTreasulrIdImg",
+							dataType: 'json',
+							data: ajaxjson,
+							success: function(res) {
+								console.log(res)
+								if(res.data == 1) {
+									plus.nativeUI.toast('上传完成！')
+									plus.webview.getWebviewById('activity')
+									mui.back()
+								}
+							}
+						});
+					},
+					imgclick: function(imid, inid) {
+						var that = this
+						var btnArray = [{
+							title: "照相机"
+						}, {
+							title: "相册"
+						}]; //选择按钮  1 2 3
+						plus.nativeUI.actionSheet({
+								title: "请选择",
+								cancel: "取消", // 0
+								buttons: btnArray
+							},
+							function(e) {
+								var index = e.index; // 
+								switch(index) {
+									case 1:
+										//写自己的逻辑
+										that.camera();
+										break;
+									case 2:
+										that.album();
+										break;
+								}
+							});
+					},
+					camera: function() {
+						var that = this
+						var cmr = plus.camera.getCamera();
+						cmr.captureImage(function(p) {
+							//成功
+							plus.io.resolveLocalFileSystemURL(p, function(entry) {
+								var img_name = entry.name; //获得图片名称
+								var img_path = entry.toLocalURL(); //获得图片路径
+								that.avatar = img_path
+								that.upload_img(img_path);
+							}, function(e) {
+								alert("读取拍照文件错误：" + e.message);
+							});
+
+						}, function(e) {
+							alert("失败：" + e.message);
+						}, {
+							filename: '_doc/camera/',
+							index: 1
+						});
+					},
+					album: function() {
+						var that = this
+						plus.gallery.pick(function(path) {
+							that.upload_img(path);
+							that.avatar = path
+						}, function(e) {
+							alert("取消选择图片");
+						}, {
+							filter: "image"
+						});
+					},
+					upload_img: function(p) {
+						var that = this
+						var n = p.substr(p.lastIndexOf('/') + 1);
+						that.files.push({
+							name: "uploadkey",
+							path: p
+						});
+						//开始上传
+						that.start_upload();
+					},
+					start_upload: function() {
+						var that = this
+						if(that.files.length <= 0) {
+							plus.nativeUI.alert("没有添加上传文件！");
+							return;
+						}
+						//原生的转圈等待框
+						var wt = plus.nativeUI.showWaiting();
+						var task = plus.uploader.createUpload(that.server, {
+								method: "POST"
+							},
+							function(t, status) { //上传完成
+								if(status == 200) {
+									//资源
+									var responseText = t.responseText;
+									//转换成json
+									var json = eval('(' + responseText + ')');
+									//上传文件的信息
+									var files = json.data;
+									that.pbAtActivityImg.push(files)
+									wt.close();
+								} else {
+									alert("上传失败：" + status);
+									//关闭原生的转圈等待框
+									wt.close();
+								}
+							});
+						task.addData("uid", that.getUid());
+						for(var i = 0; i < that.files.length; i++) {
+							var f = that.files[i];
+							task.addFile(f.path, {
+								key: f.name
+							});
+						}
+						task.start();
+					},
+					getUid: function() {
+						return Math.floor(Math.random() * 100000000 + 10000000).toString();
+					}
+				},
+				mounted: function() {
+
+				},
+				filters: {
+					myimg: function(value) {
+						return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+					}
+				}
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<title></title>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
-		<link rel="stylesheet" type="text/css" href="css/main.css"/>
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
+
 	<body>
 		<div class="wrapper price03">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab mui-action-back">
-					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					存放奖品
@@ -22,32 +24,64 @@
 				</div>
 			</div>
 			<div class="main big-main">
-				<div class="price-box">
-					<img src="img/shop.jpg"/>
-					<div class="name">金龙鱼谷物调和油</div>
-					<select name="">
-						<option value="1号箱">1号箱</option>
-						<option value="2号箱">2号箱</option>
-					</select>
-				</div>
-				<div class="price-box">
-					<img src="img/shop.jpg"/>
-					<div class="name">金龙鱼谷物调和油</div>
-					<select name="">
-						<option value="1号箱">1号箱</option>
-						<option value="2号箱">2号箱</option>
-					</select>
-				</div>
-				<div class="price-box">
-					<img src="img/shop.jpg"/>
-					<div class="name">金龙鱼谷物调和油</div>
-					<select name="">
-						<option value="1号箱">1号箱</option>
-						<option value="2号箱">2号箱</option>
+				<div class="price-box" v-for="val in mydata">
+					<img :src="val.pbMpgGoodsImg | myimg" />
+					<div class="name">{{val.pbMpgName}}</div>
+					<select name="" v-model="pbPartnerDeviceCaseId">
+						<option value="item.pbPartnerDeviceCaseId" v-for="item in mydata01">{{item.pbPdcNum}}号箱</option>
 					</select>
 				</div>
 			</div>
 		</div>
 	</body>
 	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		new Vue({
+			el: '.wrapper',
+			data: {
+				mydata:[],
+				mydata01:[]
+			},
+			methods: {
+				myajax: function() {
+					var that = this
+					$.ajax({
+						type: "post",
+						url: localStorage.getItem('myurl') + "/community/selectPbMaterialPackageGoods",
+						dataType: 'json',
+						data: {
+							usCommunityPartnerId: localStorage.getItem('uid'),
+							pbPartnerDeviceId: localStorage.getItem('pbPartnerDeviceId')
+						},
+						success: function(res) {
+							console.log(res)
+							that.mydata=res.data
+						}
+					});
+					$.ajax({
+						type: "post",
+						url: localStorage.getItem('myurl') + "/community/selectpbPartnerDeviceIdSelectDeviceCase",
+						dataType: 'json',
+						data: {
+							pbPartnerDeviceId: localStorage.getItem('pbPartnerDeviceId')
+						},
+						success: function(res) {
+							console.log(res)
+							that.mydata01=res.data
+						}
+					});
+				}
+			},
+			mounted: function() {
+				this.myajax()
+			},
+				filters:{
+					myimg:function(value){
+						return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+					}
+				}
+		})
+	</script>
+
 </html>

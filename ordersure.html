@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper plogin">
+			<!--头部-->
+			<div class="header">
+				<a class="head-tab" href="javascript:history.back()">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</a>
+				<div class="head-main">
+					登录
+				</div>
+				<a class="head-tab" href="javascript:void(0)">
+
+				</a>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main">
+				<div class="main-inner">
+					<div class="titile">请输入设备名称</div>
+					<div class="input-box">
+						<input type="text" placeholder="请输入昵称" v-model="phone" />
+					</div>
+					<div class="login" @click="login()">确认激活</div>
+				</div>
+				<div class="alert" v-if="alertboo" @click="alertshow">
+					<div class="alert-inner">
+						<div class="alert-top">豆豆洗</div>
+						<div class="text alert-text">{{alerttext}}</div>
+						<div class="button">确定</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					phone: '',
+					alerttext: '请求失败',
+					alertboo: false
+				},
+				methods: {
+					alertshow: function(text) {
+						this.alerttext = text
+						this.alertboo = !this.alertboo
+					},
+					login: function() {
+						var that = this
+						var ajaxjson = {
+							pbPdName: that.phone,
+							pbPdCode: localStorage.getItem('pbPdCode'),
+							pbPdAddress: localStorage.getItem('pbPdAddress'),
+							pbCommunityPartnerId: localStorage.getItem('uid')
+						}
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/equipment/activationDevice",
+							dataType: 'json',
+							data: ajaxjson,
+							success: function(res) {
+								if(res.status == 200) {
+									plus.nativeUI.toast('激活成功！')
+									that.opennew('index')
+								} else {
+									that.alertshow(res.msg)
+								}
+							},
+							error: function(err) {
+								alert(JSON.stringify(err))
+							}
+						});
+
+					},
+					opennew: function(target) {
+						mui.openWindow({
+							url: './' + target + '.html',
+							id: target
+						})
+					}
+				},
+				mounted: function() {
+
+				}
+			})
+		</script>
+	</body>
+
+</html>

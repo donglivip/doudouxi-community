@@ -20,7 +20,7 @@
 						公告：{{navdata[0].pbNwContent}}
 					</div>
 				</div>
-				<div class="nav-box" style="flex: 1;" v-if="utype==0">
+				<div class="nav-box" v-if="utype==0">
 					<div class="nav-item" @click="opennew('my')">
 						<img src="img/C279703D-2D4F-4E35-813A-6F75E4EF2FF1@2x.png" />
 						<div>我的豆豆洗</div>
@@ -126,7 +126,10 @@
 			el: '.wrapper',
 			data: {
 				utype: localStorage.getItem('utype'),
-				navdata: []
+				navdata: [{
+					pbNwContent:'豆豆洗社区合伙人正式上线啦！',
+					pbNsImgUrl:'./img/index.jpg'
+				}]
 			},
 			methods: {
 				opennew: function(target, id) {
@@ -143,7 +146,9 @@
 						dataType: 'json',
 						success: function(res) {
 							console.log(res)
-							that.navdata = res.data
+							if(res.data.length!=0){
+								that.navdata = res.data
+							}
 						},
 						error:function(err){
 							console.log(err)

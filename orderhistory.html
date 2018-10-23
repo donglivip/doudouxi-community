@@ -8,6 +8,10 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+	<style type="text/css">
+		.tab{height: .8rem;line-height: .8rem;}
+		.active{border-bottom: 3px solid #096148;}
+	</style>
 	<body>
 		<div class="wrapper order dcartdetail">
 			<!--头部-->
@@ -23,7 +27,7 @@
 				</div>
 			</div>
 			<!--中间主体-->
-			<div class="main big-main" @scroll="myscroll" style="background: #FFFFFF;">
+			<div class="main big-main" @scroll="myscroll" style="background: #FFFFFF;" v-if="utype==2">
 				<div class="main-inner">
 					<div class="order-box" v-for="val in mydata">
 						<div class="order-right">
@@ -40,6 +44,30 @@
 					</div>
 				</div>
 			</div>
+			<div class="big-main" v-if="utype==0" style="margin-top:.8rem">
+				<div class="big-top" style="display: flex;background: #FFFFFF;justify-content: space-around;">
+					<div class="tab" :class="myindex==0?'active':''" @click="indexchange(0)">社区合伙人订单</div>
+					<div class="tab" :class="myindex==1?'active':''" @click="indexchange(1)">干洗店订单</div>
+					<div class="tab" :class="myindex==2?'active':''" @click="indexchange(2)">取送员订单</div>
+				</div>
+				<div class="big-main" @scroll="myscroll" style="background: #FFFFFF;">
+					<div class="main-inner">
+						<div class="order-box" v-for="val in mydata">
+							<div class="order-right">
+								<div class="order-title">
+									<div class="order-h1">
+										订单编号
+									</div>
+									<div class="order-state">{{val.pbOrderId}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">{{val.changeCreateTime}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
@@ -50,9 +78,15 @@
 					navboo:false,
 					mydata: [],
 					pages:0,
-					pageNum:0
+					pageNum:0,
+					utype:localStorage.getItem('utype'),
+					myindex:0
 				},
 				methods:{
+					indexchange:function(index){
+						this.myindex=index
+						this.myajax()
+					},
 					opennew:function(type){
 						if(type=='q'){
 							window.location.href='./havetype.html'
@@ -61,9 +95,9 @@
 						}
 					},
 					myajax:function(){
+						var that=this
 //						历史订单
-						if(localStorage.getItem('utype')==2){
-							var that=this
+						if(that.utype==2){
 							$.ajax({
 								type:"post",
 								url:localStorage.getItem('myurl')+"/laundry/queryUsStoreOrder",
@@ -80,11 +114,52 @@
 									}
 								}
 							});
+						}else if(that.utype==0){
+							if(that.myindex==0){
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/queryAllOrderByIdentityUsComm",
+									dataType:'json',
+									data:{
+										usCpPhone:localStorage.getItem('uphone')
+									},
+									success:function(res){
+										console.log(res)
+										that.mydata=res.data
+									}
+								});
+							}else if(that.myindex==1){
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/queryAllOrderByIdentityUsStore",
+									dataType:'json',
+									data:{
+										usCpPhone:localStorage.getItem('uphone')
+									},
+									success:function(res){
+										console.log(res)
+										that.mydata=res.data
+									}
+								});
+							}else{
+								$.ajax({
+									type:"post",
+									url:localStorage.getItem('myurl')+"/community/queryAllOrderByIdentityUsStaff",
+									dataType:'json',
+									data:{
+										usCpPhone:localStorage.getItem('uphone')
+									},
+									success:function(res){
+										console.log(res)
+										that.mydata=res.data
+									}
+								});
+							}
 						}
 					},
 					myscroll: function() {
 						var that = this
-						if(Math.abs($('.main-inner').offset().top) + $('.main').height() + 200 >= $('.main-inner').height()) {
+						if(Math.abs($('.main-inner').offset().top) + $('.big-main').height() + 200 >= $('.main-inner').height()) {
 							if(that.pages>that.pageNum){
 								function plusReady() {
 									// 弹出系统等待对话框

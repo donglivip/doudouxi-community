@@ -25,7 +25,7 @@
 			<!--中间主体-->
 			<div class="main big-main" @scroll="myscroll" style="background: #FFFFFF;">
 				<div class="main-inner">
-					<div class="order-box" v-for="val in mydata">
+					<div class="order-box" v-for="val in mydata" v-if="utype==2">
 						<div class="order-right">
 							<div class="order-title">
 								<div class="order-h1">
@@ -36,6 +36,20 @@
 							<div class="order-bottom">
 								<div class="order-price">余额:￥{{val.usSfdBalance}}</div>
 								<div class="order-time">{{val.usSfdCreateTime}}</div>
+							</div>
+						</div>
+					</div>
+					<div class="order-box" v-for="val in mydata" v-if="utype==0">
+						<div class="order-right">
+							<div class="order-title">
+								<div class="order-h1">
+									{{val.usCpfdStyle | state02}}
+								</div>
+								<div class="order-state">{{val.usCpfdPrice}}</div>
+							</div>
+							<div class="order-bottom">
+								<div class="order-price">余额:￥{{val.usCpfdBalance}}</div>
+								<div class="order-time">{{val.usCpfdCreateTimeString}}</div>
 							</div>
 						</div>
 					</div>
@@ -51,7 +65,8 @@
 					navboo:false,
 					mydata: [],
 					pages:0,
-					pageNum:0
+					pageNum:0,
+					utype: localStorage.getItem('utype')
 				},
 				methods:{
 					opennew:function(type){
@@ -62,16 +77,35 @@
 						}
 					},
 					myajax:function(){
+						var that=this
+						that.pageNum++
 //						干洗店
-						if(localStorage.getItem('utype')==2){
-							var that=this
-							that.pageNum++
+						if(that.utype==2){
+							
 							$.ajax({
 								type:"post",
 								url:localStorage.getItem('myurl')+"/laundry/queryUsStoreWalletDetail",
 								dataType:'json',
 								data:{
 									usStoreId:localStorage.getItem('uid'),
+									pageNum:that.pageNum
+								},
+								success:function(res){
+									console.log(res)
+									that.pages=res.data.pages
+									for(var i = 0; i < res.data.list.length; i++) {
+										that.mydata.push(res.data.list[i])
+									}
+								}
+							});
+//						社区合伙人
+						}else if(that.utype==0){
+							$.ajax({
+								type:"post",
+								url:localStorage.getItem('myurl')+"/community/queryUsCommunityFinanceDetailed",
+								dataType:'json',
+								data:{
+									usCommunityPartnerId:localStorage.getItem('uid'),
 									pageNum:that.pageNum
 								},
 								success:function(res){
@@ -121,6 +155,22 @@
 							case 4:
 							return '提现'
 								break;								
+						}
+					},
+					state02:function(value){
+						switch (value){
+							case 1:
+							return '收入'
+								break;
+							case 2:
+							return '支出'
+								break;
+							case 3:
+							return '洗涤分成收入'
+								break;	
+							case 4:
+							return '提现'
+								break;
 						}
 					}
 				}

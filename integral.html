@@ -28,7 +28,8 @@
 			<div class="main big-main">
 				<div class="profit-top">
 					<div class="subtitile">账户余额</div>
-					<div class="price">{{mydata.usSwBalance}}<span style="font-size: .2rem;">(元)</span> </div>
+					<div class="price" v-if="utype==2">{{mydata.usSwBalance}}<span style="font-size: .2rem;">(元)</span> </div>
+					<div class="price" v-if="utype==0">{{mydata.usCpwBalance}}<span style="font-size: .2rem;">(元)</span> </div>
 				</div>
 				<div class="integral-tab" @click="opennew('rname')" v-if="utype!=2">
 					<div>
@@ -61,15 +62,28 @@
 						})
 					},
 					myajax: function() {
+						var that = this
 						//						干洗店
-						if(localStorage.getItem('utype') == 2) {
-							var that = this
+						if(that.utype == 2) {
 							$.ajax({
 								type: "post",
 								url: localStorage.getItem('myurl') + "/laundry/queryUsStoreWalletMoney",
 								dataType: 'json',
 								data: {
 									usStoreId: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									console.log(res)
+									that.mydata = res.data
+								}
+							});
+						}else if(that.utype == 0){
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/queryCommunityWallet",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid')
 								},
 								success: function(res) {
 									console.log(res)

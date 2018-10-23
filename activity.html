@@ -45,126 +45,129 @@
 							<div class="radius"></div>
 						</div>
 					</div>
-					<div class="trade-main activity">
-						<div class="order-box" v-if="myindex==0">
-							<div class="order-right">
-								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<div class="order-time">
-										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+					<div class="trade-main activity" @scroll="myscroll">
+						<div class="main-inner">
+							<div class="order-box" v-if="myindex==0&&val.pbAtExamineStatus==2" v-for="val in navdata">
+								<div class="order-right">
+									<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+										<div class="order-price">{{val.pbPdName}}</div>
+										<div class="order-time">
+											<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+										</div>
 									</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动项目</div>
-									<div class="order-time">挖宝</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动开始时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动结束时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">申请资源</div>
-									<div class="order-time">618物料包</div>
-								</div>
-							</div>
-						</div>
-						<div class="order-box" v-if="myindex==1">
-							<div class="order-right">
-								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<div class="order-time">
-										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+									<div class="order-bottom">
+										<div class="order-price">活动项目</div>
+										<div class="order-time">挖宝</div>
 									</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动项目</div>
-									<div class="order-time">挖宝</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动开始时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动结束时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">申请资源</div>
-									<div class="order-time">618物料包</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price"></div>
-									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)">查看物流</a>
-										<a class="btn02" href="javascript:void(0)" @click="opennew('prize')">存放奖品</a>
+									<div class="order-bottom">
+										<div class="order-price">活动开始时间</div>
+										<div class="order-time">{{val.pbAtActionTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动结束时间</div>
+										<div class="order-time">{{val.pbAtEndTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">申请资源</div>
+										<div class="order-time">{{val.pbMpName}}</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="order-box" v-if="myindex==2">
-							<div class="order-right">
-								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<div class="order-time">
-										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+							<div class="order-box" v-if="myindex==1&&(val.pbAtExamineStatus==1||val.pbAtExamineStatus==3)&&val.pbAtIsStatus==2" v-for="val in navdata">
+								<div class="order-right">
+									<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+										<div class="order-price">{{val.pbPdName}}</div>
+										<div class="order-time">
+											<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+										</div>
 									</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动项目</div>
-									<div class="order-time">挖宝</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动开始时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动结束时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">申请资源</div>
-									<div class="order-time">618物料包</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price"></div>
-									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)">结束活动</a>
+									<div class="order-bottom">
+										<div class="order-price">活动项目</div>
+										<div class="order-time">挖宝</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动开始时间</div>
+										<div class="order-time">{{val.pbAtActionTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动结束时间</div>
+										<div class="order-time">{{val.pbAtEndTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">申请资源</div>
+										<div class="order-time">{{val.pbMpName}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">
+											<div class="red" v-if="val.pbAtExamineStatus==3">已拒绝</div>
+										</div>
+										<div class="order-time setting">
+											<a class="btn02" href="javascript:void(0)" @click="opennew('prize',val.pbPartnerDeviceId)"v-if="val.pbAtExamineStatus==1">存放奖品</a>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="order-box" v-if="myindex==3">
-							<div class="order-right">
-								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
-									<div class="order-price">郑春平的一号柜</div>
-									<div class="order-time">
-										<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+							<div class="order-box" v-if="myindex==2&&val.pbAtIsStatus==1" v-for="val in navdata">
+								<div class="order-right">
+									<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+										<div class="order-price">{{val.pbPdName}}</div>
+										<div class="order-time">
+											<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+										</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动项目</div>
+										<div class="order-time">挖宝</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动开始时间</div>
+										<div class="order-time">{{val.pbAtActionTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动结束时间</div>
+										<div class="order-time">{{val.pbAtEndTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">申请资源</div>
+										<div class="order-time">{{val.pbMpName}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price"></div>
+										<div class="order-time setting">
+											<a class="btn02" href="javascript:void(0)" @click="close(val.pbActivityTreasulrId)">终止活动</a>
+										</div>
 									</div>
 								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动项目</div>
-									<div class="order-time">挖宝</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动开始时间</div>
-									<div class="order-time">2018年7月18日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">活动结束时间</div>
-									<div class="order-time">2018年7月19日8：30</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">申请资源</div>
-									<div class="order-time">618物料包</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price"></div>
-									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)">上传活动照</a>
+							</div>
+							<div class="order-box" v-if="myindex==3" v-for='val in navdata02'>
+								<div class="order-right">
+									<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+										<div class="order-price">{{val.pbPdName}}</div>
+										<div class="order-time">
+											<!--<a class="btn02" href="complaintdetail.html">查看详情</a>-->
+										</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动项目</div>
+										<div class="order-time">挖宝</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动开始时间</div>
+										<div class="order-time">{{val.pbAtActionTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">活动结束时间</div>
+										<div class="order-time">{{val.pbAtEndTimeString}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price">申请资源</div>
+										<div class="order-time">{{val.pbMpName}}</div>
+									</div>
+									<div class="order-bottom">
+										<div class="order-price"></div>
+										<div class="order-time setting">
+											<a class="btn02" href="javascript:void(0)" @click="opennew('activityimg',val.pbActivityTreasulrId)">上传活动照</a>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -174,36 +177,98 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					myindex: 0
+					myindex: 0,
+					navdata: [],
+					navdata02: [],
+					pages: 0,
+					pageNum: 0
 				},
 				methods: {
+					close:function(id){
+						var that = this
+						$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/updatePbActivityTreasulrId",
+								dataType: 'json',
+								data: {
+									pbActivityTreasulrId: id,
+									updateName:localStorage.getItem('uname')
+								},
+								success: function(res) {
+									if(res.data==1){
+										plus.nativeUI.toast('终止完成!')
+										that.myajax()
+									}else{
+										plus.nativeUI.toast('终止失败!')
+									}
+								}
+							});
+					},
 					indexchange: function(index) {
 						this.myindex = index
 					},
-					opennew:function(target,id){
+					opennew: function(target, id) {
+						localStorage.setItem('pbPartnerDeviceId',id)
 						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
+							url: './' + target + '.html',
+							id: target
 						})
 					},
 					myajax: function() {
 						var that = this
+						that.pageNum++
+						if(that.navdata.length==0){
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/selectActivityDevicePackagePojo",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									that.navdata = res.data
+								}
+							});
+						}
 						$.ajax({
 							type: "post",
-							url: localStorage.getItem('myurl') + "/community/selectPbPartnerDevice",
+							url: localStorage.getItem('myurl') + "/community/selectActivityDevicePackagePojoEnd",
 							dataType: 'json',
-							data:{
-								usCommunityPartnerId:localStorage.getItem('uid')
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid'),
+								pageNum: that.pageNum
 							},
 							success: function(res) {
 								console.log(res)
-								that.navdata = res.data
+								that.pages = res.data.pages
+								for(var i = 0; i < res.data.list.length; i++) {
+									that.navdata02.push(res.data.list[i])
+								}
 							}
 						});
+					},
+					myscroll: function() {
+						var that = this
+						if(Math.abs($('.main-inner').offset().top) + $('.activity').height() + 200 >= $('.main-inner').height()) {
+							if(that.pages > that.pageNum) {
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.showWaiting("等待中...");
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								that.myajax()
+							}
+
+						}
 					}
 				},
 				mounted: function() {
