@@ -61,12 +61,6 @@
 							</div>
 						</div>
 						<div class="order-bottom">
-							<div class="order-price">详细地址</div>
-							<div class="order-time">
-								<input type="text" v-model="adetail" placeholder="详细地址" />
-							</div>
-						</div>
-						<div class="order-bottom">
 							<div class="order-price">选择物料包</div>
 							<div class="order-time">
 							</div>
@@ -74,40 +68,16 @@
 					</div>
 				</div>
 				<div class="box">
-					<div class="box-item" @click="indexchange(0)" :class="myindex==0?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
-					</div>
-					<div class="box-item" @click="indexchange(1)" :class="myindex==1?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
-					</div>
-					<div class="box-item" @click="indexchange(2)" :class="myindex==2?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
-					</div>
-					<div class="box-item" @click="indexchange(3)" :class="myindex==3?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
-					</div>
-					<div class="box-item" @click="indexchange(4)" :class="myindex==4?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
-					</div>
-					<div class="box-item" @click="indexchange(5)" :class="myindex==5?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
-					</div>
-					<div class="box-item" @click="indexchange(6)" :class="myindex==6?'active':''">
-						<h2>618物料包</h2>
-						<p>6件奖品</p>
+					<div class="box-item" @click="indexchange(index)" :class="myindex==index?'active':''" v-for="(val,index) in mydata">
+						<h2>{{val.pbMpName}}</h2>
+						<p>{{val.pbMpPrice}}元</p>
 					</div>
 				</div>
 			</div>
 			<div class="alert" v-show="alertboo" @click="alertshow">
 				<div class="alert-inner">
-					<img src="img/yes.png"/>
-					<div class="text">提交成功,  {{time}}后返回列表页</div>
+					<img src="img/yes.png" />
+					<div class="text">提交成功, {{time}}后返回列表页</div>
 				</div>
 			</div>
 		</div>
@@ -125,8 +95,9 @@
 					etime: '',
 					adetail: '',
 					adress: '',
-					alertboo:false,
-					time:3
+					alertboo: false,
+					time: 3,
+					mydata: []
 				},
 				methods: {
 					indexchange: function(index) {
@@ -137,28 +108,64 @@
 						plus.nativeUI.pickDate(function(e) {
 							var d = e.date;
 							if(type == 's') {
-								that.stime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
+								that.stime = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate()
 							} else {
-								that.etime = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
+								that.etime = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate()
 							}
 							console.log("选择的日期：" + d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate());
 						}, function(e) {
 							console.log("未选择日期：" + e.message);
 						});
 					},
-					alertshow:function(){
-						this.alertboo=!this.alertboo
+					alertshow: function() {
+						this.alertboo = !this.alertboo
 					},
-					pay:function(){
-						var that=this
+					pay: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/insertPbActivityTreasulr",
+							async: true,
+							data:{
+								usCommunityPartnerId:localStorage.getItem('uid'),
+								pbPartnerDeviceId:localStorage.getItem('pbPartnerDeviceId'),
+								pbMaterialPackageId:that.mydata[that.myindex].pbMaterialPackageId,
+								pbAtActionTime:that.stime,
+								pbAtEndTime:that.etime,
+								pbAtAddress:adress
+							},
+							dataType: 'json',
+							success: function(res) {
+								console.log(res)
+								if(res.data==1){
+									plus.nativeUI.toast('添加完成')
+									mui.back()
+								}else{
+									plus.nativeUI.toast('添加失败')
+								}
+							}
+						});
 						that.alertshow()
-						setInterval(function(){
-							if(that.time==1){
+						setInterval(function() {
+							if(that.time == 1) {
 								mui.back()
-							}else{
+							} else {
 								that.time--
 							}
-						},1000)
+						}, 1000)
+					},
+					myajax: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/usCityPartner/queryPbMaterialPackage",
+							async: true,
+							dataType: 'json',
+							success: function(res) {
+								console.log(res)
+								that.mydata = res.data
+							}
+						});
 					}
 				},
 				mounted: function() {
@@ -168,7 +175,7 @@
 							console.log(values, displayValues);
 						}
 					});
-					$('html').removeClass()
+					this.myajax()
 				}
 			})
 		</script>

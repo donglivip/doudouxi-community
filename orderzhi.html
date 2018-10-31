@@ -12,14 +12,14 @@
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
-				<div class="head-tab mui-action-back">
+				<div class="head-tab" @click="opennew('index')">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					滞留件管理
 				</div>
-				<div class="head-tab">
-					<!--<img src="img/search.png"/>-->
+				<div class="head-tab" @click="opennew('addzan')">
+					<img src="img/add.png"/>
 				</div>
 			</div>
 			<!--中间主体-->
@@ -30,11 +30,11 @@
 							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
-									<div class="order-time">{{val.orderCode}}</div>
+									<div class="order-time">{{val.pbOrderId}}</div>
 								</div>
 								<div class="order-bottom">
-									<div class="order-price">用户名</div>
-									<div class="order-time">{{val.userName}}</div>
+									<div class="order-price">用户手机号</div>
+									<div class="order-time">{{val.usPhone}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">下单时间</div>

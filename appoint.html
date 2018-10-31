@@ -109,7 +109,6 @@
 								pbOrTakeOffTime: that.stime.replace(/-/g,"/"),
 								pbOrCleanTime: that.etime.replace(/-/g,"/")
 							}
-							console.log(JSON.stringify(ajaxjson))
 							$.ajax({
 								type: "post",
 								url: localStorage.getItem('myurl') + "/community/updateAssignmentOrderId",
@@ -126,8 +125,14 @@
 								}
 							});
 						}
-						plus.webview.getWebviewById('orderxidi').reload()
-						mui.back()
+						that.opennew('orderxidi')
+					},
+					opennew: function(target) {
+						mui.openWindow({
+							url: './' + target + '.html',
+							id: target,
+							createNew:true
+						})
 					},
 					indexchange: function(index) {
 						this.myindex = index

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Barcode Example</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+
+	<body>
+		<div class="wrpaper">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					扫一扫
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<div class="alert">
+				<div class="alert-inner">
+					<div class="alert-top">
+						豆豆洗
+					</div>
+					<div class="text">
+						错误
+					</div>
+					<div class="button">
+						<div style="border: 0;" id="true">确定</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(function() {
+			var barcode = null;
+			$('.alert').hide()
+
+			function alertboo(text) {
+				$('.text').html(text)
+				if($('.alert').css('display') == 'none') {
+					plus.webview.currentWebview().remove(barcode);
+					barcode.close()
+					$('.alert').css('display', 'flex')
+				} else {
+					var prePage = plus.webview.currentWebview();
+					prePage.reload(true);
+					$('.alert').css('display', 'none')
+				}
+			}
+
+			function create() {
+				if(!barcode) {
+					barcode = plus.barcode.create('barcode', [plus.barcode.QR], {
+						top: '0',
+						left: '0px',
+						width: '100%',
+						height: '100%',
+						frameColor: '#096148'
+					});
+					barcode.onmarked = onmarked;
+					plus.webview.currentWebview().append(barcode);
+				}
+				barcode.start();
+			}
+
+			function onmarked(type, result) {
+				var text = '未知: ';
+				switch(type) {
+					case plus.barcode.QR:
+						text = 'QR: ';
+						break;
+					case plus.barcode.EAN13:
+						text = 'EAN13: ';
+						break;
+					case plus.barcode.EAN8:
+						text = 'EAN8: ';
+						break;
+				}
+				var that=this
+				$.ajax({
+					type: "post",
+					url: localStorage.getItem('myurl') + "/equipment/verificationDeviceCode",
+					dataType: 'json',
+					data: {
+						deviceCode:result
+					},
+					success: function(res) {
+						if(res.status == 200) {
+							plus.webview.getWebviewById('saoyisao').reload(true)
+							localStorage.setItem('pbPdCode', result)
+							mui.openWindow({
+								url: './changeadress.html',
+								id: 'changeadress'
+							})
+						} else {
+							plus.webview.getWebviewById('saoyisao').reload(true)
+							plus.nativeUI.toast('当前设备已激活！')
+						}
+					},
+					error: function(err) {
+						plus.webview.getWebviewById('saoyisao').reload(true)
+						alert(JSON.stringify(err))
+					}
+				});
+				
+			}
+			$('#true').click(function() {
+				alertboo('')
+			})
+			document.addEventListener("plusready", function() {
+				create()
+			}, false);
+		})
+	</script>
+
+</html>

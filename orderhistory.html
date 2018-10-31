@@ -50,7 +50,7 @@
 					<div class="tab" :class="myindex==1?'active':''" @click="indexchange(1)">干洗店订单</div>
 					<div class="tab" :class="myindex==2?'active':''" @click="indexchange(2)">取送员订单</div>
 				</div>
-				<div class="big-main" @scroll="myscroll" style="background: #FFFFFF;">
+				<div class="big-main" @scroll="myscroll" style="background: #FFFFFF;overflow-y: scroll;">
 					<div class="main-inner">
 						<div class="order-box" v-for="val in mydata">
 							<div class="order-right">

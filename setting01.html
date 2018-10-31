@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+
+	<body>
+		<div class="wrapper help setting">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					切换身份
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main">
+				<div class="help-item" v-if="fetch" @click="myajax(1)">
+					<div>取送员</div>
+					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
+				</div>
+				<div class="help-item" v-if="laundry" @click="myajax(2)">
+					<div>干洗店</div>
+					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
+				</div>
+				<div class="help-item" v-if="community" @click="myajax(3)">
+					<div>社区合伙人</div>
+					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					fetch:false,
+					laundry:false,
+					community:false
+				},
+				methods: {
+					opennew:function(target,id){
+						mui.openWindow({
+							url:'./'+target+'.html',
+							id:target
+						})
+					},					
+					myajax: function(index) {
+						var that=this
+//						取送员
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/fetch/selectUsStaffLogin",
+							dataType: 'json',
+							data: {
+								phone:localStorage.getItem('uphone')
+							},
+							success: function(res) {
+								console.log(res)
+								if(res.status==200&&res.data!=null){
+									that.fetch=true
+									if(index==1){
+										localStorage.setItem('uname',res.data.usStName)
+										localStorage.setItem('uphone',res.data.usStPhone)
+										localStorage.setItem('uapay',res.data.usStAliPayCode)
+										localStorage.setItem('uid',res.data.usStaffId)
+										localStorage.setItem('uwpay',res.data.usStWeChatPayCode)
+										localStorage.setItem('utype',1)
+										localStorage.setItem('uavatar',res.data.usStHeadImg)
+										that.opennew('index')
+									}
+								}
+							}
+						});
+//						干洗店
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/laundry/checkUsStoreLogin",
+							dataType: 'json',
+							data: {
+								phone:localStorage.getItem('uphone')
+							},
+							success: function(res) {
+								console.log(res)
+								if(res.status==200&&res.data!=null){
+									that.laundry=true
+									if(index==2){
+										localStorage.setItem('uname',res.data.usStShopName)
+											localStorage.setItem('uphone',res.data.usStPhone )
+											localStorage.setItem('uapay',res.data.usStAliPayCode)
+											localStorage.setItem('uid',res.data.usStoreId)
+											localStorage.setItem('uwpay',res.data.usStWeChatCode)
+											localStorage.setItem('utype',2)
+											localStorage.setItem('usCommunityPartnerId',res.data.usCommunityPartnerId)
+											that.opennew('index')
+									}
+								}
+							}
+						});
+//						社区合伙人
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectCommunityLogin",
+							dataType: 'json',
+							data: {
+								phone:localStorage.getItem('uphone')
+							},
+							success: function(res) {
+								console.log(res)
+								if(res.status==200&&res.data!=null){
+									that.community=true
+									if(index==3){
+										localStorage.setItem('uname',res.data.usCpName)
+										localStorage.setItem('uphone',res.data.usCpPhone )
+										localStorage.setItem('uapay',res.data.usCpAliPayCode)
+										localStorage.setItem('uid',res.data.usCommunityPartnerId)
+										localStorage.setItem('uwpay',res.data.usCpWeChatCode)
+										localStorage.setItem('utype',0)
+										that.opennew('index')
+									}
+								}
+							}
+						});
+					}
+				},
+				mounted: function() {
+					this.myajax(0)
+				}
+			})
+		</script>
+	</body>
+
+</html>

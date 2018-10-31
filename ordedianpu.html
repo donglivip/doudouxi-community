@@ -14,7 +14,7 @@
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
-				<div class="head-tab mui-action-back">
+				<div class="head-tab" @click="opennew('index')">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
@@ -73,7 +73,7 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" @click="opennew('nav',val.pbPartnerDeviceCaseId,val.usCommunityPartnerId,val.pbOrderId,val.orderDetaileList)" href="javascript:void(0)">调整订单</a>
+										<a class="btn01" @click="opennew('nav',val.orderDetaileList[0].pbPartnerDeviceId,val.usCommunityPartnerId,val.pbOrderId,val.orderDetaileList)" href="javascript:void(0)">调整订单</a>
 										<a class="btn02"  @click="orderok(val.pbOrderId)" href="javascript:void(0)">核实订单</a>
 									</div>
 								</div>
@@ -168,7 +168,7 @@
 					mydata:''
 				},
 				methods: {
-					orderisok:function(){
+					orderisok:function(id){
 						var that = this
 //						完成订单
 						$.ajax({
@@ -219,10 +219,11 @@
 						localStorage.setItem('pbPartnerDeviceCaseId',id)
 						localStorage.setItem('usCommunityPartnerId',id02)
 						localStorage.setItem('pbOrderId',id03)
-						localStorage.setItem('cartdataold',cartdata)
+						localStorage.setItem('cartdataold',JSON.stringify(cartdata))
 						mui.openWindow({
 							url: './' + target + '.html',
-							id: target
+							id: target,
+							createNew:true
 						})
 					},
 					alertshow: function() {
@@ -244,15 +245,19 @@
 					myajax: function() {
 						var that = this
 //						待审核
+						var pbOrProblemStatus=''
+						if(that.myindex=='7'){pbOrProblemStatus='2'}
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/laundry/selectLaundryOrder",
 							dataType: 'json',
 							data: {
 								usStoreId:localStorage.getItem('uid'),
-								pbOrStatus:that.myindex
+								pbOrStatus:that.myindex,
+								pbOrProblemStatus:pbOrProblemStatus
 							},
 							success: function(res) {
+								console.log(res)
 								that.mydata=res.data
 							}
 						});

@@ -12,7 +12,7 @@
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
-				<div class="head-tab mui-action-back">
+				<div class="head-tab" @click="opennew('index')">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
@@ -32,6 +32,10 @@
 						</div>
 						<div class="trade-item" :class="myindex==11?'active':''" @click="indexchange(11)">
 							<div class="text">已清洗</div>
+							<div class="radius"></div>
+						</div>
+						<div class="trade-item" :class="myindex==7?'active':''" @click="indexchange(7)">
+							<div class="text">待退单</div>
 							<div class="radius"></div>
 						</div>
 					</div>
@@ -70,16 +74,40 @@
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">店铺名称</div>
-									<div class="order-time">{{val.name}}</div>
+									<div class="order-time">{{val.usStShopName}}</div>
 								</div>
 								<div class="order-bottom" style="align-items: flex-start;">
 									<div class="order-price">店铺地址</div>
-									<div class="order-time">{{val.adress}} </div>
+									<div class="order-time">{{val.usStAddress}} </div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint')" v-if="!state">订单指派</a>
+										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint03',[val.pbOrderId])" v-if="!state">订单指派</a>
+										<img src="img/y.png" v-if="state&&val.state==true" class="logo" @click="changeindex(index,2)"/>
+										<img src="img/n.png" v-if="state&&val.state==false" class="logo" @click="changeindex(index,2)"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box" v-if="myindex==14" v-for='(val,index) in shopdata'>
+							<div class="order-right">
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">{{val.pbOrderId}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">店铺名称</div>
+									<div class="order-time">{{val.usStShopName}}</div>
+								</div>
+								<div class="order-bottom" style="align-items: flex-start;">
+									<div class="order-price">店铺地址</div>
+									<div class="order-time">{{val.usStAddress}} </div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint03',[val.pbOrderId])" v-if="!state">订单指派</a>
 										<img src="img/y.png" v-if="state&&val.state==true" class="logo" @click="changeindex(index,2)"/>
 										<img src="img/n.png" v-if="state&&val.state==false" class="logo" @click="changeindex(index,2)"/>
 									</div>
@@ -131,9 +159,13 @@
 					myajax:function(){
 						var that=this
 						var ajaxjson={
-								usCommunityPartnerI:localStorage.getItem('uid'),
-								pbOrStatus:that.myindex
+								usCommunityPartnerId:localStorage.getItem('uid'),
+								pbOrStatus:that.myindex,
+								pbOrProblemStatus:3
 							}
+						if(that.myindex!=7){
+							ajaxjson.pbOrProblemStatus=''
+						}
 						console.log(ajaxjson)
 						$.ajax({
 							type:"post",

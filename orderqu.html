@@ -42,7 +42,7 @@
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">{{val.deviceName}}</div>
-									<a class="order-time" href="['tel:'+val.userPhone+'']" style="font-size: .2rem;color: #096148;">
+									<a class="order-time" :href="['tel:'+val.userPhone+'']" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
@@ -56,11 +56,11 @@
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">送达地址</div>
-									<div class="order-time">{{val.takeAddress}}</div>
+									<div class="order-time">{{val.sendAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">最迟收取时间</div>
-									<div class="order-time">{{val.takeAddress}}</div>
+									<div class="order-time">{{val.takeTime}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">干洗店电话</div>
@@ -74,7 +74,7 @@
 									<div class="order-price"></div>
 									<div class="order-time setting">
 										<a class="btn01" href="javascript:void(0)" @click="orderheshi(val.pbOrderId)">核实订单</a>
-										<a class="btn02" href="javascript:void(0)" @click="opensao">扫码开箱</a>
+										<a class="btn02" href="javascript:void(0)" @click="opensao(val.pbOrderId)">扫码开箱</a>
 									</div>
 								</div>
 							</div>
@@ -83,7 +83,7 @@
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">{{val.deviceName}}</div>
-									<a class="order-time" href="['tel:'+val.userPhone+'']" style="font-size: .2rem;color: #096148;">
+									<a class="order-time" :href="['tel:'+val.userPhone+'']" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
@@ -97,11 +97,11 @@
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">送达地址</div>
-									<div class="order-time">{{val.takeAddress}}</div>
+									<div class="order-time">{{val.sendAddress}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">最迟收取时间</div>
-									<div class="order-time">{{val.takeAddress}}</div>
+									<div class="order-time">{{val.takeTime}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">干洗店电话</div>
@@ -215,7 +215,8 @@
 
 						}
 					},
-					opensao: function() {
+					opensao: function(id) {
+						localStorage.setItem('orderId',id)
 						mui.openWindow({
 							url: './saoyisao.html',
 							id: 'saoyisao'

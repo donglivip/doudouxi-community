@@ -39,7 +39,7 @@
 					<div class="tab-text">设备管理</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
 				</div>
-				<div class="user-tab" @click="opennew('saoyisao')">
+				<div class="user-tab" @click="opennew('saoyisao02')">
 					<div class="tab-text">激活设备</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" class="arr"/>
 				</div>
@@ -54,10 +54,10 @@
 				},
 				methods:{
 					opennew:function(target,id){
-						plus.webview.getWebviewById('saoyisao').reload(true)
 						mui.openWindow({
 							url:'./'+target+'.html',
-							id:target
+							id:target,
+							createNew:true
 						})
 					}
 				},

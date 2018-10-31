@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/style/nav.css"/>
 		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
@@ -36,12 +36,14 @@
 					</div>
 				</div>
 				<div class="subnav">
-					<div class="subnav-item" :class="subindex==index?'active':''" @click="subindexchange(index)" v-for="(val,index) in onedata[navindex].twoList">{{val.pbCtName}}</div>
+					<div class="subnav-inner">
+						<div class="subnav-item" :class="subindex==index?'active':''" @click="subindexchange(index)" v-for="(val,index) in onedata[navindex].twoList" v-if="onedata.length!=0">{{val.pbCtName}}</div>
+					</div>
 				</div>
 				<div class="shop-box">
 					<div class="shop" v-for="(val,index) in threedata">
 						<div class="img-box" @click="usCommunityPartnerSaleId(val.usCommunityPartnerSaleId,index)">
-							<img :src="val.pbCdImg" />
+							<img :src="val.pbCdImg | myimg" />
 						</div>
 						<div class="price-box">
 							<div class="name">{{val.pbCdName}}</div>
@@ -49,7 +51,7 @@
 						</div>
 						<div class="add-box">
 							<img src="img/Close-2 Copy 9@2x.png" @click.stop="addnum('j',index)" />
-							<div class="num">{{val.pbRdNum}}</div>
+							<div class="num">{{val.countNum}}</div>
 							<img src="img/Close-2 Copy 6@2x.png" @click.stop="addnum('z',index)" />
 						</div>
 					</div>
@@ -62,11 +64,13 @@
 						<img src="img/Trash@2x.png" @click.stop="clear" />
 						<div class="text" @click.stop="clear">清空洗衣篮</div>
 					</div>
-					<div class="cart" v-for="val in cartdata">
+					<div class="cart" v-for="(val,index) in cartdata">
 						<div class="cart-name">{{val.pbCdName}}</div>
 						<div class="cart-num">￥{{val.usCpsSalePrice}}</div>
 						<div class="cart-setting">
+							<img src="img/Close-2 Copy 9@2x.png" @click.stop="changenum('j',index)" />
 							<div>x{{val.pbRdNum}}</div>
+							<img src="img/Close-2 Copy 6@2x.png" @click.stop="changenum('z',index)" />
 						</div>
 					</div>
 				</div>
@@ -74,7 +78,7 @@
 			<!--详情弹出层-->
 			<div class="main" v-if='detailboo'>
 				<div class="img-box">
-					<img :src="mydata.pbCdImg" />
+					<img :src="mydata.pbCdImg | myimg" />
 				</div>
 				<div class="detail-inner">
 					<div class="name">
@@ -85,7 +89,7 @@
 					</div>
 					<div class="setting">
 						<img src="img/Close-2 Copy 9@2x.png" @click.stop="addnum('j',index)" />
-						<div>{{threedata[index].pbRdNum}}</div>
+						<div>{{threedata[index].countNum}}</div>
 						<img src="img/Close-2 Copy 6@2x.png" @click.stop="addnum('z',index)" />
 					</div>
 				</div>
@@ -125,10 +129,20 @@
 					mydata: ''
 				},
 				methods: {
-					pay:function(){
-						localStorage.setItem('cartdata',JSON.stringify(this.cartdata))
-						localStorage.setItem('allnum',this.allnum)
-						this.opennew('pay02')
+					pay: function() {
+						if(this.cartdata.length==0){
+							plus.nativeUI.toast('您还没选择衣物呢！')
+						}else{
+							localStorage.setItem('cartdata', JSON.stringify(this.cartdata))
+							localStorage.setItem('allnum', this.allnum)
+							this.opennew('pay02')
+						}
+					},
+					allprice: function() {
+						this.allnum = 0
+						for(var i = 0; i < this.cartdata.length; i++) {
+							this.allnum += this.cartdata[i].usCpsSalePrice * this.cartdata[i].pbRdNum
+						}
 					},
 					back: function() {
 						var that = this
@@ -153,21 +167,42 @@
 					},
 					myajax: function() {
 						var that = this
+						console.log({
+								pbOrderId: localStorage.getItem('pbOrderId'),
+								usStoreId: localStorage.getItem('uid')
+							})
+						//						插入洗衣篮数据
 						$.ajax({
 							type: "post",
-							url: localStorage.getItem('myurl') + "/user/getOneTwo",
+							url: localStorage.getItem('myurl') + "/laundry/insertOrderBasket",
 							dataType: 'json',
 							data: {
-								deviceCaseId: localStorage.getItem('pbPartnerDeviceCaseId')
+								pbOrderId: localStorage.getItem('pbOrderId'),
+								usStoreId: localStorage.getItem('uid')
 							},
 							success: function(res) {
-								console.log(res)
-								that.onedata = res.data
-								that.havethree()
+								
+								if(res.data != 1) {
+									plus.nativeUI.toast('洗衣篮获取失败！')
+								} else {
+									//						 			获取一级,二级分类
+									$.ajax({
+										type: "post",
+										url: localStorage.getItem('myurl') + "/user/getOneTwo",
+										dataType: 'json',
+										data: {
+											deviceCaseId: localStorage.getItem('pbPartnerDeviceCaseId')
+										},
+										success: function(res) {
+											that.onedata = res.data
+											that.havethree()
+										}
+									});
+								}
 							}
 						});
 					},
-					havethree:function(){
+					havethree: function() {
 						var that = this
 						$.ajax({
 							type: "post",
@@ -175,59 +210,130 @@
 							dataType: 'json',
 							data: {
 								usCommunityPartnerId: localStorage.getItem('usCommunityPartnerId'),
-								pbClothesTwoId:that.onedata[that.navindex].pbClothesTwoId,
-								pbOrderId:localStorage.getItem('pbOrderId')
+								pbClothesTwoId: that.onedata[that.navindex].twoList[that.subindex].pbClothesTwoId,
+								pbOrderId: localStorage.getItem('pbOrderId'),
+								usStoreId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								that.threedata = res.data
+							}
+						});
+						//									获取洗衣篮信息
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/laundry/selectPbOrderDetaileBasket",
+							dataType: 'json',
+							data: {
+								orderId: localStorage.getItem('pbOrderId'),
+								usStoreId: localStorage.getItem('uid')
 							},
 							success: function(res) {
 								console.log(res)
-								that.threedata=res.data
-								for(var i = 0; i < that.threedata.length; i++) {
-										that.threedata[i].pbRdNum=that.threedata[i].countNum
-								}
+								that.cartdata = res.data
+								that.allprice()
 							}
 						});
+						plus.nativeUI.closeWaiting()
 					},
 					clear: function() {
 						var that = this
-						this.cartdata = []
-						for(var i = 0; i < that.threedata.length; i++) {
-							that.threedata[i].pbRdNum = 0
-						}
-						that.allnum = 0
 						this.alertboo = !this.alertboo
+						//						清空洗衣篮信息
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/laundry/truncateOrderBasket",
+							dataType: 'json',
+							data: {
+								pbOrderId: localStorage.getItem('pbOrderId')
+							},
+							success: function(res) {
+								console.log(res)
+								that.havethree()
+							}
+						});
 					},
-					addnum: function(type, index) {
-						var that = this
+					changenum: function(type, index) {
+						plus.nativeUI.showWaiting()
+						var that = this,
+							num = this.cartdata[index].pbRdNum
 						if(type == 'j') {
-							if(this.threedata[index].pbRdNum > 0) {
-								this.threedata[index].pbRdNum--
+							if(num > 0) {
+								num--
 							}
 						} else {
-							console.log(this.threedata[index].pbRdNum)
-							this.threedata[index].pbRdNum++
-						}
-						that.allnum = 0
-						that.cartdata=[]
-						for(var i = 0; i < that.threedata.length; i++) {
-							if(that.threedata[i].pbRdNum > 0) {
-								that.cartdata.push(that.threedata[i])
-								that.allnum += that.threedata[i].pbRdNum * that.threedata[i].usCpsSalePrice
+							num++
+						}console.log({
+								pbOrderDetaileBasketId: that.cartdata[index].pbOrderDetaileBasketId,
+								pbRdNum: num,
+								pbRdPrice: num * that.cartdata[index].usCpsSalePrice
+							})
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/laundry/updateOrderBasket",
+							dataType: 'json',
+							data: {
+								pbOrderDetaileBasketId: that.cartdata[index].pbOrderDetaileBasketId,
+								pbRdNum: num,
+								pbRdPrice: num * that.cartdata[index].usCpsSalePrice
+							},
+							success: function(res) {
+								that.havethree()
 							}
+						});
+					},
+					addnum: function(type, index) {
+						plus.nativeUI.showWaiting()
+						var that = this,
+							num = this.threedata[index].countNum
+						if(type == 'j') {
+							if(num > 0) {
+								num--
+							}
+						} else {
+							num++
 						}
+						if(this.threedata[index].countNum == 0) {
+							//							插入洗衣篮信息
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/laundry/insertOrderBasketDetail",
+								dataType: 'json',
+								data: {
+									pbOrderId: localStorage.getItem('pbOrderId'),
+									usCommunityPartnerSaleId: that.threedata[index].usCommunityPartnerSaleId,
+									pbRdNum: 1,
+									pbRdPrice: that.threedata[index].usCpsSalePrice,
+									usStoreId: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									console.log(res)
+									that.havethree()
+								}
+							});
+						} else {
+							//							更改洗衣篮信息
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/laundry/updateOrderBasket",
+								dataType: 'json',
+								data: {
+									pbOrderDetaileBasketId: that.threedata[index].pbOrderDetaileBasketId,
+									pbRdNum: num,
+									pbRdPrice: num * that.threedata[index].usCpsSalePrice
+								},
+								success: function(res) {
+									console.log(res)
+									that.havethree()
+								}
+							});
+						}
+						
 					},
 					tab: function(index, id) {
 						this.navindex = index
+						this.myajax()
 					},
 					alertshow: function() {
-						var that = this
-						if(!that.alertboo) {
-							that.cartdata = []
-							for(var i = 0; i < that.threedata.length; i++) {
-								if(that.threedata[i].pbRdNum > 0) {
-									that.cartdata.push(that.threedata[i])
-								}
-							}
-						}
 						this.alertboo = !this.alertboo
 					},
 					opennew: function(target) {
@@ -238,10 +344,16 @@
 					},
 					subindexchange: function(index) {
 						this.subindex = index
+						this.havethree()
 					}
 				},
 				mounted: function() {
 					this.myajax()
+				},
+				filters: {
+					myimg: function(value) {
+						return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+					}
 				}
 			})
 		</script>

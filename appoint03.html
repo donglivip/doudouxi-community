@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<link rel="stylesheet" type="text/css" href="css/jquery.weui.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<style type="text/css">
+		.order-box {
+			margin-bottom: .2rem;
+		}
+		
+		.order-right {
+			padding-top: .2rem;
+		}
+	</style>
+
+	<body>
+		<div class="wrapper order trade">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
+				</div>
+				<div class="head-main">
+					指派订单
+				</div>
+				<div class="head-tab">
+
+				</div>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main complaint haveactivity02">
+				<div class="order-box appoint">
+					<div class="order-right">
+						<div class="order-bottom">
+							<div class="order-price">取送最迟时间</div>
+							<div class="order-time">
+								<input type="text" v-model="pbOrTakeOffTime" @click="pickDate('s')" placeholder="取送最迟时间" />
+							</div>
+						</div>
+						<div class="order-bottom">
+							<div class="order-price">指派取送员</div>
+							<div class="order-time">
+								<select v-model="usStaffIdRetention">
+									<option :value="val.usStaffId" v-for="val in mydata01">{{val.usStName}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="bottom" @click="submit">确认指派</div>
+					</div>
+				</div>
+			
+			</div>
+			<div class="alert" v-show="alertboo" @click="alertshow">
+				<div class="alert-inner">
+					<img src="img/yes.png"/>
+					<div class="text">指派成功,  {{time}}后返回</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					pbOrTakeOffTime: '',
+					etime: '',
+					adetail: '',
+					adress: '',
+					alertboo:false,
+					time:3,
+					mydata:[],
+					mydata01:[],
+					usStaffIdRetention:'',
+					usTommunityStoragePointId:''
+				},
+				methods: {
+					submit:function(){
+						var mylist=JSON.parse(localStorage.getItem('orderlist'))
+						var that = this
+						for(var i = 0; i < mylist.length; i++) {
+							var ajaxjson = {
+								pbOrderId: mylist[i],
+								usStaffIdGive: that.usStaffIdRetention,
+								pbOrTakeOffTime: that.pbOrTakeOffTime.replace(/-/g,"/"),
+								updateName:localStorage.getItem('uname')
+							}
+							console.log(JSON.stringify(ajaxjson))
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/updateAssignmentOrderIdClean",
+								dataType: 'json',
+								data: ajaxjson,
+								success: function(res) {
+									console.log(JSON.stringify(res))
+									if(res.status == 300) {
+										plus.nativeUI.toast('订单指派失败')
+									}else if(res.status == 400){
+										plus.nativeUI.toast('没有可用柜子')
+									}
+								},
+								error:function(err){
+									console.log(JSON.stringify(err))
+								}
+							});
+						}
+						that.opennew('orderxidi')
+					},
+					opennew: function(target) {
+						mui.openWindow({
+							url: './' + target + '.html',
+							id: target,
+							createNew:true
+						})
+					},
+					pickDate: function(type) {
+						var that = this
+						plus.nativeUI.pickDate(function(e) {
+							var d = e.date;
+							that.pbOrTakeOffTime = d.getFullYear() + "/" + (d.getMonth() + 1) + "/" + d.getDate()
+						}, function(e) {
+							console.log("未选择日期：" + e.message);
+						});
+					},
+					alertshow:function(){
+						this.alertboo=!this.alertboo
+					},
+					pay:function(){
+						var that=this
+						that.alertshow()
+						setInterval(function(){
+							if(that.time==1){
+								mui.back()
+							}else{
+								that.time--
+							}
+						},1000)
+					},
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/queryUsCommunityUsStaff",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata01 = res.data
+							}
+						});
+					}
+				},
+				mounted: function() {
+					this.myajax()
+				}
+			})
+		</script>
+	</body>
+
+</html>

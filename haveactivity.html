@@ -29,26 +29,26 @@
 			</div>
 			<!--中间主体-->
 			<div class="main big-main complaint">
-					<div class="trade-main activity" @scroll="myscroll">
+					<div class="activity">
 						<div class="main-inner">
-							<div class="order-box">
+							<div class="order-box" v-for="val in mydata">
 								<div class="order-right">
 									<div class="order-bottom">
 										<div class="order-price">设备名称</div>
-										<div class="order-time">郑春平的一号柜</div>
+										<div class="order-time">{{val.pbPdName}}</div>
 									</div>
 									<div class="order-bottom">
 										<div class="order-price">所在位置</div>
-										<div class="order-time">徐州市铜山区春旺小区西门</div>
+										<div class="order-time">{{val.pbPdAddress}}</div>
 									</div>
 									<div class="order-bottom">
 										<div class="order-price">已举办活动次数</div>
-										<div class="order-time">5次</div>
+										<div class="order-time">{{val.countNum}}次</div>
 									</div>
 									<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 										<div class="order-price"></div>
 										<div class="order-time setting">
-											<a class="btn02" href="javascript:void(0)" @click="opennew('haveactivity02')">申请活动</a>
+											<a class="btn02" href="javascript:void(0)" @click="opennew('haveactivity02',val.pbPartnerDeviceId)">申请活动</a>
 										</div>
 									</div>
 								</div>
@@ -65,57 +65,49 @@
 				el: '.wrapper',
 				data: {
 					myindex: 0,
-					mydata: [],
-					pages:0,
-					pageNum:0
+					mydata: []
 				},
 				methods: {
 					indexchange: function(index) {
 						this.myindex = index
 					},
 					opennew:function(target,id){
-						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
-						})
-					},
-					myajax:function(){
 						var that=this
-						that.pageNum++
 						$.ajax({
 							type: "post",
-							url: localStorage.getItem('myurl') + "/community/selectActivityDevicePackagePojoEnd",
+							url: localStorage.getItem('myurl') + "/community/selectpbActivityTreasulrIsNo",
 							dataType: 'json',
 							data: {
-								usCommunityPartnerId: localStorage.getItem('uid'),
-								pageNum:that.pageNum
+								pbPartnerDeviceId: id
 							},
 							success: function(res) {
-								console.log(res)
-								that.pages=res.data.pages
-								for(var i = 0; i < res.data.list.length; i++) {
-									that.mydata.push(res.data.list[i])
+								if(res.data==1){
+									localStorage.setItem('pbPartnerDeviceId',id)
+									mui.openWindow({
+										url:'./'+target+'.html',
+										id:target
+									})
+								}else{
+									plus.nativeUI.toast('当前柜子已有活动！')
 								}
 							}
 						});
+						
 					},
-					myscroll: function() {
-						var that = this
-						if(Math.abs($('.main-inner').offset().top) + $('.main').height() + 200 >= $('.main-inner').height()) {
-							if(that.pages>that.pageNum){
-								function plusReady() {
-									// 弹出系统等待对话框
-									var w = plus.nativeUI.showWaiting("等待中...");
-								}
-								if(window.plus) {
-									plusReady();
-								} else {
-									document.addEventListener("plusready", plusReady, false);
-								}
-								that.myajax()
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/selectPbActivityTreasulrCountNum",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata=res.data
 							}
-							
-						}
+						});
 					}
 				},
 				mounted: function() {

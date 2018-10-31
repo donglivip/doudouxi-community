@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="css/main.css" />
+		<script src="js/rem.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
+		<title></title>
+	</head>
+	<body>
+		<div class="wrapper community">
+			<!--头部-->
+			<div class="header">
+				<div class="head-tab mui-action-back">
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+				</div>
+				<div class="head-main">
+					暂存点管理
+				</div>
+				<div class="head-tab" @click="opennew('addzan')">
+					<img src="img/add.png"/>
+				</div>
+			</div>
+			<!--中间主体-->
+			<div class="main big-main">
+				<div class="community-box" v-for="val in mydata">
+					<div class="community-main" style="justify-content: center;margin: 0 .2rem;flex: 1;">
+						{{val.usCspAddress}}
+					</div>
+					<img src="img/Trash@2x.png" style="width: .4rem;height: .4rem;border-radius: 0;" @click="delete(val.usCommunityStoragePointId,val.usCspDefault)"/>
+				</div>
+			</div>
+		</div>
+		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var myvue=new Vue({
+				el:'.wrapper',
+				data:{
+					mydata:[]
+				},
+				methods:{
+					myajax:function(){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/queryStorageAddress",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.mydata = res.data
+							}
+						});
+					},
+					delete:function(id,status){
+						var that=this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/deleteUsCommunityStoragePointStauts",
+							dataType: 'json',
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid'),
+								usCommunityStoragePointId:id,
+								usCspDefault:status
+							},
+							success: function(res) {
+								if(res.data==1){
+									that.myajax()
+								}else{
+									plus.nativeUI.toast('删除失败！')
+								}
+							}
+						});
+					}
+				},
+				mounted:function(){
+					this.myajax()
+				}
+			})
+		</script>
+	</body>
+</html>
