@@ -1,0 +1,5 @@
+@import url("../reset.css");
+/*关于我们*/
+.aboutus h4{font-size: .3rem;margin: .2rem .2rem .1rem;}
+.aboutus p{margin-left: .25rem;font-size: .25rem;line-height: .5rem;}
+.aboutus .main img{width: calc(100% - .6rem);margin: .3rem;}

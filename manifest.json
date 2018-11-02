@@ -220,7 +220,8 @@
 				"resources": [],
 				"refer": [
 					"devicedetail.html",
-					"my.html"
+					"my.html",
+					"device.html"
 				],
 				"priority": 0
 			},
@@ -496,7 +497,8 @@
 			"mlogin.html": {
 				"resources": [],
 				"refer": [
-					"index.html"
+					"index.html",
+					"setting.html"
 				],
 				"priority": 0
 			},
@@ -533,6 +535,13 @@
 				"resources": [],
 				"refer": [
 					"orderxidi.html"
+				],
+				"priority": 0
+			},
+			"setting01.html": {
+				"resources": [],
+				"refer": [
+					"index.html"
 				],
 				"priority": 0
 			}

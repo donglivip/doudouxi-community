@@ -37,12 +37,12 @@
 						</div>
 					</div>
 				</div>
-				<a class="user-tab" href="javascript:void(0)">
+				<!--<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">ID</div>
 					<div class="tab-text">
 						{{mydata.usStaffId}}
 					</div>
-				</a>
+				</a>-->
 				<a class="user-tab" href="javascript:void(0)">
 					<div class="tab-text">身份证号</div>
 					<div class="tab-text">
@@ -114,7 +114,11 @@
 				},
 				filters:{
 					myimg:function(value){
-						return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+						if(value==""){
+							return './img/Group 10@2x.png'
+						}else{
+							return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+						}
 					}
 				}
 			})

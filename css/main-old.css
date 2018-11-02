@@ -66,10 +66,7 @@
 .setting .avatar img{width: .8rem;height: .8rem;border-radius: 50%;}
 .setting input{flex: 1;text-indent: .2rem;}
 .setting .submit{background: #096148;color: #FFFFFF;height: .9rem;position: absolute;bottom: 0;left: 0;width: 100%;display: flex;align-items: center;justify-content: center;}
-/*关于我们*/
-.aboutus h4{font-size: .3rem;margin: .2rem .2rem .1rem;}
-.aboutus p{margin-left: .25rem;font-size: .25rem;line-height: .5rem;}
-.aboutus .main img{width: calc(100% - .6rem);margin: .3rem;}
+
 /*问题详情*/
 .questiondetail h5{font-size: .28rem;margin: .3rem .2rem;}
 .questiondetail p{font-size: .28rem;margin: 0 .3rem ;}

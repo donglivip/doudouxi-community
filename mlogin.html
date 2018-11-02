@@ -133,7 +133,7 @@
 									console.log(res)
 									if(res.status==200){
 										if(res.data==null){
-											that.alertshow('不存在该干洗店！')
+											that.alertshow('用户名或者密码不正确！')
 										}else{
 											localStorage.setItem('uname',res.data.usStShopName)
 											localStorage.setItem('uphone',res.data.usStPhone )

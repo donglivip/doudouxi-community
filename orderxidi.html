@@ -137,7 +137,8 @@
 						localStorage.setItem('orderlist',JSON.stringify(id))
 						mui.openWindow({
 							url:'./'+target+'.html',
-							id:target
+							id:target,
+							createNew:true
 						})
 					},
 					changestate:function(){

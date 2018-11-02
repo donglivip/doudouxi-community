@@ -67,15 +67,13 @@
 				methods:{
 					backlogin:function(){
 						localStorage.clear()
-						mui.openWindow({
-							url:'./mlogin.html',
-							id:'mlogin'
-						})
+						window.location.href='mlogin.html'
 					},
 					opennew:function(target,id){
 						mui.openWindow({
 							url:'./'+target+'.html',
-							id:target
+							id:target,
+							createNew:true
 						})
 					},
 					imgclick: function(imid, inid) {

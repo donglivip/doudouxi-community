@@ -26,15 +26,15 @@
 			</div>
 			<!--中间主体-->
 			<div class="main big-main">
-				<div class="help-item" v-if="fetch" @click="myajax(1)">
+				<div class="help-item" v-if="fetch&&utype!=1" @click="myajax(1)">
 					<div>取送员</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
 				</div>
-				<div class="help-item" v-if="laundry" @click="myajax(2)">
+				<div class="help-item" v-if="laundry&&utype!=2" @click="myajax(2)">
 					<div>干洗店</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
 				</div>
-				<div class="help-item" v-if="community" @click="myajax(3)">
+				<div class="help-item" v-if="community&&utype!=0" @click="myajax(3)">
 					<div>社区合伙人</div>
 					<img src="img/Arrow_simple_rightt Copy 3@2x.png" />
 				</div>
@@ -46,88 +46,99 @@
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					fetch:false,
-					laundry:false,
-					community:false
+					fetch: false,
+					laundry: false,
+					community: false,
+					utype: localStorage.getItem('utype')
 				},
 				methods: {
-					opennew:function(target,id){
+					opennew: function(target, id) {
 						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
+							url: './' + target + '.html',
+							id: target,
+							createNew: true
 						})
-					},					
+					},
 					myajax: function(index) {
-						var that=this
-//						取送员
+						var that = this
+						//						取送员
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/fetch/selectUsStaffLogin",
 							dataType: 'json',
 							data: {
-								phone:localStorage.getItem('uphone')
+								phone: localStorage.getItem('uphone')
 							},
 							success: function(res) {
 								console.log(res)
-								if(res.status==200&&res.data!=null){
-									that.fetch=true
-									if(index==1){
-										localStorage.setItem('uname',res.data.usStName)
-										localStorage.setItem('uphone',res.data.usStPhone)
-										localStorage.setItem('uapay',res.data.usStAliPayCode)
-										localStorage.setItem('uid',res.data.usStaffId)
-										localStorage.setItem('uwpay',res.data.usStWeChatPayCode)
-										localStorage.setItem('utype',1)
-										localStorage.setItem('uavatar',res.data.usStHeadImg)
+								if(res.status == 200 && res.data != null) {
+									that.fetch = true
+									if(index == 1) {
+										var myurl=localStorage.getItem('myurl')
+										localStorage.clear()
+										localStorage.setItem('myurl',myurl)
+										localStorage.setItem('uname', res.data.usStName)
+										localStorage.setItem('uphone', res.data.usStPhone)
+										localStorage.setItem('uapay', res.data.usStAliPayCode)
+										localStorage.setItem('uid', res.data.usStaffId)
+										localStorage.setItem('uwpay', res.data.usStWeChatPayCode)
+										localStorage.setItem('utype', 1)
+										localStorage.setItem('uavatar', res.data.usStHeadImg)
 										that.opennew('index')
 									}
 								}
 							}
 						});
-//						干洗店
+						//						干洗店
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/laundry/checkUsStoreLogin",
 							dataType: 'json',
 							data: {
-								phone:localStorage.getItem('uphone')
+								phone: localStorage.getItem('uphone')
 							},
 							success: function(res) {
 								console.log(res)
-								if(res.status==200&&res.data!=null){
-									that.laundry=true
-									if(index==2){
-										localStorage.setItem('uname',res.data.usStShopName)
-											localStorage.setItem('uphone',res.data.usStPhone )
-											localStorage.setItem('uapay',res.data.usStAliPayCode)
-											localStorage.setItem('uid',res.data.usStoreId)
-											localStorage.setItem('uwpay',res.data.usStWeChatCode)
-											localStorage.setItem('utype',2)
-											localStorage.setItem('usCommunityPartnerId',res.data.usCommunityPartnerId)
-											that.opennew('index')
+								if(res.status == 200 && res.data != null) {
+									that.laundry = true
+									if(index == 2) {
+										var myurl=localStorage.getItem('myurl')
+										localStorage.clear()
+										localStorage.setItem('myurl',myurl)
+										localStorage.setItem('uname', res.data.usStShopName)
+										localStorage.setItem('uphone', res.data.usStPhone)
+										localStorage.setItem('uapay', res.data.usStAliPayCode)
+										localStorage.setItem('uid', res.data.usStoreId)
+										localStorage.setItem('uwpay', res.data.usStWeChatCode)
+										localStorage.setItem('utype', 2)
+										localStorage.setItem('usCommunityPartnerId', res.data.usCommunityPartnerId)
+										that.opennew('index')
 									}
 								}
 							}
 						});
-//						社区合伙人
+						//						社区合伙人
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/community/selectCommunityLogin",
 							dataType: 'json',
 							data: {
-								phone:localStorage.getItem('uphone')
+								phone: localStorage.getItem('uphone')
 							},
 							success: function(res) {
 								console.log(res)
-								if(res.status==200&&res.data!=null){
-									that.community=true
-									if(index==3){
-										localStorage.setItem('uname',res.data.usCpName)
-										localStorage.setItem('uphone',res.data.usCpPhone )
-										localStorage.setItem('uapay',res.data.usCpAliPayCode)
-										localStorage.setItem('uid',res.data.usCommunityPartnerId)
-										localStorage.setItem('uwpay',res.data.usCpWeChatCode)
-										localStorage.setItem('utype',0)
+								if(res.status == 200 && res.data != null) {
+									that.community = true
+									if(index == 3) {
+										var myurl=localStorage.getItem('myurl')
+										localStorage.clear()
+										localStorage.setItem('myurl',myurl)
+										localStorage.setItem('uname', res.data.usCpName)
+										localStorage.setItem('uphone', res.data.usCpPhone)
+										localStorage.setItem('uapay', res.data.usCpAliPayCode)
+										localStorage.setItem('uid', res.data.usCommunityPartnerId)
+										localStorage.setItem('uwpay', res.data.usCpWeChatCode)
+										localStorage.setItem('utype', 0)
 										that.opennew('index')
 									}
 								}

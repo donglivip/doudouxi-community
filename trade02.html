@@ -35,21 +35,21 @@
 					<div class="sharedetail-item">
 						<p>今日</p>
 						<p v-if="mydata.mapDay!=null">￥{{mydata.mapDay.pbOrCountPrice}}</p>
-						<p v-if="mydata.mapDay!=null">￥{{mydata.mapDay.usCpfdPrice}}</p>
+						<p v-if="mydata.mapDay!=null">￥{{mydata.mapDay.usSfdPrice}}</p>
 						<p v-if="mydata.mapDay==null">￥0</p>
 						<p v-if="mydata.mapDay==null">￥0</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>当月</p>
 						<p v-if="mydata.mapMonth!=null">￥{{mydata.mapMonth.pbOrCountPrice}}</p>
-						<p v-if="mydata.mapMonth!=null">￥{{mydata.mapMonth.usCpfdPrice}}</p>
+						<p v-if="mydata.mapMonth!=null">￥{{mydata.mapMonth.usSfdPrice}}</p>
 						<p v-if="mydata.mapMonth==null">￥0</p>
 						<p v-if="mydata.mapMonth==null">￥0</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>当季</p>
 						<p v-if="mydata.mapQuarter!=null">￥{{mydata.mapQuarter.pbOrCountPrice}}</p>
-						<p v-if="mydata.mapQuarter!=null">￥{{mydata.mapQuarter.usCpfdPrice}}</p>
+						<p v-if="mydata.mapQuarter!=null">￥{{mydata.mapQuarter.usSfdPrice}}</p>
 						<p v-if="mydata.mapQuarter==null">￥0</p>
 						<p v-if="mydata.mapQuarter==null">￥0</p>
 					</div>
@@ -70,10 +70,9 @@
 						</div>
 					</div>
 					<div class="order-box" @scroll="myscroll">
-						<div class="main-inner">
 							<div class="order-right" v-for="val in mydata01">
 								<div class="order-bottom">
-									<div class="order-price">订单号:{{val.pbOrderId}}</div>
+									<div class="order-price" style="white-space: nowrap;">订单号:{{val.pbOrderId}}</div>
 									<div class="order-time">{{val.pbOrUpdateTimeDay}}</div>
 								</div>
 								<div class="order-bottom">
@@ -85,7 +84,6 @@
 									<div class="order-time yellow">￥{{val.usCpfdPrice}}</div>
 								</div>
 							</div>
-						</div>
 					</div>
 				</div>
 			</div>

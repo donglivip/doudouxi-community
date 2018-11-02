@@ -72,7 +72,11 @@
 				},
 				filters:{
 					myimg:function(value){
-						return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+						if(value==""){
+							return './img/Group 10@2x.png'
+						}else{
+							return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+						}
 					}
 				}
 			})
