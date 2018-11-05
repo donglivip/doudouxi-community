@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,18 +9,19 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+
 	<body>
 		<div class="wrapper plogin">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab">
-					
+
 				</div>
 				<div class="head-main">
 					登录
 				</div>
 				<div class="head-tab">
-					
+
 				</div>
 			</div>
 			<!--中间主体-->
@@ -33,12 +35,12 @@
 					</div>
 					<div class="titile">账号密码登录 </div>
 					<div class="input-box">
-						<input type="number" placeholder="请输入手机号" v-model="phone"/>
+						<input type="number" placeholder="请输入手机号" v-model="phone" />
 					</div>
 					<div class="input-box">
-						<input :type="ptype" placeholder="请输入密码" v-model="passs"/>
-						<img src="img/number (1).png" @click="changetype('text')" v-if="ptype=='password'"/>
-						<img src="img/number (2).png" @click="changetype('password')" v-if="ptype=='text'"/>
+						<input :type="ptype" placeholder="请输入密码" v-model="passs" />
+						<img src="img/number (1).png" @click="changetype('text')" v-if="ptype=='password'" />
+						<img src="img/number (2).png" @click="changetype('password')" v-if="ptype=='text'" />
 					</div>
 					<div class="login-type" style="justify-content: space-between;">
 						<!--<a href="wlogin.html">忘记密码?</a>-->
@@ -46,9 +48,9 @@
 					</div>
 					<div class="login" @click="login()">登录</div>
 					<div class="login-type">
-						<div @click="opennew('Agreement','')">登陆即视为同意 	<strong>《豆豆洗注册协议》</strong></div>
+						<div @click="opennew('Agreement','')">登陆即视为同意 <strong>《豆豆洗注册协议》</strong></div>
 					</div>
-					
+
 					<!--<div class="three">
 						<div class="thre-title">第三方登录 </div>
 						<div class="three-box">
@@ -69,145 +71,146 @@
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var myvue=new Vue({
-				el:'.wrapper',
-				data:{
-					ptype:'password',
-					index:0,
-					phone:'',
-					passs:'',
-					alerttext:'请求失败',
-					alertboo:false
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					ptype: 'password',
+					index: 0,
+					phone: '',
+					passs: '',
+					alerttext: '请求失败',
+					alertboo: false
 				},
-				methods:{
-					alertshow:function(text){
-						this.alerttext=text
-						this.alertboo=!this.alertboo
+				methods: {
+					alertshow: function(text) {
+						this.alerttext = text
+						this.alertboo = !this.alertboo
 					},
-					login:function(){
-						var that=this
-						if(that.index==1){
+					login: function() {
+						var that = this
+						if(that.index == 1) {
 //							取送员登陆 15952208893//  123456//
-							var ajaxjson={
-									phone:that.phone,
-									usStPassword:that.passs
-								}
+							var ajaxjson = {
+								phone: that.phone,
+								usStPassword: that.passs
+							}
 							console.log(ajaxjson)
 							$.ajax({
-								type:"post",
-								url:localStorage.getItem('myurl')+"/fetch/selectUsStaffLogin",
-								dataType:'json',
-								data:ajaxjson,
-								success:function(res){
+								type: "post",
+								url: localStorage.getItem('myurl') + "/fetch/selectUsStaffLogin",
+								dataType: 'json',
+								data: ajaxjson,
+								success: function(res) {
 									console.log(res)
-									if(res.status==200){
-										localStorage.setItem('uname',res.data.usStName)
-										localStorage.setItem('uphone',res.data.usStPhone)
-										localStorage.setItem('uapay',res.data.usStAliPayCode)
-										localStorage.setItem('uid',res.data.usStaffId)
-										localStorage.setItem('uwpay',res.data.usStWeChatPayCode)
-										localStorage.setItem('utype',1)
-										localStorage.setItem('uavatar',res.data.usStHeadImg)
+									if(res.status == 200) {
+										localStorage.setItem('uname', res.data.usStName)
+										localStorage.setItem('uphone', res.data.usStPhone)
+										localStorage.setItem('uapay', res.data.usStAliPayCode)
+										localStorage.setItem('uid', res.data.usStaffId)
+										localStorage.setItem('uwpay', res.data.usStWeChatPayCode)
+										localStorage.setItem('utype', 1)
+										localStorage.setItem('uavatar', res.data.usStHeadImg)
 										that.opennew('index')
-									}else{
+									} else {
 										that.alertshow(res.msg)
 									}
 								},
-								error:function(err){
+								error: function(err) {
 									console.log(err)
 								}
 							});
-						}else if(that.index==2){
-//							干洗店登陆
-							var ajaxjson={
-									phone:that.phone,
-									usStPassword:that.passs
-								}
+						} else if(that.index == 2) {
+							//							干洗店登陆
+							var ajaxjson = {
+								phone: that.phone,
+								usStPassword: that.passs
+							}
 							console.log(ajaxjson)
 							$.ajax({
-								type:"post",
-								url:localStorage.getItem('myurl')+"/laundry/checkUsStoreLogin",
-								dataType:'json',
-								data:ajaxjson,
-								success:function(res){
+								type: "post",
+								url: localStorage.getItem('myurl') + "/laundry/checkUsStoreLogin",
+								dataType: 'json',
+								data: ajaxjson,
+								success: function(res) {
 									console.log(res)
-									if(res.status==200){
-										if(res.data==null){
+									if(res.status == 200) {
+										if(res.data == null) {
 											that.alertshow('用户名或者密码不正确！')
-										}else{
-											localStorage.setItem('uname',res.data.usStShopName)
-											localStorage.setItem('uphone',res.data.usStPhone )
-											localStorage.setItem('uapay',res.data.usStAliPayCode)
-											localStorage.setItem('uid',res.data.usStoreId)
-											localStorage.setItem('uwpay',res.data.usStWeChatCode)
-											localStorage.setItem('utype',2)
-											localStorage.setItem('usCommunityPartnerId',res.data.usCommunityPartnerId)
+										} else {
+											localStorage.setItem('uname', res.data.usStShopName)
+											localStorage.setItem('uphone', res.data.usStPhone)
+											localStorage.setItem('uapay', res.data.usStAliPayCode)
+											localStorage.setItem('uid', res.data.usStoreId)
+											localStorage.setItem('uwpay', res.data.usStWeChatCode)
+											localStorage.setItem('utype', 2)
+											localStorage.setItem('usCommunityPartnerId', res.data.usCommunityPartnerId)
 											that.opennew('index')
 										}
-									}else{
+									} else {
 										that.alertshow(res.msg)
 									}
 								},
-								error:function(err){
+								error: function(err) {
 									console.log(err)
 								}
 							});
-						}else{
-//							社区合伙人登陆
-							var ajaxjson={
-									phone:that.phone,
-									usStPassword:that.passs
-								}
+						} else {
+							//							社区合伙人登陆
+							var ajaxjson = {
+								phone: that.phone,
+								usStPassword: that.passs
+							}
 							console.log(JSON.stringify(ajaxjson))
 							$.ajax({
-								type:"post",
-								url:localStorage.getItem('myurl')+"/community/selectCommunityLogin",
-								dataType:'json',
-								data:ajaxjson,
-								success:function(res){
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/selectCommunityLogin",
+								dataType: 'json',
+								data: ajaxjson,
+								success: function(res) {
 									console.log(res)
-									if(res.status==200){
-										if(res.data!=null){
-											localStorage.setItem('uname',res.data.usCpName)
-											localStorage.setItem('uphone',res.data.usCpPhone )
-											localStorage.setItem('uapay',res.data.usCpAliPayCode)
-											localStorage.setItem('uid',res.data.usCommunityPartnerId)
-											localStorage.setItem('uwpay',res.data.usCpWeChatCode)
-											localStorage.setItem('utype',0)
+									if(res.status == 200) {
+										if(res.data != null) {
+											localStorage.setItem('uname', res.data.usCpName)
+											localStorage.setItem('uphone', res.data.usCpPhone)
+											localStorage.setItem('uapay', res.data.usCpAliPayCode)
+											localStorage.setItem('uid', res.data.usCommunityPartnerId)
+											localStorage.setItem('uwpay', res.data.usCpWeChatCode)
+											localStorage.setItem('utype', 0)
 											that.opennew('index')
-										}else{
+										} else {
 											that.alertshow('用户名或者密码不正确！')
 										}
-									}else{
+									} else {
 										that.alertshow(res.msg)
 									}
 								},
-								error:function(err){
+								error: function(err) {
 									console.log(JSON.stringify(err))
 								}
-							});							
+							});
 						}
 					},
-					changetype:function(text){
-						this.ptype=text
+					changetype: function(text) {
+						this.ptype = text
 					},
-					opennew:function(target,id){
+					opennew: function(target, id) {
 						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target,
-							createNew:true
+							url: './' + target + '.html',
+							id: target,
+							createNew: true
 						})
 					},
-					change:function(index){
-						this.index=index
+					change: function(index) {
+						this.index = index
 					}
 				},
-				mounted:function(){
-					localStorage.setItem('myurl','http://47.100.104.251:8081')
-//					localStorage.setItem('myurl','http://27.54.248.14:8080')
-//					localStorage.setItem('myurl','http://192.168.0.172')
+				mounted: function() {
+//										localStorage.setItem('myurl','http://47.100.104.251:8081')
+//					localStorage.setItem('myurl', 'http://27.54.248.14:8080')
+										localStorage.setItem('myurl','http://192.168.2.245')
 				}
 			})
 		</script>
 	</body>
+
 </html>

@@ -37,8 +37,8 @@
 				<div class="price-box" v-for="(val,index) in navdata">
 					<img :src="val.pbCdImg | myimg" />
 					<div class="name">{{val.pbCdName}}</div>
-					<input type="text" :placeholder="val.pbCdUpdateName" @blur="inputblur(index)" />
-					<div class="fhao">元</div>
+					<input type="number" :placeholder="val.pbCdUpdateName" @blur="inputblur(index)" max="100" min="1" />
+					<div class="fhao">%</div>
 				</div>
 			</div>
 		</div>
@@ -58,52 +58,65 @@
 				inputblur: function(index) {
 					var that = this
 					if(this.navdata[index].pbCdCreateName == undefined || this.navdata[index].pbCdCreateName == null) {
-						$.ajax({
-							type: "post",
-							url: localStorage.getItem('myurl') + "/community/insertUsCommunityPartnerCost",
-							dataType: 'json',
-							data: {
-								usCommunityPartnerId: localStorage.getItem('uid'),
-								usStoreId: localStorage.getItem('pbPartnerDeviceReasonId'),
-								usCpcCostPrice: $('input').eq(index).val(),
-								createName: localStorage.getItem('uname'),
-								pbClothesDetailsId: that.navdata[index].pbClothesDetailsId
-							},
-							success: function(res) {
-								console.log(res)
-								if(res.data == 1) {
-									plus.nativeUI.toast('修改完成！')
-								} else {
-									plus.nativeUI.toast('修改失败！')
-								}
+						if($('input').eq(index).val() <= 100 && $('input').eq(index).val() >= 1) {
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/insertUsCommunityPartnerCost",
+								dataType: 'json',
+								data: {
+									usCommunityPartnerId: localStorage.getItem('uid'),
+									usStoreId: localStorage.getItem('pbPartnerDeviceReasonId'),
+									usCpcCostPrice: $('input').eq(index).val(),
+									createName: localStorage.getItem('uname'),
+									pbClothesDetailsId: that.navdata[index].pbClothesDetailsId
+								},
+								success: function(res) {
+									console.log(res)
+									if(res.data == 1) {
+										plus.nativeUI.toast('修改完成！')
+									} else {
+										plus.nativeUI.toast('修改失败！')
+									}
 
-							}
-						})
+								}
+							})
+						} else {
+							alert('价格区间在1 ~ 100之间')
+						}
 					} else {
 						console.log({
-								usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
-								usCpcCostPrice: $('input').eq(index).val(),
-								updateName: localStorage.getItem('uname')
-							})
-						$.ajax({
-							type: "post",
-							url: localStorage.getItem('myurl') + "/community/updateUsCommunityPartnerCost",
-							dataType: 'json',
-							data: {
-								usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
-								usCpcCostPrice: $('input').eq(index).val(),
-								updateName: localStorage.getItem('uname')
-							},
-							success: function(res) {
-								console.log(res)
-								if(res.data == 1) {
-									plus.nativeUI.toast('修改完成！')
-								} else {
-									plus.nativeUI.toast('修改失败！')
-								}
-
-							}
+							usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
+							usCpcCostPrice: $('input').eq(index).val(),
+							updateName: localStorage.getItem('uname')
 						})
+						if((new Date() - new Date(that.navdata[index].pbCdUpdateTime))/1000>=2592000){
+							if($('input').eq(index).val() <= 100 && $('input').eq(index).val() >= 1) {
+								$.ajax({
+									type: "post",
+									url: localStorage.getItem('myurl') + "/community/updateUsCommunityPartnerCost",
+									dataType: 'json',
+									data: {
+										usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
+										usCpcCostPrice: $('input').eq(index).val(),
+										updateName: localStorage.getItem('uname')
+									},
+									success: function(res) {
+										console.log(res)
+										if(res.data == 1) {
+											plus.nativeUI.toast('修改完成！')
+										} else {
+											plus.nativeUI.toast('修改失败！')
+										}
+	
+									}
+								})
+							} else {
+								alert('价格区间在1 ~ 100之间')
+							}
+						}else{
+							alert('成本价格一个月只能修改一次')
+						}
+						
 					}
 				},
 				alertshow: function() {

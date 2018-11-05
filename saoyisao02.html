@@ -89,21 +89,18 @@
 				var that=this
 				$.ajax({
 					type: "post",
-					url: localStorage.getItem('myurl') + "/equipment/verificationDeviceCode",
+					url: localStorage.getItem('myurl') + "/equipment/fetchOpenTheDoor",
 					dataType: 'json',
 					data: {
-						deviceCode:result
+						deviceCode:result,
+						orderId:localStorage.getItem('orderId')
 					},
 					success: function(res) {
 						if(res.status == 200) {
-							plus.webview.getWebviewById('saoyisao').reload(true)
-							localStorage.setItem('pbPdCode', result)
-							mui.openWindow({
-								url: './changeadress.html',
-								id: 'changeadress'
-							})
+							plus.webview.getWebviewById('saoyisao02').reload(true)
+							mui.back()
 						} else {
-							plus.webview.getWebviewById('saoyisao').reload(true)
+							plus.webview.getWebviewById('saoyisao02').reload(true)
 							plus.nativeUI.toast('当前设备已激活！')
 						}
 					},

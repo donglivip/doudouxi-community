@@ -74,7 +74,7 @@
 .profit{background: #F4F4F4;}
 .profit .profit-top{background: #FFFFFF;height: 3rem;width: 100%;display: flex;flex-direction: column;align-items: center;justify-content: center;margin-bottom: .5rem;}
 .profit .price{font-size: .7rem;}
-.profit .subtitile{font-size: .3rem;color: #758B85;margin-top: .15rem;}
+.profit .subtitile{font-size: .3rem;color: #758B85;margin-top: .15rem;display: flex;justify-content: space-between;width: calc(100% - .6rem);}
 .profit .proce{margin: .2rem;color: #758B85;}
 .profit .withdraw{margin: 0 .2rem;background: #096148;color: #FFFFFF;height: 1rem;border-radius: .5rem;display: flex;align-items: center;justify-content: center;}
 .profit .proce02{position: absolute;bottom: .3rem;width: 100%;text-align: center;}

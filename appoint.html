@@ -53,7 +53,7 @@
 						<div class="order-bottom">
 							<div class="order-price">指派取送员</div>
 							<div class="order-time">
-								<select name="" v-model="usStaffId">
+								<select name="" v-model="usStaffId" @change="change(1)">
 									<option :value="val.usStaffId" v-for="val in mydata">{{val.usStName}}</option>
 								</select>
 							</div>
@@ -61,7 +61,7 @@
 						<div class="order-bottom">
 							<div class="order-price">指派干洗店</div>
 							<div class="order-time">
-								<select name="" v-model="usStoreId">
+								<select name="" v-model="usStoreId" @change="change(2)">
 									<option :value="val.usStoreId" v-for="val in mydata01">{{val.usStShopName}}</option>
 								</select>
 							</div>
@@ -98,16 +98,41 @@
 					usStoreId: ''
 				},
 				methods: {
+					change: function(type) {
+						var that=this
+						var ajaxjson=null;
+						if(type==1){
+							ajaxjson={
+								usStaffId: that.usStaffId,
+								usCommunityPartnerId:localStorage.getItem('uid')
+							}
+						}else{
+							ajaxjson={
+								usStoreId: that.usStoreId,
+								usCommunityPartnerId:localStorage.getItem('uid')
+							}
+						}
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/community/updateUsStaffDefault",
+							dataType: 'json',
+							data: ajaxjson,
+							success: function(res) {
+								console.log(res)
+							}
+						});
+					},
 					submit: function() {
-						var mylist=JSON.parse(localStorage.getItem('orderlist'))
+						var mylist = JSON.parse(localStorage.getItem('orderlist'))
 						var that = this
+						//						循环指派订单
 						for(var i = 0; i < mylist.length; i++) {
 							var ajaxjson = {
 								pbOrderId: mylist[i],
 								usStaffId: that.usStaffId,
 								usStoreId: that.usStoreId,
-								pbOrTakeOffTime: that.stime.replace(/-/g,"/"),
-								pbOrCleanTime: that.etime.replace(/-/g,"/")
+								pbOrTakeOffTime: that.stime.replace(/-/g, "/"),
+								pbOrCleanTime: that.etime.replace(/-/g, "/")
 							}
 							$.ajax({
 								type: "post",
@@ -120,7 +145,7 @@
 										alert(mylist[i] + '号订单指派失败！')
 									}
 								},
-								error:function(err){
+								error: function(err) {
 									console.log(JSON.stringify(err))
 								}
 							});
@@ -131,7 +156,7 @@
 						mui.openWindow({
 							url: './' + target + '.html',
 							id: target,
-							createNew:true
+							createNew: true
 						})
 					},
 					indexchange: function(index) {
@@ -178,6 +203,11 @@
 							success: function(res) {
 								console.log(res)
 								that.mydata = res.data
+								for(var i = 0; i < that.mydata.length; i++) {
+									if(that.mydata[i].usStDefaultStyle == 1) {
+										that.usStaffId = that.mydata[i].usStaffId
+									}
+								}
 							}
 						});
 						$.ajax({
@@ -190,12 +220,24 @@
 							success: function(res) {
 								console.log(res)
 								that.mydata01 = res.data
+								for(var i = 0; i < that.mydata01.length; i++) {
+									if(that.mydata01[i].usStDefaultUse == 1) {
+										that.usStoreId = that.mydata01[i].usStoreId
+									}
+								}
 							}
 						});
 					}
 				},
 				mounted: function() {
 					this.myajax()
+				},
+				directives: {
+					selectboo: function(el, binding) {
+						if(binding.value == 1) {
+							el.setAttribute('selected', 'selected')
+						}
+					}
 				}
 			})
 		</script>

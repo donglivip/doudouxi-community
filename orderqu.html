@@ -20,9 +20,7 @@
 				<div class="head-main">
 					收取
 				</div>
-				<div class="head-tab">
-
-				</div>
+				<div class="head-tab"></div>
 			</div>
 			<!--中间主体-->
 			<div class="main big-main complaint">
@@ -34,6 +32,10 @@
 						</div>
 						<div class="trade-item" :class="myindex==1?'active':''" @click="indexchange(1)">
 							<div class="text">已收取</div>
+							<div class="radius"></div>
+						</div>
+						<div class="trade-item" :class="myindex==2?'active':''" @click="indexchange(2)">
+							<div class="text">退单</div>
 							<div class="radius"></div>
 						</div>
 					</div>
@@ -101,7 +103,7 @@
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">最迟收取时间</div>
-									<div class="order-time">{{val.takeTime}}</div>
+									<div class="order-time">{{val.collectTime}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">干洗店电话</div>
@@ -114,8 +116,50 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="opensao(val.pbOrderId)">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)" @click="opensao(val.pbOrderId)" v-if="new Date() - new Date(val.pbOrUpdateTime)<=5000">扫码开箱</a>
 										<a class="btn02" href="javascript:void(0)" @click="orderdao(val.pbOrderId)">确认到店</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="order-box" v-if="myindex==2" v-for="val in mydata02">
+							<div class="order-right">
+								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
+									<div class="order-price">{{val.deviceName}}</div>
+									<a class="order-time" :href="['tel:'+val.userPhone+'']" style="font-size: .2rem;color: #096148;">
+										联系用户
+									</a>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">订单号</div>
+									<div class="order-time">{{val.orderCode}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">取件地址</div>
+									<div class="order-time">{{val.takeAddress}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">送达地址</div>
+									<div class="order-time">{{val.sendAddress}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">最迟收取时间</div>
+									<div class="order-time">{{val.collectTime}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">干洗店电话</div>
+									<div class="order-time">{{val.storePhone}}</div>
+								</div>
+								<div class="order-bottom">
+									<div class="order-price">订单状态</div>
+									<div class="order-time">{{val.orderStauts | mystate}}</div>
+								</div>
+								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
+									<div class="order-price"></div>
+									<div class="order-time setting">
+										<a class="btn01" href="javascript:void(0)" @click="opensao(val.pbOrderId)" v-if="val.orderStauts==18">扫码开箱</a>
+										<a class="btn02" href="javascript:void(0)" @click="tuiqu(val.pbOrderId)" v-if="val.orderStauts==17">已取件</a>
+										<a class="btn02" href="javascript:void(0)" @click="tuida(val.pbOrderId)" v-if="val.orderStauts==18">已送达</a>
 									</div>
 								</div>
 							</div>
@@ -140,9 +184,44 @@
 					alertboo: false,
 					time: 3,
 					mydata: [],
-					mydata01: []
+					mydata01: [],
+					mydata02: []
 				},
 				methods: {
+					tuida: function() {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/fetch/updateOrderStautsRefundService",
+							dataType: 'json',
+							data: {
+								pbOrderId: id,
+								usStaffIdRefund: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.pay()
+								that.myajax()
+							}
+						});
+					},
+					tuiqu: function(id) {
+						var that = this
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/fetch/updateOrderStautsRefund",
+							dataType: 'json',
+							data: {
+								pbOrderId: id,
+								usStaffIdRefund: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								console.log(res)
+								that.pay()
+								that.myajax()
+							}
+						});
+					},
 					orderdao: function(id) {
 						var that = this
 						console.log(id)
@@ -189,7 +268,6 @@
 							},
 							success: function(res) {
 								that.mydata = res.data
-								console.log(res)
 							}
 						});
 						//						已收取
@@ -202,7 +280,18 @@
 							},
 							success: function(res) {
 								that.mydata01 = res.data
-								console.log(res)
+							}
+						});
+						//						退单
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/fetch/selectOrderUsStaffIdRefund",
+							dataType: 'json',
+							data: {
+								usStaffId: localStorage.getItem('uid')
+							},
+							success: function(res) {
+								that.mydata02 = res.data
 							}
 						});
 					},
@@ -217,10 +306,10 @@
 						}
 					},
 					opensao: function(id) {
-						localStorage.setItem('orderId',id)
+						localStorage.setItem('orderId', id)
 						mui.openWindow({
-							url: './saoyisao.html',
-							id: 'saoyisao'
+							url: './saoyisao02.html',
+							id: 'saoyisao02'
 						})
 					},
 					alertshow: function() {
@@ -267,6 +356,17 @@
 							case 7:
 								return '问题订单'
 								break;
+							case 10:
+								return '待送店'
+								break;
+						}
+					},
+					filtertime: function(value) {
+						var time = new Date() - new Date(value)
+						if(time / 1000 > 5000) {
+							return false;
+						} else {
+							return true;
 						}
 					}
 				}

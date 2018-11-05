@@ -81,7 +81,7 @@
 								pbPartnerDeviceId: id
 							},
 							success: function(res) {
-								if(res.data==1){
+								if(res.data==0){
 									localStorage.setItem('pbPartnerDeviceId',id)
 									mui.openWindow({
 										url:'./'+target+'.html',
