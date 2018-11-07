@@ -77,7 +77,7 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if="val.orderStauts!=5">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId,val.sendAddress,val.userPhone)">发送取件码</a>
+										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId,val.sendAddress,val.userPhone,val.usUserId)">发送取件码</a>
 										<a class="btn02" href="javascript:void(0)" @click="opensao(val.pbOrderId)">扫码开箱</a>
 									</div>
 								</div>
@@ -154,14 +154,14 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if='val.orderStauts==14'>
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId,val.usCspAddress,val.userPhone)">发送取件码</a>
+										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId,val.usCspAddress,val.userPhone,val.usUserId)">发送取件码</a>
 										<a class="btn02" href="javascript:void(0)" @click="orderzopen(val.pbOrderId)">扫码开箱</a>
 									</div>
 								</div>
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if='val.orderStauts==15'>
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="orderzok(val.pbOrderId)">确认送达</a>
+										<a class="btn02" href="javascript:void(0)" @click="orderzok(val.pbOrderId,val.usUserId)">确认送达</a>
 									</div>
 								</div>
 							</div>
@@ -190,14 +190,16 @@
 					mydata02: []
 				},
 				methods: {
-					orderzok: function(id) {
+					orderzok: function(id,usUserId) {
 						var that = this
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/fetch/updateOrderStausss",
 							dataType: 'json',
 							data: {
-								pbOrderId: id
+								pbOrderId: id,
+								usUserId:usUserId,
+								usStaffIdRetention:localStorage.getItem('uid')
 							},
 							success: function(res) {
 								console.log(res)
@@ -211,33 +213,19 @@
 						});
 					},
 					orderzopen: function(id) {
-						var that = this
-						$.ajax({
-							type: "post",
-							url: localStorage.getItem('myurl') + "/fetch/updateOrderStau",
-							dataType: 'json',
-							data: {
-								pbOrderId: id
-							},
-							success: function(res) {
-								console.log(res)
-								if(res.data == 1) {
-									that.pay()
-									that.myajax()
-								} else {
-									alert('操作失败')
-								}
-							}
-						});
+						localStorage.setItem('orderId', id)
+						this.opennew('saoyisao03')
 					},
-					orderfa: function(id, adress, phone) {
+					orderfa: function(id, adress, phone,UsUserId) {
 						var that = this
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/fetch/updateOrderStautsBycodes",
 							dataType: 'json',
 							data: {
-								pbOrderId: id
+								pbOrderId: id,
+								usStaffId: localStorage.getItem('uid'),
+								UsUserId:UsUserId 
 							},
 							success: function(res) {
 								if(res.data == 1) {
@@ -327,11 +315,10 @@
 						this.myindex = index
 					},
 					opennew: function(type) {
-						if(type == 'q') {
-							window.location.href = './havetype.html'
-						} else {
-
-						}
+						mui.openWindow({
+							url: './saoyisao03.html',
+							id: 'saoyisao03'
+						})
 					},
 					opensao: function(id) {
 						localStorage.setItem('orderId', id)

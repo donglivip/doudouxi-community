@@ -156,6 +156,11 @@
 							success: function(res) {
 								console.log(res)
 								that.mydata01 = res.data
+								for(var i = 0; i < that.mydata01.length; i++) {
+									if(that.mydata01[i].usStDefaultStyle == 1) {
+										that.usStaffId = that.mydata01[i].usStaffId
+									}
+								}
 							}
 						});
 					}

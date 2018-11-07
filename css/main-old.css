@@ -181,7 +181,7 @@
 .complaint .setting .btn01{border: 1px solid #096148;color: #096148;}
 .complaint .setting .btn02{background:#096148;color: #FFFFFF;}
 .complaint .order-price,.complaint .order-time{width: 50%;}
-.complaint .order-time{display: flex;justify-content: flex-end;}
+.complaint .order-time{display: flex;justify-content: flex-end;text-align: right;}
 .trade-item{display: flex;flex-direction: column;align-items: center;justify-content: center;}
 .complaint .red{color: red;}
 /*分类中心*/

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -8,22 +9,24 @@
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 		<title></title>
 	</head>
+
 	<body>
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
 				<div class="head-tab mui-action-back">
-					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
+					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
 					干洗店管理
 				</div>
 				<div class="head-tab" @click="opennew('devicedetail')">
-					<img src="img/add.png"/>
+					<img src="img/add.png" />
 				</div>
 			</div>
 			<!--中间主体-->
-			<div class="main big-main sharedetail">
+			<div class="main big-main sharedetail" @scroll="myscroll">
+				<div class="main-inner">
 					<div class="order-box alert01" v-for="val in navdata" @click="opennew('device',val.usStoreId)">
 						<div class="order-right">
 							<div class="order-bottom">
@@ -43,45 +46,72 @@
 				</div>
 			</div>
 		</div>
+		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			var myvue=new Vue({
-				el:'.wrapper',
-				data:{
-					navdata:[]
+			var myvue = new Vue({
+				el: '.wrapper',
+				data: {
+					navdata: [],
+					pages: 0,
+					pageNum: 0
 				},
-				methods:{
-					indexchange:function(index){
-						this.myindex=index
+				methods: {
+					myscroll: function() {
+						var that = this
+						if(Math.abs($('.main-inner').offset().top) + $('.main').height() + 200 >= $('.main-inner').height()) {
+							if(that.pages > that.pageNum) {
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.showWaiting("等待中...");
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								that.myajax()
+							}
+
+						}
 					},
-					opennew:function(target,id){
-						localStorage.setItem('usStoreId',id)
+					indexchange: function(index) {
+						this.myindex = index
+					},
+					opennew: function(target, id) {
+						localStorage.setItem('usStoreId', id)
 						mui.openWindow({
-							url:'./'+target+'.html',
-							id:target
+							url: './' + target + '.html',
+							id: target
 						})
 					},
 					myajax: function() {
 						var that = this
+						that.pageNum++
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/community/selectUsStore",
 							dataType: 'json',
-							data:{
-								usCommunityPartnerId:localStorage.getItem('uid')
+							data: {
+								usCommunityPartnerId: localStorage.getItem('uid'),
+								pageNum:that.pageNum
 							},
 							success: function(res) {
 								console.log(res)
-								that.navdata = res.data
+								that.pages = res.data.pages
+								for(var i = 0; i < res.data.list.length; i++) {
+									that.navdata.push(res.data.list[i])
+								}
 							}
 						});
 					}
 				},
-				mounted:function(){
+				mounted: function() {
 					this.myajax()
 				}
 			})
 		</script>
 	</body>
+
 </html>

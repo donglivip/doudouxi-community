@@ -73,8 +73,8 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" @click="opennew('nav',val.orderDetaileList[0].pbPartnerDeviceId,val.usCommunityPartnerId,val.pbOrderId,val.orderDetaileList)" href="javascript:void(0)">调整订单</a>
-										<a class="btn02"  @click="orderok(val.pbOrderId)" href="javascript:void(0)">核实订单</a>
+										<a class="btn01" @click="opennew('nav',val.orderDetaileList[0].pbPartnerDeviceId,val.usCommunityPartnerId,val.pbOrderId,val.orderDetaileList,val.usUserId)" href="javascript:void(0)">调整订单</a>
+										<a class="btn02"  @click="orderok(val.pbOrderId,val.usUserId)" href="javascript:void(0)">核实订单</a>
 									</div>
 								</div>
 							</div>
@@ -141,7 +141,7 @@
 									<div class="order-price"></div>
 									<div class="order-time setting">
 										<!--<a class="btn01" href="nav.html">调整订单</a>-->
-										<a class="btn02" href="javascript:void(0)" @click="orderisok(val.pbOrderId)">完成订单</a>
+										<a class="btn02" href="javascript:void(0)" @click="orderisok(val.pbOrderId,val.usCommunityPartnerId)">完成订单</a>
 									</div>
 								</div>
 							</div>
@@ -168,7 +168,7 @@
 					mydata:''
 				},
 				methods: {
-					orderisok:function(id){
+					orderisok:function(id,UsCommunityPartnerId){
 						var that = this
 //						完成订单
 						$.ajax({
@@ -177,7 +177,9 @@
 							dataType: 'json',
 							data: {
 								pbOrderId:id,
-								updateName:localStorage.getItem('uname')
+								updateName:localStorage.getItem('uname'),
+								usCommunityPartnerId:UsCommunityPartnerId,
+								usStoreId:localStorage.getItem('uid')
 							},
 							success: function(res) {
 								console.log(res)
@@ -190,7 +192,7 @@
 							}
 						});
 					},
-					orderok:function(id){
+					orderok:function(id,UsUserId){
 						var that = this
 //						审核订单
 						$.ajax({
@@ -199,7 +201,9 @@
 							dataType: 'json',
 							data: {
 								pbOrderId:id,
-								updateName:localStorage.getItem('uname')
+								updateName:localStorage.getItem('uname'),
+								UsUserId:UsUserId,
+								UsStoreId:localStorage.getItem('uid')
 							},
 							success: function(res) {
 								if(res.data==1){
@@ -215,11 +219,12 @@
 						this.myindex = index
 						this.myajax()
 					},
-					opennew: function(target,id,id02,id03,cartdata) {
+					opennew: function(target,id,id02,id03,cartdata,usUserId) {
 						localStorage.setItem('pbPartnerDeviceCaseId',id)
 						localStorage.setItem('usCommunityPartnerId',id02)
 						localStorage.setItem('pbOrderId',id03)
 						localStorage.setItem('cartdataold',JSON.stringify(cartdata))
+						localStorage.setItem('usUserId',usUserId)            
 						mui.openWindow({
 							url: './' + target + '.html',
 							id: target,

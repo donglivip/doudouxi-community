@@ -180,7 +180,8 @@
 					"setting.html",
 					"integral.html",
 					"newcenter.html",
-					"orderhistory.html"
+					"orderhistory.html",
+					"share.html"
 				],
 				"priority": 0
 			},
@@ -231,7 +232,8 @@
 					"shopadmin.html",
 					"community.html",
 					"index.html",
-					"saoyisao.html"
+					"saoyisao.html",
+					"alert02.html"
 				],
 				"priority": 0
 			},
@@ -339,7 +341,8 @@
 					"appoint.html",
 					"index.html",
 					"appoint02.html",
-					"appoint03.html"
+					"appoint03.html",
+					"appoint04.html"
 				],
 				"priority": 0
 			},
@@ -404,7 +407,8 @@
 				"resources": [],
 				"refer": [
 					"index.html",
-					"saoyisao.html"
+					"saoyisao.html",
+					"saoyisao03.html"
 				],
 				"priority": 0
 			},
@@ -542,6 +546,13 @@
 				"resources": [],
 				"refer": [
 					"index.html"
+				],
+				"priority": 0
+			},
+			"appoint04.html": {
+				"resources": [],
+				"refer": [
+					"orderxidi.html"
 				],
 				"priority": 0
 			}

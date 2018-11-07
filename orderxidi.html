@@ -90,7 +90,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="order-box" v-if="myindex==14" v-for='(val,index) in shopdata'>
+						<div class="order-box" v-if="myindex==7" v-for='(val,index) in shopdata'>
 							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price">订单号</div>
@@ -107,7 +107,7 @@
 								<div class="order-bottom">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint03',[val.pbOrderId])" v-if="!state">订单指派</a>
+										<a class="btn02" href="javascript:void(0)" @click="opennew('appoint04',[val.pbOrderId],[val.usUserId])" v-if="!state">订单指派</a>
 										<img src="img/y.png" v-if="state&&val.state==true" class="logo" @click="changeindex(index,2)"/>
 										<img src="img/n.png" v-if="state&&val.state==false" class="logo" @click="changeindex(index,2)"/>
 									</div>
@@ -126,15 +126,17 @@
 				data: {
 					myindex: 9,
 					state:false,
-					shopdata:[]
+					shopdata:[],
+					shopdata01:[]
 				},
 				methods: {
 					indexchange: function(index) {
 						this.myindex = index
 						this.myajax()
 					},
-					opennew:function(target,id){
+					opennew:function(target,id,id02){
 						localStorage.setItem('orderlist',JSON.stringify(id))
+						localStorage.setItem('orderlist01',JSON.stringify(id02))
 						mui.openWindow({
 							url:'./'+target+'.html',
 							id:target,
@@ -144,11 +146,13 @@
 					changestate:function(){
 						this.state=!this.state
 						var orderlist=[],
+							orderlist01=[],
 							that=this
 						if(this.state==false){
 							for (var i=0;i<that.shopdata.length;i++) {
 								if(that.shopdata[i].state==true){
 									orderlist.push(that.shopdata[i].pbOrderId)
+									orderlist01.push(that.shopdata[i].usUserId)
 								}
 							}
 							this.opennew('appoint',orderlist)

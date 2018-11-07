@@ -34,7 +34,8 @@
 			"shopadmin.html",
 			"community.html",
 			"index.html",
-			"saoyisao.html"
+			"saoyisao.html",
+			"alert02.html"
 		],
 		"resources": []
 	},
@@ -141,7 +142,8 @@
 			"appoint.html",
 			"index.html",
 			"appoint02.html",
-			"appoint03.html"
+			"appoint03.html",
+			"appoint04.html"
 		],
 		"resources": []
 	},
@@ -204,7 +206,8 @@
 	"ordersong.html": {
 		"refer": [
 			"index.html",
-			"saoyisao.html"
+			"saoyisao.html",
+			"saoyisao03.html"
 		],
 		"resources": []
 	},
@@ -231,7 +234,8 @@
 			"index.html",
 			"integral.html",
 			"newcenter.html",
-			"orderhistory.html"
+			"orderhistory.html",
+			"share.html"
 		],
 		"resources": []
 	},
@@ -338,6 +342,11 @@
 	"setting01.html": {
 		"refer": [
 			"index.html"
+		]
+	},
+	"appoint04.html": {
+		"refer": [
+			"orderxidi.html"
 		]
 	}
 }

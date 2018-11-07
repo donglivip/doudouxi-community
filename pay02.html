@@ -137,8 +137,11 @@
 							createName: localStorage.getItem('uname'),
 							pbOrCountPrice: localStorage.getItem('allnum'),
 							pbOrCountNum: pbOrCountNum,
-							price: localStorage.getItem('allnum') - that.oldnum
+							price: localStorage.getItem('allnum') - that.oldnum,
+							usUserId:localStorage.getItem('usUserId'),
+							usStoreId:localStorage.getItem('uid')
 						}
+						console.log(ajaxjson)
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/laundry/insertPbOrderDetaile",
@@ -147,6 +150,7 @@
 								data: JSON.stringify(ajaxjson)
 							},
 							success: function(res) {
+								console.log(res)
 								if(res.data == 1) {
 									that.opennew('ordedianpu')
 								}
