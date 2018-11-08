@@ -28,7 +28,7 @@
 			<div class="main big-main complaint">
 				<div class="order-top">
 						<span :class="myindex==0?'active':''" @click="indexchange(0)">洗涤价格</span>
-						<span :class="myindex==1?'active':''" @click="indexchange(1)">成本价格</span>
+						<span :class="myindex==1?'active':''" @click="indexchange(1)">商家分润</span>
 					</div>
 				<div class="order-main" style="height: calc(100% - .7rem);">
 					<div class="order-box" v-if="myindex==0" v-for="val in mydata">

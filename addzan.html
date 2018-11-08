@@ -24,7 +24,7 @@
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
-				<div class="head-tab mui-action-back">
+				<div class="head-tab" @click="opennew('zanlist')">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
@@ -69,6 +69,15 @@
 					},
 					myajax:function(){
 						var that=this
+						function plusReady() {
+							// 弹出系统等待对话框
+							plus.nativeUI.showWaiting();
+						}
+						if(window.plus) {
+							plusReady();
+						} else {
+							document.addEventListener("plusready", plusReady, false);
+						}
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/community/addUsCommunityStoragePointAddress",
@@ -78,8 +87,20 @@
 								usCspAddress:that.usCspAddress
 							},
 							success: function(res) {
-								if(res.data==4){
-									mui.back()
+								console.log(JSON.stringify(res))
+								function plusReady() {
+									// 弹出系统等待对话框
+									plus.nativeUI.closeWaiting()
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								if(res.status==200){
+									that.opennew('zanlist')
+								}else{
+									alert('添加失败!')
 								}
 							}
 						});

@@ -46,7 +46,13 @@
 						<!--<a href="wlogin.html">忘记密码?</a>-->
 						<!--<a href="plogin.html">手机快捷登录</a>-->
 					</div>
-					<div class="login" @click="login()">登录</div>
+					<div class="login-type" style="justify-content: space-between;margin: 1.3rem .2rem 0  0;">
+						<a href="javascript:void(0)"></a>
+						<a href="javascript:void(0)" style="display: flex;align-items: center;">
+							<input type="checkbox" v-model="pwdboo" />记住密码
+						</a>
+					</div>
+					<div class="login" @click="login()" style="margin: 0;">登录</div>
 					<div class="login-type">
 						<div @click="opennew('Agreement','')">登陆即视为同意 <strong>《豆豆洗注册协议》</strong></div>
 					</div>
@@ -76,10 +82,11 @@
 				data: {
 					ptype: 'password',
 					index: 0,
-					phone: '',
-					passs: '',
+					phone: localStorage.getItem('uphone'),
+					passs: localStorage.getItem('passs'),
 					alerttext: '请求失败',
-					alertboo: false
+					alertboo: false,
+					pwdboo: true
 				},
 				methods: {
 					alertshow: function(text) {
@@ -88,6 +95,11 @@
 					},
 					login: function() {
 						var that = this
+						if(that.pwdboo == true) {
+							localStorage.setItem('passs', that.passs)
+						} else {
+							localStorage.setItem('passs', '')
+						}
 						if(that.index == 1) {
 							//							取送员登陆 15952208893//  123456//
 							var ajaxjson = {
@@ -205,9 +217,9 @@
 					}
 				},
 				mounted: function() {
-					localStorage.setItem('myurl', 'http://47.100.104.251:8081')
-					//					localStorage.setItem('myurl', 'http://27.54.248.14:8080')
-					//										localStorage.setItem('myurl','http://192.168.2.245')
+					//localStorage.setItem('myurl', 'http://47.100.104.251:8081')
+					//localStorage.setItem('myurl', 'http://27.54.248.14:8080')
+					localStorage.setItem('myurl', 'http://192.168.2.116')
 				}
 			})
 		</script>

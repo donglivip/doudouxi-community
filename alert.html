@@ -83,7 +83,7 @@
 								usCommunityPartnerId:localStorage.getItem('uid')
 							},
 							success: function(res) {
-								console.log(res)
+								console.log(localStorage.getItem('uid'))
 								that.navdata = res.data
 							}
 						});

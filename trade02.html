@@ -54,23 +54,24 @@
 						<p v-if="mydata.mapQuarter==null">￥0</p>
 					</div>
 				</div>
-				<div class="order-main">
-					<div class="trade-top">
-						<div class="trade-item" :class="myindex==0?'active':''" @click="indexchange(0)">
-							<div class="text">今日</div>
-							<div class="radius"></div>
+				<div class="order-main" @scroll="myscroll">
+					<div class="main-inner">
+						<div class="trade-top">
+							<div class="trade-item" :class="myindex==0?'active':''" @click="indexchange(0)">
+								<div class="text">今日</div>
+								<div class="radius"></div>
+							</div>
+							<div class="trade-item" :class="myindex==1?'active':''" @click="indexchange(1)">
+								<div class="text">当月</div>
+								<div class="radius"></div>
+							</div>
+							<div class="trade-item" :class="myindex==2?'active':''" @click="indexchange(2)">
+								<div class="text">当季</div>
+								<div class="radius"></div>
+							</div>
 						</div>
-						<div class="trade-item" :class="myindex==1?'active':''" @click="indexchange(1)">
-							<div class="text">当月</div>
-							<div class="radius"></div>
-						</div>
-						<div class="trade-item" :class="myindex==2?'active':''" @click="indexchange(2)">
-							<div class="text">当季</div>
-							<div class="radius"></div>
-						</div>
-					</div>
-					<div class="order-box" @scroll="myscroll">
-							<div class="order-right" v-for="val in mydata01">
+						<div class="order-box" v-for="val in mydata01">
+							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price" style="white-space: nowrap;">订单号:{{val.pbOrderId}}</div>
 									<div class="order-time">{{val.pbOrUpdateTimeDay}}</div>
@@ -84,6 +85,7 @@
 									<div class="order-time yellow">￥{{val.usCpfdPrice}}</div>
 								</div>
 							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -103,7 +105,7 @@
 				methods: {
 					myscroll: function() {
 						var that = this
-						if(Math.abs($('.main-inner').offset().top) + $('.order-box').height() + 200 >= $('.main-inner').height()) {
+						if(Math.abs($('.main-inner').offset().top) + $('.order-main').height() + 200 >= $('.main-inner').height()) {
 							if(that.pages > that.pageNum) {
 								function plusReady() {
 									// 弹出系统等待对话框
@@ -121,8 +123,8 @@
 					},
 					indexchange: function(index) {
 						this.myindex = index
-						this.mydata01=[]
-						this.pageNum=0
+						this.mydata01 = []
+						this.pageNum = 0
 						this.myajax()
 					},
 					opennew: function(type) {
@@ -136,7 +138,7 @@
 						var that = this
 						that.pageNum++
 							if(localStorage.getItem('utype') == 2) {
-								if(that.mydata==''){
+								if(that.mydata == '') {
 									//							顶部总和
 									$.ajax({
 										type: "post",
@@ -155,7 +157,7 @@
 									usStoreId: localStorage.getItem('uid'),
 									pageNum: that.pageNum
 								}
-								if(that.myindex==0){
+								if(that.myindex == 0) {
 									$.ajax({
 										type: "post",
 										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeDay",
@@ -163,13 +165,13 @@
 										data: ajaxjson,
 										success: function(res) {
 											console.log(res)
-											that.pages=res.data.pages
+											that.pages = res.data.pages
 											for(var i = 0; i < res.data.list.length; i++) {
 												that.mydata01.push(res.data.list[i])
 											}
 										}
 									});
-								}else if(that.myindex==1){
+								} else if(that.myindex == 1) {
 									$.ajax({
 										type: "post",
 										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeMonth",
@@ -177,13 +179,13 @@
 										data: ajaxjson,
 										success: function(res) {
 											console.log(res)
-											that.pages=res.data.pages
+											that.pages = res.data.pages
 											for(var i = 0; i < res.data.list.length; i++) {
 												that.mydata01.push(res.data.list[i])
 											}
 										}
 									});
-								}else{
+								} else {
 									$.ajax({
 										type: "post",
 										url: localStorage.getItem('myurl') + "/laundry/selectUsStoreIncomeQuarter",
@@ -191,14 +193,14 @@
 										data: ajaxjson,
 										success: function(res) {
 											console.log(res)
-											that.pages=res.data.pages
+											that.pages = res.data.pages
 											for(var i = 0; i < res.data.list.length; i++) {
 												that.mydata01.push(res.data.list[i])
 											}
 										}
 									});
 								}
-								
+
 							}
 					}
 				},

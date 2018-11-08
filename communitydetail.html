@@ -18,9 +18,9 @@
 				<div class="head-main">
 					添加取送员
 				</div>
-				<a class="head-tab" href="javascript:void(0)">
+				<div class="head-tab">
 					
-				</a>
+				</div>
 			</div>
 			<!--中间主体-->
 			<div class="main" style="margin-top: .8rem;padding-bottom: .5rem;">
@@ -50,14 +50,6 @@
 					<input type="radio"  name="sex" id="man" checked="checked" v-model="usStSex" value="1"/>
 					<label for="man">女</label>
 					<input type="radio"  name="sex" id="wman" v-model="usStSex" value="2"/>
-				</div>
-				<div class="user-tab">
-					<div class="tab-text">支付宝账号</div>
-					<input type="text" placeholder="支付宝账号" v-model="usStAliPayCode"/>
-				</div>
-				<div class="user-tab">
-					<div class="tab-text">微信账号</div>
-					<input type="text" placeholder="微信账号" v-model="usStWeChatPayCode"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">身份证号码</div>
@@ -100,8 +92,6 @@
 					usStIdCard:'',
 					usStFrontCardImg:'',
 					usStBackCardImg:'',
-					usStAliPayCode:'',
-					usStWeChatPayCode:'',
 					usStHeadImg:''
 				},
 				methods:{
@@ -110,10 +100,10 @@
 							plus.nativeUI.toast('两次密码不一致！')
 							return false;
 						}
-//						if(this.usStName==''||this.usStPhone==''||this.usStPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStAliPayCode==''||this.usStWeChatPayCode==''||this.usStHeadImg==''){
-//							plus.nativeUI.toast('信息填写不完整！')
-//							return false;
-//						}
+						if(this.usStName==''||this.usStPhone==''||this.usStPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStAliPayCode==''||this.usStWeChatPayCode==''||this.usStHeadImg==''){
+							plus.nativeUI.toast('信息填写不完整！')
+							return false;
+						}
 						var that = this
 						var ajaxjson={
 							usCommunityPartnerId:localStorage.getItem('uid'),
@@ -124,8 +114,6 @@
 							usStIdCard:that.usStIdCard,
 							usStFrontCardImg:that.usStFrontCardImg,
 							usStBackCardImg:that.usStBackCardImg,
-							usStAliPayCode:that.usStAliPayCode,
-							usStWeChatPayCode:that.usStWeChatPayCode,
 							usStHeadImg:that.usStHeadImg
 						}
 						console.log(JSON.stringify(ajaxjson))

@@ -38,6 +38,10 @@
 					<input type="text" placeholder="请输入店铺地址" id='city-picker' v-model="usStAddress" readonly="readonly"/>
 				</div>
 				<div class="user-tab">
+					<div class="tab-text">店铺详细地址<span class="red"> *</span></div>
+					<input type="text" placeholder="请输入店铺地址" v-model="usStAddressdetail" />
+				</div>
+				<div class="user-tab">
 					<div class="tab-text">联系人姓名<span class="red"> *</span></div>
 					<input type="text" placeholder="请输入联系人姓名" v-model="usStLegalPerson"/>
 				</div>
@@ -46,11 +50,11 @@
 					<input type="text" placeholder="请输入联系人手机号" v-model="usStPhone"/>
 				</div>
 				<div class="user-tab">
-					<div class="tab-text">支付宝账号<span class="red"> *</span></div>
+					<div class="tab-text">支付宝账号</div>
 					<input type="text" placeholder="请输入支付宝账号" v-model="usStAliPayCode"/>
 				</div>
 				<div class="user-tab">
-					<div class="tab-text">微信账号<span class="red"> *</span></div>
+					<div class="tab-text">微信账号</div>
 					<input type="text" placeholder="请输入微信账号" v-model="usStWeChatCode"/>
 				</div>
 				<div class="user-tab">
@@ -62,8 +66,8 @@
 					<input type="text" placeholder="请再次设置密码" v-model="usStPassword02"/>
 				</div>
 				<div class="user-tab">
-					<div class="tab-text">支付密码<span class="red"> *</span></div>
-					<input type="text" placeholder="请再次支付密码" v-model="usStPayPassword"/>
+					<div class="tab-text">支付密码</div>
+					<input type="text" placeholder="请设置支付密码" v-model="usStPayPassword"/>
 				</div>
 				<div class="user-tab">
 					<div class="tab-text">性别 </div>
@@ -134,7 +138,8 @@
 					usStHeadImg:'',
 					usStSpencialIndustryImg:'',
 					files: [],
-					server: localStorage.getItem('myurl') + '/laundry/imageLaundryImage'
+					server: localStorage.getItem('myurl') + '/laundry/imageLaundryImage',
+					usStAddressdetail:[]
 				},
 				methods:{
 					submit:function(){
@@ -142,7 +147,7 @@
 							plus.nativeUI.toast('两次密码不一致！')
 							return false;
 						}
-						if(this.usStShopName==''||this.usStAddress==''||this.usStLegalPerson==''||this.usStPhone==''||this.usStPassword==''||this.usStPayPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStAliPayCode==''||this.usStWeChatCode==''||this.usStHeadImg==''){
+						if(this.usStShopName==''||this.usStAddress==''||this.usStLegalPerson==''||this.usStPhone==''||this.usStPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStHeadImg==''){
 							plus.nativeUI.toast('信息录入不完整！')
 							return false;
 						}
@@ -150,7 +155,7 @@
 							ajaxjson={
 								usCommunityPartnerId:localStorage.getItem('uid'),
 								usStShopName:that.usStShopName,
-								usStAddress:that.usStAddress[0]+that.usStAddress[1]+that.usStAddress[2],
+								usStAddress:that.usStAddress[0]+that.usStAddress[1]+that.usStAddress[2]+that.usStAddressdetail,
 								usStLegalPerson:that.usStLegalPerson,
 								usStPhone:that.usStPhone,
 								usStPassword:that.usStPassword,

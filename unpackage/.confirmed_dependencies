@@ -235,7 +235,8 @@
 			"integral.html",
 			"newcenter.html",
 			"orderhistory.html",
-			"share.html"
+			"share.html",
+			"zanlist.html"
 		],
 		"resources": []
 	},
@@ -347,6 +348,17 @@
 	"appoint04.html": {
 		"refer": [
 			"orderxidi.html"
+		]
+	},
+	"zanlist.html": {
+		"refer": [
+			"addzan.html",
+			"usercenter.html"
+		]
+	},
+	"addzan.html": {
+		"refer": [
+			"zanlist.html"
 		]
 	}
 }

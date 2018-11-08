@@ -181,7 +181,8 @@
 					"integral.html",
 					"newcenter.html",
 					"orderhistory.html",
-					"share.html"
+					"share.html",
+					"zanlist.html"
 				],
 				"priority": 0
 			},
@@ -553,6 +554,21 @@
 				"resources": [],
 				"refer": [
 					"orderxidi.html"
+				],
+				"priority": 0
+			},
+			"zanlist.html": {
+				"resources": [],
+				"refer": [
+					"addzan.html",
+					"usercenter.html"
+				],
+				"priority": 0
+			},
+			"addzan.html": {
+				"resources": [],
+				"refer": [
+					"zanlist.html"
 				],
 				"priority": 0
 			}

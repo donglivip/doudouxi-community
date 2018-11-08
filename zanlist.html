@@ -12,7 +12,7 @@
 		<div class="wrapper community">
 			<!--头部-->
 			<div class="header">
-				<div class="head-tab mui-action-back">
+				<div class="head-tab" @click="opennew('usercenter')">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back"/>
 				</div>
 				<div class="head-main">
@@ -41,6 +41,13 @@
 					mydata:[]
 				},
 				methods:{
+					opennew: function(target, id) {
+						mui.openWindow({
+							url: './' + target + '.html',
+							id: target,
+							createNew:true
+						})
+					},
 					myajax:function(){
 						var that=this
 						$.ajax({

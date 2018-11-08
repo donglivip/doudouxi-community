@@ -33,12 +33,12 @@
 					<!--<div class="input-box">
 						<input type="text" placeholder="支付密码" v-model="usStPayPassword" />
 					</div>-->
-					<div class="input-box">
+					<!--<div class="input-box">
 						<input type="text" placeholder="支付宝账号" v-model="usStAliPayCode" />
 					</div>
 					<div class="input-box">
 						<input type="text" placeholder="微信账号" v-model="usStWeChatCode" />
-					</div>
+					</div>-->
 					<div class="login" @click="login">确认更改</div>
 				</div>
 			</div>
@@ -70,7 +70,7 @@
 					},
 					login: function() {
 						var that = this
-						if(that.usStPassword == ''||that.usStWeChatCode==''||that.usStAliPayCode=='') {
+						if(that.usStPassword == '') {
 							that.alertshow('资料填写不完整')
 						} else {
 							$.ajax({
@@ -79,10 +79,10 @@
 								dataType: 'json',
 								data: {
 									usStoreId: localStorage.getItem('uid'),
-									usStPassword: that.usStPassword,
-									usStPayPassword:that.usStPayPassword,
-									usStAliPayCode:that.usStAliPayCode,
-									usStWeChatCode:that.usStWeChatCode
+									usStPassword: that.usStPassword
+//									usStPayPassword:that.usStPayPassword,
+//									usStAliPayCode:that.usStAliPayCode,
+//									usStWeChatCode:that.usStWeChatCode
 								},
 								success: function(res) {
 									console.log(res)

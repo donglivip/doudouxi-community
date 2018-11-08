@@ -105,7 +105,7 @@
 .order .bottom-right{background: #096148;color: #FFFFFF;border-radius:.4rem ;line-height: .5rem;font-size: .2rem;width: 1.5rem;height: .5rem;text-align: center;}
 .order .order-state{color: #096148;}
 .order .bottom-left{flex: 1;}
-.order .order-price{margin-top: .1rem;width: 2.4rem;}
+.order .order-price{margin-top: .1rem;width: 2.4rem;white-space: nowrap;}
 .order .order-alert{position: absolute;width: 100%;height: calc(100% - 2.6rem);top:1.6rem;left: 0;background: rgba(0,0,0,.5);z-index: 999;}
 .order .nav-tab{width: 100%;background: #FFFFFF;height: .8rem;border-bottom: 1px solid #F4F4F4;text-indent: .2rem;line-height: .8rem;display: flex;align-items: center;justify-content: space-between;}
 .order .nav-tab img{width: .34rem;height: .22rem;margin-right: .2rem;}

@@ -51,13 +51,19 @@
 						<div class="order-bottom">
 							<div class="order-price">活动结束时间</div>
 							<div class="order-time">
-								<input type="text" v-model="stime" @click="pickDate('e')" placeholder="活动结束时间" />
+								<input type="text" v-model="etime" @click="pickDate('e')" placeholder="活动结束时间" />
 							</div>
 						</div>
 						<div class="order-bottom">
 							<div class="order-price">收件地址</div>
 							<div class="order-time">
-								<input type="text" v-model="adress" placeholder="收件地址" id='city-picker' />
+								<input type="text" v-model="adress" placeholder="收件地址" id='city-picker' readonly="readonly"/>
+							</div>
+						</div>
+						<div class="order-bottom">
+							<div class="order-price">详细地址</div>
+							<div class="order-time">
+								<input type="text" v-model="adressdetail" placeholder="详细收件地址" />
 							</div>
 						</div>
 						<div class="order-bottom">
@@ -97,7 +103,8 @@
 					adress: '',
 					alertboo: false,
 					time: 3,
-					mydata: []
+					mydata: [],
+					adressdetail:''
 				},
 				methods: {
 					indexchange: function(index) {
@@ -132,7 +139,7 @@
 								pbMaterialPackageId:that.mydata[that.myindex].pbMaterialPackageId,
 								pbAtActionTime:that.stime,
 								pbAtEndTime:that.etime,
-								pbAtAddress:adress
+								pbAtAddress:that.adress+that.adressdetail
 							},
 							dataType: 'json',
 							success: function(res) {
