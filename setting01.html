@@ -133,6 +133,7 @@
 									if(index == 3) {
 										var myurl=localStorage.getItem('myurl')
 										localStorage.clear()
+										localStorage.setItem('usShareCode',res.data.usCpShareCode)
 										localStorage.setItem('usCpHeadImg', res.data.usCpHeadImg)
 										localStorage.setItem('myurl',myurl)
 										localStorage.setItem('uname', res.data.usCpName)
