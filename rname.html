@@ -30,7 +30,7 @@
 					<label for="uname">支付宝账号</label>
 					<input type="text" placeholder="请输入支付宝账号" v-model="usCpAliPayCode" />
 				</div>
-				<div class="input-box">
+				<!--<div class="input-box">
 					<label for="uname">微信账号</label>
 					<input type="text" placeholder="请输入微信账号" v-model="usCpWeChatCode">
 				</div>
@@ -41,7 +41,7 @@
 				<div class="input-box">
 					<label for="uname">支付密码</label>
 					<input type="text" placeholder="请输入支付密码" v-model="usCpPayPassword" />
-				</div>
+				</div>-->
 				<div class="submit" @click="submit">
 					提交
 				</div>
@@ -74,7 +74,8 @@
 					},
 					submit: function() {
 						var that = this
-						if(that.usCpAliPayCode==''||that.usCpWeChatCode==''||that.usCpPassword==''||that.usCpPayPassword==''){
+//						||that.usCpWeChatCode==''||that.usCpPassword==''||that.usCpPayPassword==''
+						if(that.usCpAliPayCode==''){
 							plus.nativeUI.toast('信息填写不完整')
 							return false;
 						}
@@ -84,22 +85,25 @@
 							dataType: 'json',
 							data: {
 								usCommunityPartnerId: localStorage.getItem('uid'),
-								usCpPassword: that.usCpPassword,
-								usCpPayPassword: that.usCpPayPassword,
+//								usCpPassword: that.usCpPassword,
+//								usCpPayPassword: that.usCpPayPassword,
 								usCpAliPayCode: that.usCpAliPayCode,
-								usCpWeChatCode:that.usCpWeChatCode
+//								usCpWeChatCode:that.usCpWeChatCode
 							},
 							success: function(res) {
 								console.log(res)
 								localStorage.setItem('uapay',that.usCpAliPayCode)
-								localStorage.setItem('uwpay',that.usCpWeChatCode)
+//								localStorage.setItem('uwpay',that.usCpWeChatCode)
 								mui.back()
 							}
 						});
 					}
 				},
 				mounted: function() {
-
+					if(localStorage.getItem('uapay')!='undefined'){
+						this.usCpAliPayCode=localStorage.getItem('uapay')
+					}
+					
 				}
 			})
 		</script>

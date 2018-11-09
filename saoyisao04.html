@@ -89,7 +89,7 @@
 				var that=this
 				$.ajax({
 					type: "post",
-					url: localStorage.getItem('myurl') + "/equipment/fetchOpenTheDoor",
+					url: localStorage.getItem('myurl') + "/equipment/verificationDeviceCode",
 					dataType: 'json',
 					data: {
 						deviceCode:result,
@@ -97,15 +97,19 @@
 					},
 					success: function(res) {
 						if(res.status == 200) {
-							plus.webview.getWebviewById('saoyisao02').reload(true)
-							mui.back()
+							plus.webview.getWebviewById('saoyisao').reload(true)
+							localStorage.setItem('pbPdCode', result)
+							mui.openWindow({
+								url: './changeadress.html',
+								id: 'changeadress'
+							})
 						} else {
-							plus.webview.getWebviewById('saoyisao02').reload(true)
-							plus.nativeUI.toast('开箱失败，请重试，或者联系管理员!')
+							plus.webview.getWebviewById('saoyisao04').reload(true)
+							plus.nativeUI.toast('激活失败，请重试，或者联系管理员!')
 						}
 					},
 					error: function(err) {
-						plus.webview.getWebviewById('saoyisao').reload(true)
+						plus.webview.getWebviewById('saoyisao04').reload(true)
 						alert(JSON.stringify(err))
 					}
 				});

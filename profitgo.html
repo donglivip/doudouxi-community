@@ -60,8 +60,9 @@
 						<img src="img/Group 10@2x.png" />
 						<div class="text">提现方式</div>
 						<div class="button">
-							<span v-if="usAliPayCode!=undefined" @click="paytype(1)">支付宝</span>
-							<span v-if="usWeChatPayCode!=undefined" @click="paytype(2)">微信</span>
+							<span v-if="usAliPayCode!='undefined'" @click="paytype(1)">支付宝</span>
+							<span v-if="usWeChatPayCode!='undefined'" @click="paytype(2)">微信</span>
+							<span v-if="usAliPayCode=='undefined'&&usWeChatPayCode=='undefined'" @click="opennew('rname')" style="border: 0;">您还没有绑定支付宝或者微信</span>
 						</div>
 					</div>
 				</div>
@@ -70,8 +71,8 @@
 						<img src="img/yes.png" />
 						<div class="text">{{alerttext}}</div>
 						<div class="button">
-							<span v-if="usAliPayCode!=undefined" @click="paytype(1)">支付宝</span>
-							<span v-if="usWeChatPayCode!=undefined" @click="paytype(2)">微信</span>
+							<span v-if="usAliPayCode!='undefined'" @click="paytype(1)">支付宝</span>
+							<span v-if="usWeChatPayCode!='undefined'" @click="paytype(2)">微信</span>
 						</div>
 					</div>
 				</div>
@@ -121,6 +122,11 @@
 							this.alertshow('请选择提现方式！')
 							return false;
 						}
+						if(this.price<=this.mydata01.pbPfInitialAmount||this.price>=this.mydata01.pbPfMaxAmount){
+							plus.nativeUI.toast('提现金额在'+this.mydata01.pbPfInitialAmount+' ~ '+this.mydata01.pbPfMaxAmount+'之间！')
+							return false;
+						}
+						return false;
 						var that = this
 						var payCode;
 						if(that.style == 1) {
@@ -148,13 +154,16 @@
 										} else {
 											that.opennew('integral')
 										}
+									},
+									error:function(err){
+										console.log(err)
 									}
 								});
 							}else{
 								alert('余额不足')
 							}
 						}else{
-							if(that.mydata.usSwBalance>= (that.price + (that.price * that.mydata01.pbPfPercentage / 100))){
+							if(that.mydata.usCpwBalance>= (parseFloat(that.price) + (that.price * that.mydata01.pbPfPercentage / 100))){
 								$.ajax({
 									type: "post",
 									url: localStorage.getItem('myurl') + "/community/insertUsCommunityTransaction",
@@ -178,6 +187,8 @@
 										console.log(err)
 									}
 								});
+							}else{
+								alert('余额不足')
 							}
 						}
 					},
@@ -234,7 +245,7 @@
 					mytype: function(value) {
 						switch(value) {
 							case '':
-								return '请选择支付方式'
+								return '请选择提现方式'
 								break;
 							case 1:
 								return '支付宝'

@@ -155,7 +155,14 @@
 									orderlist01.push(that.shopdata[i].usUserId)
 								}
 							}
-							this.opennew('appoint',orderlist)
+							if(this.myindex==9){
+								this.opennew('appoint',orderlist)
+							}else if(this.myindex==11){
+								this.opennew('appoint03',orderlist)
+							}else{
+								this.opennew('appoint04',orderlist)
+							}
+							
 						}
 					},
 					changeindex:function(index,type){

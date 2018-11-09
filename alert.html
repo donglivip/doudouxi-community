@@ -24,6 +24,7 @@
 			</div>
 			<!--中间主体-->
 			<div class="main big-main sharedetail">
+				<div class="main-inner">
 					<div class="order-box alert01" v-for="val in navdata" v-if="val.deviceCaseReason.length!=0">
 						<div class="order-right">
 							<div class="order-bottom">
@@ -32,7 +33,7 @@
 							</div>
 							<div class="order-bottom">
 								<div class="order-price">设备ID</div>
-								<div class="order-time">{{val.pbPartnerDeviceId}}</div>
+								<div class="order-time">{{val.pbPdCode}}</div>
 							</div>
 							<div class="order-bottom">
 								<div class="order-price">所属社区合伙人</div>
@@ -46,11 +47,12 @@
 								<div class="order-price">设备状态</div>
 								<div class="circle" v-if="val.deviceCaseReason.length==0"></div>
 								<div class="order-time red">
-									<block v-for='item in val.deviceCaseReason'>{{item.pbPartnerDeviceCaseId+ '号箱子' +item.pbPdrContent}}</block>
+									<block v-for='item in val.deviceCaseReason'>{{item.pbPdcNum+ '号箱子' +item.pbPdrContent}}</block>
 								</div>
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>
@@ -60,9 +62,29 @@
 			var myvue=new Vue({
 				el:'.wrapper',
 				data:{
-					navdata:[]
+					navdata:[],
+					pages:0,
+					pageNum:0
 				},
 				methods:{
+					myscroll: function() {
+						var that = this
+						if(Math.abs($('.main-inner').offset().top) + $('.main').height() + 200 >= $('.main-inner').height()) {
+							if(that.pages>that.pageNum){
+								function plusReady() {
+									// 弹出系统等待对话框
+									var w = plus.nativeUI.showWaiting("等待中...");
+								}
+								if(window.plus) {
+									plusReady();
+								} else {
+									document.addEventListener("plusready", plusReady, false);
+								}
+								that.myajax()
+							}
+							
+						}
+					},
 					indexchange:function(index){
 						this.myindex=index
 					},
@@ -75,16 +97,22 @@
 					},
 					myajax: function() {
 						var that = this
+						that.pageNum++
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/community/selectPbPartnerDevice",
 							dataType: 'json',
 							data:{
-								usCommunityPartnerId:localStorage.getItem('uid')
+								usCommunityPartnerId:localStorage.getItem('uid'),
+								pageNum:that.pageNum
 							},
 							success: function(res) {
 								console.log(localStorage.getItem('uid'))
-								that.navdata = res.data
+								that.pages=res.data.pages
+								for(var i = 0; i < res.data.list.length; i++) {
+									that.navdata.push(res.data.list[i])
+								}
+								console.log(that.navdata)
 							}
 						});
 					}

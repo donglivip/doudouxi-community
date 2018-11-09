@@ -57,7 +57,7 @@
 				flag=3
 			}
 			jQuery(function() {
-				jQuery('#output').qrcode(localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='flag);
+				jQuery('#output').qrcode(localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='+flag);
 			})
 			var shares = null,
 				sharewx = null,
@@ -90,7 +90,7 @@
 				sharewx.send({
 					title:'最好用的洗衣软件 豆豆洗！',
 					content: "懒得洗 就用豆豆洗！",
-					href: localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='flag,
+					href: localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='+flag,
 					extra: {
 						scene: "WXSceneSession"
 					}
@@ -105,7 +105,7 @@
 				shareqq.send({
 					title:'最好用的洗衣软件 豆豆洗！',
 					content: "懒得洗 就用豆豆洗！",
-					href: localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='flag,
+					href: localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='+flag,
 					extra: {
 						scene: "豆豆洗"
 					}
@@ -119,7 +119,7 @@
 				sharewx.send({
 					title:'最好用的洗衣软件 豆豆洗！',
 					content: "懒得洗 就用豆豆洗！",
-					href: localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='flag,
+					href: localStorage.getItem('myurl')  + "/share?shareCode="+localStorage.getItem('usShareCode')+'&flag='+flag,
 					extra: {
 						scene: "WXSceneTimeline"
 					}

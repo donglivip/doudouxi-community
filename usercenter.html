@@ -25,8 +25,8 @@
 			<!--中间主体-->
 			<div class="main">
 				<div class="center-top">
-					<img :src="avatar" class="backimg"/>
-					<img :src="avatar" class="avatar"/>
+					<img :src="avatar | myimg" class="backimg"/>
+					<img :src="avatar | myimg" class="avatar" @click="imgclick" />
 					 <!--@click="imgclick"-->
 					<div class="name-box">
 						<div class="name">{{uname}}</div>
@@ -95,6 +95,7 @@
 			</div>
 		</div>
 		<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			var myvue=new Vue({
 				el:'.wrapper',
@@ -104,7 +105,8 @@
 					uname:localStorage.getItem('uname'),
 					uphone:localStorage.getItem('uphone'),
 //					avatar:localStorage.getItem('uavatar'),
-					utype:localStorage.getItem('utype')
+					utype:localStorage.getItem('utype'),
+					server:''
 				},
 				methods:{
 					opennew:function(target,id){
@@ -179,7 +181,7 @@
 							path: p
 						});
 						//开始上传
-//						that.start_upload();
+						that.start_upload();
 					},
 					start_upload: function() {
 						var that = this
@@ -200,6 +202,71 @@
 									var json = eval('(' + responseText + ')');
 									//上传文件的信息
 									var files = json.data;
+									if(localStorage.getItem('utype')==0){
+										$.ajax({
+											type: "post",
+											url: localStorage.getItem('myurl') + "/community/updateUsCommunityInfo",
+											dataType: 'json',
+											data: {
+												usCommunityPartnerId: localStorage.getItem('uid'),
+												usCpHeadImg: json.data
+											},
+											success: function(res) {
+												if(res.status == 200) {
+													localStorage.setItem('usCpHeadImg', json.data)
+													plus.webview.getWebviewById('usercenter').reload()
+												} else {
+													that.alertshow('信息提交失败')
+												}
+											},
+											error:function(err){
+												alert(JSON.stringify(err))
+											}
+										});
+									}else if(localStorage.getItem('utype')==1){
+										$.ajax({
+											type: "post",
+											url: localStorage.getItem('myurl') + "/fetch/updateComUsStaffInfo  ",
+											dataType: 'json',
+											data: {
+												usStaffId: localStorage.getItem('uid'),
+												usStHeadImg: json.data
+											},
+											success: function(res) {
+												if(res.status == 200) {
+													localStorage.setItem('usStHeadImg', json.data)
+													plus.webview.getWebviewById('usercenter').reload()
+												} else {
+													that.alertshow('信息提交失败')
+												}
+											},
+											error:function(err){
+												alert(JSON.stringify(err))
+											}
+										});
+									}else{
+										$.ajax({
+											type: "post",
+											url: localStorage.getItem('myurl') + "/laundry/updateUsStoreInfo  ",
+											dataType: 'json',
+											data: {
+												UsStoreId: localStorage.getItem('uid'),
+												usStHeadImg: json.data
+											},
+											success: function(res) {
+												if(res.status == 200) {
+													localStorage.setItem('usStHeadImg', json.data)
+													plus.webview.getWebviewById('usercenter').reload()
+												} else {
+													that.alertshow('信息提交失败')
+												}
+											},
+											error:function(err){
+												alert(JSON.stringify(err))
+											}
+										});
+									}
+									
 									wt.close();
 								} else {
 									alert("上传失败：" + status);
@@ -221,7 +288,41 @@
 					}
 				},
 				mounted:function(){
+					if(localStorage.getItem('utype')==0){
+//						社区合伙人
+						if(localStorage.getItem('usCpHeadImg') == 'undefined') {
+							this.avatar = 'img/Group 10@2x.png'
+						} else {
+							this.avatar = localStorage.getItem('usCpHeadImg')
+						}
+						this.server=localStorage.getItem('myurl') + '/community/imageusCommunityPartnerImage'
+					}else if(localStorage.getItem('utype')==1){
+//						取送员
+						if(localStorage.getItem('usStHeadImg') == 'undefined'||localStorage.getItem('usStHeadImg') == '') {
+							this.avatar = 'img/Group 10@2x.png'
+						} else {
+							this.avatar = localStorage.getItem('usStHeadImg')
+						}
+						this.server=localStorage.getItem('myurl') + '/fetch/imageFetchImage'
+					}else{
+//						干洗店
+						if(localStorage.getItem('usStHeadImg') == 'undefined'||localStorage.getItem('usStHeadImg') == '') {
+							this.avatar = 'img/Group 10@2x.png'
+						} else {
+							this.avatar = localStorage.getItem('usStHeadImg')
+						}
+						this.server=localStorage.getItem('myurl') + '/laundry/imageLaundryImage'
+					}
 					
+				},
+				filters:{
+					myimg:function(value){
+						if(value!='img/Group 10@2x.png'){ 
+							return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+						}else{
+							return value
+						}
+					}
 				}
 			})
 		</script>

@@ -73,24 +73,45 @@
 						if(that.usStPassword == '') {
 							that.alertshow('资料填写不完整')
 						} else {
-							$.ajax({
-								type: "post",
-								url: localStorage.getItem('myurl') + "/laundry/updateUsStoreInfo",
-								dataType: 'json',
-								data: {
-									usStoreId: localStorage.getItem('uid'),
-									usStPassword: that.usStPassword
-//									usStPayPassword:that.usStPayPassword,
-//									usStAliPayCode:that.usStAliPayCode,
-//									usStWeChatCode:that.usStWeChatCode
-								},
-								success: function(res) {
-									console.log(res)
-									if(res.data == 1) {
-										plus.nativeUI.toast('修改完成')
+							if(localStorage.getItem('utype')==0){
+								$.ajax({
+									type: "post",
+									url: localStorage.getItem('myurl') + "/community/updateUsCommunityInfo",
+									dataType: 'json',
+									data: {
+										usCommunityPartnerId: localStorage.getItem('uid'),
+										usCpPassword: that.usStPassword
+	//									usStPayPassword:that.usStPayPassword,
+	//									usStAliPayCode:that.usStAliPayCode,
+	//									usStWeChatCode:that.usStWeChatCode
+									},
+									success: function(res) {
+										console.log(res)
+										if(res.data == 1) {
+											plus.nativeUI.toast('修改完成')
+										}
 									}
-								}
-							});
+								});								
+							}else{
+								$.ajax({
+									type: "post",
+									url: localStorage.getItem('myurl') + "/laundry/updateUsStoreInfo",
+									dataType: 'json',
+									data: {
+										usStoreId: localStorage.getItem('uid'),
+										usStPassword: that.usStPassword
+	//									usStPayPassword:that.usStPayPassword,
+	//									usStAliPayCode:that.usStAliPayCode,
+	//									usStWeChatCode:that.usStWeChatCode
+									},
+									success: function(res) {
+										console.log(res)
+										if(res.data == 1) {
+											plus.nativeUI.toast('修改完成')
+										}
+									}
+								});
+							}
 						}
 
 					}

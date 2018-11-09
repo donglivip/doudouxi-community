@@ -70,13 +70,13 @@
 								phone: localStorage.getItem('uphone')
 							},
 							success: function(res) {
-								console.log(res)
 								if(res.status == 200 && res.data != null) {
 									that.fetch = true
 									if(index == 1) {
 										var myurl=localStorage.getItem('myurl')
 										localStorage.clear()
 										localStorage.setItem('myurl',myurl)
+										localStorage.setItem('usStHeadImg',res.data.usStHeadImg)
 										localStorage.setItem('uname', res.data.usStName)
 										localStorage.setItem('uphone', res.data.usStPhone)
 										localStorage.setItem('uapay', res.data.usStAliPayCode)
@@ -104,6 +104,7 @@
 									if(index == 2) {
 										var myurl=localStorage.getItem('myurl')
 										localStorage.clear()
+										localStorage.setItem('usStHeadImg',res.data.usStHeadImg)
 										localStorage.setItem('myurl',myurl)
 										localStorage.setItem('uname', res.data.usStShopName)
 										localStorage.setItem('uphone', res.data.usStPhone)
@@ -132,6 +133,7 @@
 									if(index == 3) {
 										var myurl=localStorage.getItem('myurl')
 										localStorage.clear()
+										localStorage.setItem('usCpHeadImg', res.data.usCpHeadImg)
 										localStorage.setItem('myurl',myurl)
 										localStorage.setItem('uname', res.data.usCpName)
 										localStorage.setItem('uphone', res.data.usCpPhone)
