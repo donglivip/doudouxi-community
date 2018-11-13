@@ -144,6 +144,9 @@
 						})
 					},
 					changestate:function(){
+						if(this.shopdata.length==0){
+							return false;
+						}
 						this.state=!this.state
 						var orderlist=[],
 							orderlist01=[],

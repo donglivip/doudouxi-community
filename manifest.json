@@ -571,6 +571,20 @@
 					"zanlist.html"
 				],
 				"priority": 0
+			},
+			"shop.html": {
+				"resources": [],
+				"refer": [
+					"pay.html"
+				],
+				"priority": 0
+			},
+			"profitgo.html": {
+				"resources": [],
+				"refer": [
+					"integral.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -637,10 +651,8 @@
 				"js/jquery.min.js",
 				"img/bottom01-active.png",
 				"img/Close-2 Copy 9@2x.png",
-				"shop.html",
 				"img/wquan.png",
 				"img/nav2.png",
-				"pay.html",
 				"img/erweima.png",
 				"img/model0.png",
 				"img/640.png",

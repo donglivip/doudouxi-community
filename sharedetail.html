@@ -29,15 +29,15 @@
 				<div class="sharedetail-top">
 					<div class="sharedetail-item">
 						<p>成功推荐人数</p>
-						<p>{{mydata.successRecommend}}</p>
+						<p>{{mydata.successPeople}}</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>好友消费人数</p>
-						<p>{{mydata.consumptionRecommend}}</p>
+						<p>{{mydata.consumptionPeople}}</p>
 					</div>
 					<div class="sharedetail-item">
 						<p>奖励总金额</p>
-						<p>￥{{mydata.totalReward}}</p>
+						<p>￥{{mydata.totalMoney==null?0:mydata.totalMoney}}</p>
 					</div>
 				</div>
 				<!--名单筛选-->
@@ -57,19 +57,15 @@
 							<div class="order-right">
 								<div class="order-bottom">
 									<div class="order-price">受邀好友</div>
-									<div class="order-time">{{val.usName==null?'未实名':val.usName}}</div>
-								</div>
-								<div class="order-bottom">
-									<div class="order-price">好友状态</div>
-									<div class="order-time">{{val.pbRuIsFirstUse==1?'已消费':'未消费'}}</div>
+									<div class="order-time">{{val.userName}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">推荐奖励金额</div>
-									<div class="order-time">￥{{val.usUfdPrice}}</div>
+									<div class="order-time">￥{{val.price}}</div>
 								</div>
 								<div class="order-bottom">
 									<div class="order-price">推荐时间</div>
-									<div class="order-time">{{val.changeTime}}</div>
+									<div class="order-time">{{val.createTime}}</div>
 								</div>
 							</div>
 						</div>
@@ -121,37 +117,59 @@
 						}
 					},
 					myajax: function() {
-						var that = this
+						var that = this,
+							flag = null
+						if(localStorage.getItem('utype') == 0) {
+							flag = 3
+						} else if(localStorage.getItem('utype') == 2) {
+							flag = 2
+						}
 						that.pageNum++
+//						顶部推荐信息
 							$.ajax({
 								type: "post",
-								url: localStorage.getItem('myurl') + "/user/getRecommend",
+								url: localStorage.getItem('myurl') + "/share/successSharePeople",
 								dataType: 'json',
 								data: {
-									userId: localStorage.getItem('usUserId')
+									Id: localStorage.getItem('uid'),
+									flag: flag
 								},
 								success: function(res) {
 									console.log(res)
 									that.mydata = res.data
 								}
 							})
-						$.ajax({
-							type: "post",
-							url: localStorage.getItem('myurl') + "/user/getRecommends",
-							dataType: 'json',
-							data: {
-								userId: localStorage.getItem('usUserId'),
-								status: that.navid,
-								pageNum: that.pageNum
-							},
-							success: function(res) {
-								console.log(res)
-								that.pages = res.data.pages
-								for(var i = 0; i < res.data.list.length; i++) {
-									that.mydata01.push(res.data.list[i])
+//							推荐明细
+						if(localStorage.getItem('utype')==0){
+//							社区合伙人
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/share/usCommProfit",
+								dataType: 'json',
+								data: {
+									Id: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									console.log(res)
+									that.mydata01=res.data
 								}
-							}
-						})
+							})
+						}else{
+//							干洗店
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/share/usStoreProfit",
+								dataType: 'json',
+								data: {
+									Id: localStorage.getItem('uid')
+								},
+								success: function(res) {
+									console.log(res)
+									that.mydata01=res.data
+								}
+							})							
+						}
+						
 					},
 					myscroll: function() {
 						var that = this

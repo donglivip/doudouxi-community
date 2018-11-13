@@ -360,5 +360,15 @@
 		"refer": [
 			"zanlist.html"
 		]
+	},
+	"shop.html": {
+		"refer": [
+			"pay.html"
+		]
+	},
+	"profitgo.html": {
+		"refer": [
+			"integral.html"
+		]
 	}
 }

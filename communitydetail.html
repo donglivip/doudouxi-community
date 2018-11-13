@@ -25,15 +25,15 @@
 			<!--中间主体-->
 			<div class="main" style="margin-top: .8rem;padding-bottom: .5rem;">
 				<div class="user-tab">
-					<div class="tab-text">头像</div>
+					<div class="tab-text">头像<span class="red">*</span></div>
 					<img src="img/Group 10@2x.png" @click="imgclick('usStHeadImg')" id="usStHeadImg" style="height: 80%;border: 1px solid #F4F4F4;border-radius: 50%;"/>
 				</div>
 				<div class="user-tab top">
-					<div class="tab-text">姓名</div>
+					<div class="tab-text">姓名<span class="red">*</span></div>
 					<input type="text" placeholder="请输入取送员姓名" v-model="usStName"/>
 				</div>
 				<div class="user-tab top">
-					<div class="tab-text">手机号</div>
+					<div class="tab-text">手机号<span class="red">*</span></div>
 					<input type="text" placeholder="请输入取送员手机号" v-model="usStPhone"/>
 				</div>
 				<div class="user-tab">
@@ -52,11 +52,11 @@
 					<input type="radio"  name="sex" id="wman" v-model="usStSex" value="2"/>
 				</div>
 				<div class="user-tab">
-					<div class="tab-text">身份证号码</div>
+					<div class="tab-text">身份证号码<span class="red">*</span></div>
 					<input type="text" placeholder="请输入取送员身份证号" v-model="usStIdCard"/>
 				</div>
 				<div class="user-tab top">
-					<div class="tab-text">上传身份证照</div>
+					<div class="tab-text">上传身份证照<span class="red">*</span></div>
 				</div>
 				<div class="user-tab mys">
 					<img src="img/sz.png" @click="imgclick('usStFrontCardImg')" id="usStFrontCardImg"/>
@@ -100,8 +100,28 @@
 							plus.nativeUI.toast('两次密码不一致！')
 							return false;
 						}
-						if(this.usStName==''||this.usStPhone==''||this.usStPassword==''||this.usStIdCard==''||this.usStFrontCardImg==''||this.usStBackCardImg==''||this.usStAliPayCode==''||this.usStWeChatPayCode==''||this.usStHeadImg==''){
-							plus.nativeUI.toast('信息填写不完整！')
+						if(this.usStName==''){
+							plus.nativeUI.toast('取送员姓名不能为空！')
+							return false;
+						}
+						if(this.usStHeadImg==''){
+							plus.nativeUI.toast('取送员头像不能为空！')
+							return false;
+						}
+						if(this.usStPhone==''){
+							plus.nativeUI.toast('取送员手机号不能为空！')
+							return false;
+						}
+						if(this.usStIdCard==''){
+							plus.nativeUI.toast('取送员身份证不能为空！')
+							return false;
+						}
+						if(this.usStFrontCardImg==''){
+							plus.nativeUI.toast('取送员身份证正面照不能为空！')
+							return false;
+						}
+						if(this.usStBackCardImg==''){
+							plus.nativeUI.toast('取送员身份证背面照不能为空！')
 							return false;
 						}
 						var that = this

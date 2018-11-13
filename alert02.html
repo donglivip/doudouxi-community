@@ -49,7 +49,7 @@
 								<div class="order-price">设备状态</div>
 								<div class="order-time" :class="val.deviceCaseReason.length>0?'red':''">
 									<div class="circle" v-if="val.deviceCaseReason.length==0"></div>
-									<block v-for='item in val.deviceCaseReason'>{{item.pbPdrContent}}</block>
+									<block v-for='item in val.deviceCaseReason'>{{item.pbPdcNum+ '号箱子' +item.pbPdrContent}}</block>
 								</div>
 							</div>
 						</div>

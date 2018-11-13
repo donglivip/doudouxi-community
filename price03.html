@@ -37,7 +37,7 @@
 				<div class="price-box" v-for="(val,index) in navdata">
 					<img :src="val.pbCdImg | myimg" />
 					<div class="name">{{val.pbCdName}}</div>
-					<input type="number" :placeholder="val.pbCdUpdateName" @blur="inputblur(index)" max="100" min="1" />
+					<input type="number" :placeholder="val | mystate" @blur="inputblur(index)" max="100" min="1" />
 					<div class="fhao">%</div>
 				</div>
 			</div>
@@ -52,13 +52,18 @@
 				adress: '',
 				alertboo: false,
 				time: 3,
-				navdata: []
+				navdata: [],
+				guizedata:''
 			},
 			methods: {
 				inputblur: function(index) {
 					var that = this
+					if($('input').eq(index).val() > this.guizedata || $('input').eq(index).val() < 1) {
+						alert('价格需要设置在1~'+this.guizedata+'之间')
+						return false;
+					}
 					if(this.navdata[index].pbCdCreateName == undefined || this.navdata[index].pbCdCreateName == null) {
-						if($('input').eq(index).val() <= 100 && $('input').eq(index).val() >= 1) {
+						
 							$.ajax({
 								type: "post",
 								url: localStorage.getItem('myurl') + "/community/insertUsCommunityPartnerCost",
@@ -74,15 +79,13 @@
 									console.log(res)
 									if(res.data == 1) {
 										plus.nativeUI.toast('修改完成！')
+										that.myajax()
 									} else {
 										plus.nativeUI.toast('修改失败！')
 									}
 
 								}
 							})
-						} else {
-							alert('价格区间在1 ~ 100之间')
-						}
 					} else {
 						console.log({
 							usCommunityPartnerCostId: that.navdata[index].pbCdCreateName,
@@ -90,7 +93,6 @@
 							updateName: localStorage.getItem('uname')
 						})
 						if((new Date() - new Date(that.navdata[index].pbCdUpdateTime))/1000>=2592000){
-							if($('input').eq(index).val() <= 100 && $('input').eq(index).val() >= 1) {
 								$.ajax({
 									type: "post",
 									url: localStorage.getItem('myurl') + "/community/updateUsCommunityPartnerCost",
@@ -104,15 +106,13 @@
 										console.log(res)
 										if(res.data == 1) {
 											plus.nativeUI.toast('修改完成！')
+											that.myajax()
 										} else {
 											plus.nativeUI.toast('修改失败！')
 										}
 	
 									}
 								})
-							} else {
-								alert('价格区间在1 ~ 100之间')
-							}
 						}else{
 							alert('成本价格一个月只能修改一次')
 						}
@@ -150,6 +150,15 @@
 							that.navdata = res.data
 						}
 					})
+					$.ajax({
+						type: "post",
+						url: localStorage.getItem('myurl') + "/community/getCommunityShare",
+						dataType: 'json',
+						success: function(res) {
+							that.guizedata = res.data
+							localStorage.setItem('guizedata',res.data)
+						}
+					})
 				}
 			},
 			mounted: function() {
@@ -158,6 +167,13 @@
 			filters: {
 				myimg: function(value) {
 					return localStorage.getItem('myurl') + value.substring(value.indexOf('D:') + 1)
+				},
+				mystate: function(value) {
+					if(value.pbCdCreateName==null){
+						return '1~'+localStorage.getItem('guizedata')
+					}else{
+						return value.pbCdUpdateName
+					}
 				}
 			}
 		})

@@ -24,7 +24,7 @@
 		<div class="wrapper order trade">
 			<!--头部-->
 			<div class="header">
-				<div class="head-tab mui-action-back">
+				<div class="head-tab" @click="back">
 					<img src="img/Arrow_Simple_left Copy@2x.png" class="back" />
 				</div>
 				<div class="head-main">
@@ -98,6 +98,10 @@
 					usStoreId: ''
 				},
 				methods: {
+					back:function(){
+						plus.webview.getWebviewById('orderxidi').reload()
+						mui.back()
+					},
 					change: function(type) {
 						var that=this
 						var ajaxjson=null;
