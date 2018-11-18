@@ -3,7 +3,7 @@
     "id": "H57E1085B",/*应用的标识，创建应用时自动生成，勿手动修改*/
     "name": "豆豆洗-社区合伙人",/*应用名称，程序桌面图标名称*/
     "version": {
-        "name": "1.0",/*应用版本名称*/
+        "name": "2.0",/*应用版本名称*/
         "code": ""
     },
     "description": "",/*应用描述信息*/
@@ -35,7 +35,7 @@
         "Maps": {
             "description": "管理地图插件"
         },
-        "Share":{}
+        "Share":{},"Payment":{}
     },
     "plus": {
         "splashscreen": {
@@ -45,7 +45,7 @@
         "popGesture": "close",/*设置应用默认侧滑返回关闭Webview窗口，"none"为无侧滑返回功能，"hide"为侧滑隐藏Webview窗口。参考http://ask.dcloud.net.cn/article/102*/
         "runmode": "normal",/*应用的首次启动运行模式，可取liberate或normal，liberate模式在第一次启动时将解压应用资源（Android平台File API才可正常访问_www目录）*/
         "signature": "Sk9JTiBVUyBtYWlsdG86aHIyMDEzQGRjbG91ZC5pbw==",/*可选，保留给应用签名，暂不使用*/
-        "distribute": {"plugins":{"share":{"weixin":{"appid":"wx0faf55ebe6d8faef","appsecret":"7d64b152e1a9502eff07a1f427f6ba69","description":"可选，微信分享"}},"maps":{"amap":{"appkey_ios":"f9c6594e096b2125cefda0be217d5ad0","appkey_android":"cbc4b72410c7b9ffa6269e34a407b055","description":""}}},
+        "distribute": {"plugins":{"payment":{"weixin":{"description":"微信支付","appid":"wx0faf55ebe6d8faef"},"alipay":{"description":"阿里支付","scheme":""}},"share":{"weixin":{"appid":"wx0faf55ebe6d8faef","appsecret":"7d64b152e1a9502eff07a1f427f6ba69","description":"可选，微信分享"}},"maps":{"amap":{"appkey_ios":"f9c6594e096b2125cefda0be217d5ad0","appkey_android":"cbc4b72410c7b9ffa6269e34a407b055","description":""}}},
             "apple": {
                 "appid": "",/*iOS应用标识，苹果开发网站申请的appid，如io.dcloud.HelloH5*/
                 "mobileprovision": "",/*iOS应用打包配置文件*/

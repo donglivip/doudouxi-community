@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
@@ -7,6 +8,7 @@
 		<link rel="stylesheet" type="text/css" href="css/main.css" />
 		<script src="js/vue.js" type="text/javascript" charset="utf-8"></script>
 	</head>
+
 	<body>
 		<div class="wrapper index">
 			<div class="main">
@@ -118,14 +120,15 @@
 	</body>
 	<script src="js/mui.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/url.js" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		var myvue = new Vue({
 			el: '.wrapper',
 			data: {
 				utype: localStorage.getItem('utype'),
 				navdata: [{
-					pbNwContent:'豆豆洗社区合伙人正式上线啦！',
-					pbNsImgUrl:'./img/index.jpg'
+					pbNwContent: '豆豆洗社区合伙人正式上线啦！',
+					pbNsImgUrl: './img/index.jpg'
 				}]
 			},
 			methods: {
@@ -133,7 +136,7 @@
 					mui.openWindow({
 						url: './' + target + '.html',
 						id: target,
-						createNew:true
+						createNew: true
 					})
 				},
 				myajax: function() {
@@ -144,21 +147,63 @@
 						dataType: 'json',
 						success: function(res) {
 							console.log(res)
-							if(res.data.length!=0){
+							if(res.data.length != 0) {
 								that.navdata = res.data
 							}
 						},
-						error:function(err){
+						error: function(err) {
 							console.log(err)
 						}
 					});
 				}
 			},
 			mounted: function() {
-				if(localStorage.getItem('uid') == null||localStorage.getItem('uid') == undefined) {
-					window.location.href='./mlogin.html'
-				}else{
-					this.myajax()
+				var that = this
+
+				function plusReady() {
+					plus.runtime.getProperty(plus.runtime.appid, function(inf) {
+						$.ajax({
+							type: "post",
+							url: localStorage.getItem('myurl') + "/backstageCommunity/selectPbAppVersion",
+							dataType: 'json',
+							success: function(res) {
+								if(res.data.pbAvCommunityCode != inf.version) {
+									plus.nativeUI.showWaiting("版本更新，下载资源中！");
+									plus.downloader.createDownload(localStorage.getItem('myurl') + res.data.pbAvCommunityUrl, {
+										filename: "_doc/update/"
+									}, function(d, status) {
+										if(status == 200) {
+											plus.runtime.install(d.filename, {}, function() {
+												plus.nativeUI.closeWaiting();
+												plus.nativeUI.alert("应用资源更新完成！点击重启！", function() {
+													plus.runtime.restart();
+												});
+											}, function(e) {
+												plus.nativeUI.closeWaiting();
+												plus.nativeUI.alert("安装wgt文件失败[" + e.code + "]：" + e.message);
+											});
+										} else {
+											plus.nativeUI.alert("下载wgt失败！");
+										}
+									}).start();
+								} else {
+									if(localStorage.getItem('uid') == null || localStorage.getItem('uid') == undefined) {
+										window.location.href = './mlogin.html'
+									} else {
+										this.myajax()
+									}
+								}
+							},
+							error: function(err) {
+								alert(JSON.stringify(err))
+							}
+						});
+					});
+				}
+				if(window.plus) {
+					plusReady();
+				} else {
+					document.addEventListener("plusready", plusReady, false);
 				}
 			}
 		})

@@ -42,7 +42,7 @@
 						</div>
 					</div>
 					<div class="trade-main activity">
-						<div class="order-box" v-if="myindex==4" v-for="val in mydata">
+						<div class="order-box" v-if="myindex==4" v-for="val in mydata" @click="opendetail(val.pbOrderId)">
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">订单号:{{val.pbOrderId}}</div>
@@ -79,7 +79,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="order-box" v-if="myindex==7" v-for="val in mydata">
+						<div class="order-box" v-if="myindex==7" v-for="val in mydata" @click="opendetail(val.pbOrderId)">
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">订单号:{{val.pbOrderId}}</div>
@@ -109,7 +109,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="order-box" v-if="myindex==8" v-for="val in mydata">
+						<div class="order-box" v-if="myindex==8" v-for="val in mydata" @click="opendetail(val.pbOrderId)">
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">订单号:{{val.pbOrderId}}</div>
@@ -168,6 +168,10 @@
 					mydata:''
 				},
 				methods: {
+					opendetail:function(id){
+						localStorage.setItem('orderId',id)
+						this.opennew('orderdetail')
+					},
 					orderisok:function(id,UsCommunityPartnerId){
 						var that = this
 //						完成订单

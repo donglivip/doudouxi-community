@@ -32,7 +32,7 @@
 			<div class="main big-main">
 				<div class="price-top" style="border-bottom: 1px solid #F4F4F4;">
 					<div>类型</div>
-					<div>价格</div>
+					<div>分润</div>
 				</div>
 				<div class="price-box" v-for="(val,index) in navdata">
 					<img :src="val.pbCdImg | myimg" />
@@ -59,7 +59,7 @@
 				inputblur: function(index) {
 					var that = this
 					if($('input').eq(index).val() > this.guizedata || $('input').eq(index).val() < 1) {
-						alert('价格需要设置在1~'+this.guizedata+'之间')
+						alert('需要设置在1~'+this.guizedata+'之间')
 						return false;
 					}
 					if(this.navdata[index].pbCdCreateName == undefined || this.navdata[index].pbCdCreateName == null) {

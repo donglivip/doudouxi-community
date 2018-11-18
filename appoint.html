@@ -110,21 +110,31 @@
 								usStaffId: that.usStaffId,
 								usCommunityPartnerId:localStorage.getItem('uid')
 							}
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/updateUsStaffDefault",
+								dataType: 'json',
+								data: ajaxjson,
+								success: function(res) {
+									console.log(res)
+								}
+							});
 						}else{
 							ajaxjson={
 								usStoreId: that.usStoreId,
 								usCommunityPartnerId:localStorage.getItem('uid')
 							}
+							$.ajax({
+								type: "post",
+								url: localStorage.getItem('myurl') + "/community/updateUsStoreDefault",
+								dataType: 'json',
+								data: ajaxjson,
+								success: function(res) {
+									console.log(res)
+								}
+							});
 						}
-						$.ajax({
-							type: "post",
-							url: localStorage.getItem('myurl') + "/community/updateUsStaffDefault",
-							dataType: 'json',
-							data: ajaxjson,
-							success: function(res) {
-								console.log(res)
-							}
-						});
+						
 					},
 					submit: function() {
 						var mylist = JSON.parse(localStorage.getItem('orderlist'))
