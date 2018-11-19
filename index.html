@@ -146,7 +146,6 @@
 						url: localStorage.getItem('myurl') + "/fetch/queryAllNewsNoticePojo",
 						dataType: 'json',
 						success: function(res) {
-							console.log(res)
 							if(res.data.length != 0) {
 								that.navdata = res.data
 							}
@@ -159,7 +158,6 @@
 			},
 			mounted: function() {
 				var that = this
-
 				function plusReady() {
 					plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 						$.ajax({
@@ -169,7 +167,7 @@
 							success: function(res) {
 								if(res.data.pbAvCommunityCode != inf.version) {
 									plus.nativeUI.showWaiting("版本更新，下载资源中！");
-									plus.downloader.createDownload(localStorage.getItem('myurl') + res.data.pbAvCommunityUrl, {
+									plus.downloader.createDownload('http://console.pingfanren.com.cn:8081' + res.data.pbAvCommunityUrl, {
 										filename: "_doc/update/"
 									}, function(d, status) {
 										if(status == 200) {
@@ -195,7 +193,7 @@
 								}
 							},
 							error: function(err) {
-								alert(JSON.stringify(err))
+								alert('版本获取失败！')
 							}
 						});
 					});
