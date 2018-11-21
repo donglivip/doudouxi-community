@@ -167,7 +167,7 @@
 							success: function(res) {
 								if(res.data.pbAvCommunityCode != inf.version) {
 									plus.nativeUI.showWaiting("版本更新，下载资源中！");
-									plus.downloader.createDownload('http://console.pingfanren.com.cn:8081' + res.data.pbAvCommunityUrl, {
+									plus.downloader.createDownload(localStorage.getItem('myurl') + res.data.pbAvCommunityUrl, {
 										filename: "_doc/update/"
 									}, function(d, status) {
 										if(status == 200) {
