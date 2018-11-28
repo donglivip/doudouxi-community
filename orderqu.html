@@ -75,8 +75,8 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="orderheshi(val.pbOrderId)">核实订单</a>
-										<a class="btn02" href="javascript:void(0)" @click="opensao(val.pbOrderId)">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)" @click.stop="orderheshi(val.pbOrderId)">核实订单</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="opensao(val.pbOrderId)">扫码开箱</a>
 									</div>
 								</div>
 							</div>
@@ -116,8 +116,8 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="opensao(val.pbOrderId)" v-if="new Date() - new Date(val.pbOrUpdateTime)<=5000">扫码开箱</a>
-										<a class="btn02" href="javascript:void(0)" @click="orderdao(val.pbOrderId,val.usUserId)">确认到店</a>
+										<a class="btn01" href="javascript:void(0)" @click.stop="opensao(val.pbOrderId)" v-if="new Date() - new Date(val.pbOrUpdateTime)<=5000">扫码开箱</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="orderdao(val.pbOrderId,val.usUserId)">确认到店</a>
 									</div>
 								</div>
 							</div>
@@ -157,9 +157,9 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="opensao(val.pbOrderId)" v-if="val.orderStauts==18">扫码开箱</a>
-										<a class="btn02" href="javascript:void(0)" @click="tuiqu(val.pbOrderId)" v-if="val.orderStauts==17">已取件</a>
-										<a class="btn02" href="javascript:void(0)" @click="tuida(val.pbOrderId)" v-if="val.orderStauts==18">已送达</a>
+										<a class="btn01" href="javascript:void(0)" @click.stop="opensao(val.pbOrderId)" v-if="val.orderStauts==18">扫码开箱</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="tuiqu(val.pbOrderId)" v-if="val.orderStauts==17">已取件</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="tuida(val.pbOrderId)" v-if="val.orderStauts==18">已送达</a>
 									</div>
 								</div>
 							</div>

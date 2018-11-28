@@ -30,7 +30,7 @@
 							<div class="order-bottom">
 								<div class="order-price">{{val.pbCoName}}</div>
 								<div class="order-time setting">
-									<a class="btn02" href="javascript:void(0)">设置分润</a>
+									<a class="btn02" href="javascript:void(0)">{{examinetype==0?'设置价格':'设置分润'}}</a>
 								</div>
 							</div>
 						</div>
@@ -44,7 +44,8 @@
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					navdata:[]
+					navdata:[],
+					examinetype:localStorage.getItem('examinetype')
 				},
 				methods: {
 					indexchange: function(index) {

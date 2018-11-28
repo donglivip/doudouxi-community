@@ -136,14 +136,12 @@
 							usStBackCardImg:that.usStBackCardImg,
 							usStHeadImg:that.usStHeadImg
 						}
-						console.log(JSON.stringify(ajaxjson))
 						$.ajax({
 							type: "post",
 							url: localStorage.getItem('myurl') + "/community/insertUsStaff",
 							dataType: 'json',
 							data: ajaxjson,
 							success: function(res) {
-								console.log(JSON.stringify(res))
 								that.pay()
 							}
 						});
@@ -156,7 +154,7 @@
 						that.alertshow()
 						setInterval(function(){
 							if(that.time==1){
-								plus.webview.getWebviewById('community').reload()
+								plus.webview.getWebviewById('community').reload(true)
 								mui.back()
 							}else{
 								that.time--

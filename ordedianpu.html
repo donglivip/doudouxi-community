@@ -46,7 +46,7 @@
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">订单号:{{val.pbOrderId}}</div>
-									<a class="order-time" :href="['tel:'+val.usName]" style="font-size: .2rem;color: #096148;">
+									<a class="order-time" :href="['tel:'+val.userPhone]" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
@@ -73,8 +73,8 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" @click="opennew('nav',val.orderDetaileList[0].pbPartnerDeviceId,val.usCommunityPartnerId,val.pbOrderId,val.orderDetaileList,val.usUserId)" href="javascript:void(0)">调整订单</a>
-										<a class="btn02"  @click="orderok(val.pbOrderId,val.usUserId)" href="javascript:void(0)">核实订单</a>
+										<a class="btn01" @click.stop="opennew('nav',val.orderDetaileList[0].pbPartnerDeviceId,val.usCommunityPartnerId,val.pbOrderId,val.orderDetaileList,val.usUserId)" href="javascript:void(0)">调整订单</a>
+										<a class="btn02"  @click.stop="orderok(val.pbOrderId,val.usUserId)" href="javascript:void(0)">核实订单</a>
 									</div>
 								</div>
 							</div>
@@ -83,7 +83,7 @@
 							<div class="order-right">
 								<div class="order-bottom" style="border-bottom: 1px solid #F4F4F4;height: .9rem;">
 									<div class="order-price">订单号:{{val.pbOrderId}}</div>
-									<a class="order-time" :href="['tel:'+val.usName]" style="font-size: .2rem;color: #096148;">
+									<a class="order-time" :href="['tel:'+val.userPhone]" style="font-size: .2rem;color: #096148;">
 										联系用户
 									</a>
 								</div>
@@ -141,7 +141,7 @@
 									<div class="order-price"></div>
 									<div class="order-time setting">
 										<!--<a class="btn01" href="nav.html">调整订单</a>-->
-										<a class="btn02" href="javascript:void(0)" @click="orderisok(val.pbOrderId,val.usCommunityPartnerId)">完成订单</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="orderisok(val.pbOrderId,val.usCommunityPartnerId)">完成订单</a>
 									</div>
 								</div>
 							</div>
@@ -186,7 +186,6 @@
 								usStoreId:localStorage.getItem('uid')
 							},
 							success: function(res) {
-								console.log(res)
 								if(res.data==1){
 									that.pay()
 									that.myajax()

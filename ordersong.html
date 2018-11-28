@@ -77,14 +77,14 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if="val.orderStauts!=5">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId,val.sendAddress,val.userPhone,val.usUserId)">发送取件码</a>
-										<a class="btn02" href="javascript:void(0)" @click="opensao(val.pbOrderId)">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)" @click.stop="orderfa(val.pbOrderId,val.sendAddress,val.userPhone,val.usUserId)">发送取件码</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="opensao(val.pbOrderId)">扫码开箱</a>
 									</div>
 								</div>
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if="val.orderStauts==5">
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="orderqu(val.pbOrderId)">确认取衣</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="orderqu(val.pbOrderId)">确认取衣</a>
 									</div>
 								</div>
 							</div>
@@ -154,14 +154,14 @@
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if='val.orderStauts==14'>
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn01" href="javascript:void(0)" @click="orderfa(val.pbOrderId,val.usCspAddress,val.userPhone,val.usUserId)">发送取件码</a>
-										<a class="btn02" href="javascript:void(0)" @click="orderzopen(val.pbOrderId)">扫码开箱</a>
+										<a class="btn01" href="javascript:void(0)" @click.stop="orderfa(val.pbOrderId,val.usCspAddress,val.userPhone,val.usUserId)">发送取件码</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="orderzopen(val.pbOrderId)">扫码开箱</a>
 									</div>
 								</div>
 								<div class="order-bottom" style="border-top: 1px solid #F4F4F4;" v-if='val.orderStauts==15'>
 									<div class="order-price"></div>
 									<div class="order-time setting">
-										<a class="btn02" href="javascript:void(0)" @click="orderzok(val.pbOrderId,val.usUserId)">确认送达</a>
+										<a class="btn02" href="javascript:void(0)" @click.stop="orderzok(val.pbOrderId,val.usUserId)">确认送达</a>
 									</div>
 								</div>
 							</div>
