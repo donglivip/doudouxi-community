@@ -44,7 +44,8 @@
 			var myvue = new Vue({
 				el: '.wrapper',
 				data: {
-					navdata:[]
+					navdata:[],
+					examinetype:localStorage.getItem('examinetype')
 				},
 				methods: {
 					indexchange: function(index) {
