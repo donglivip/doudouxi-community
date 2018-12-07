@@ -215,7 +215,8 @@
     "refer": [
       "index.html",
       "nav.html",
-      "prize.html"
+      "prize.html",
+      "orderdetail.html"
     ],
     "resources": []
   },
