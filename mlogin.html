@@ -34,8 +34,8 @@
 					<div class="titile">请选择登陆身份 </div>
 					<div class="user-box">
 						<div class="box" :class="index==0?'active':''" @click="change(0)">社区合伙人</div>
-						<div class="box" :class="index==1?'active':''" @click="change(1)">取送员</div>
-						<div class="box" :class="index==2?'active':''" @click="change(2)">干洗店</div>
+						<!--<div class="box" :class="index==1?'active':''" @click="change(1)">取送员</div>-->
+						<!--<div class="box" :class="index==2?'active':''" @click="change(2)">干洗店</div>-->
 					</div>
 					<div class="titile">账号密码登录 </div>
 					<div class="input-box">
@@ -58,7 +58,7 @@
 					</div>
 					<div class="login" @click="login()" style="margin: 0;">登录</div>
 					<div class="login-type">
-						<div @click="opennew('Agreement','')">登录即视为同意 <strong>《豆豆洗注册协议》</strong></div>
+						<div @click="opennew('Agreement','')">登录即视为同意 <strong>《待定注册协议》</strong></div>
 					</div>
 
 					<!--<div class="three">
@@ -71,7 +71,7 @@
 				</div>
 				<div class="alert" v-if="alertboo" @click="alertshow">
 					<div class="alert-inner">
-						<div class="alert-top">豆豆洗</div>
+						<div class="alert-top">待定</div>
 						<div class="text alert-text">{{alerttext}}</div>
 						<div class="button">确定</div>
 					</div>
